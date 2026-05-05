@@ -1,7 +1,7 @@
-FROM node:20-slim AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-RUN corepack enable && corepack prepare pnpm@9.12.0 --activate
+RUN npm install -g pnpm@9.12.0 --no-fund --no-audit
 
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
 COPY apps/api/package.json ./apps/api/
@@ -22,7 +22,7 @@ RUN pnpm --filter @aria/api build
 RUN pnpm --filter @aria/api --prod deploy /deploy
 
 # --- Runtime ---
-FROM node:20-slim
+FROM node:20-alpine
 WORKDIR /app
 
 COPY --from=builder /deploy ./
