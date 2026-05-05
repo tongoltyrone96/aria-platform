@@ -37,7 +37,7 @@ export async function accountRoutes(fastify: FastifyInstance) {
           .where(eq(devices.licenseId, lic.id));
         return {
           id: lic.id,
-          key: `${lic.key.slice(0, 12)}...`,
+          key: lic.key,
           maxDevices: lic.maxDevices,
           expiresAt: lic.expiresAt?.toISOString() ?? null,
           devices: devs.map((d) => ({

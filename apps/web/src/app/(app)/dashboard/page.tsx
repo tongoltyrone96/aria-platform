@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { UsageChart } from '@/components/dashboard/UsageChart';
 import { Download, Zap, Monitor, Clock } from 'lucide-react';
+import { LicenseKeyDisplay } from '@/components/dashboard/LicenseKeyDisplay';
 
 const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.aria-ai.com';
 const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.aria-ai.com';
@@ -31,6 +32,7 @@ export default async function DashboardPage() {
     ? new Date(account.subscription.currentPeriodEnd).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
     : 'N/A';
   const activeDevices = account?.licenses?.flatMap((l: { devices: unknown[] }) => l.devices).filter((d: { status: string }) => d.status === 'active').length ?? 0;
+  const licenseKey: string | null = account?.licenses?.[0]?.key ?? null;
   const usedThisMonth = usage?.used ?? 0;
   const limit = usage?.limit ?? 50;
   const byDay = usage?.byDay ?? [];
@@ -85,6 +87,15 @@ export default async function DashboardPage() {
           : <div className="h-[200px] flex items-center justify-center text-muted-foreground text-sm">No usage data yet</div>
         }
       </div>
+
+      {/* License key */}
+      {licenseKey && (
+        <div className="bg-card border border-border rounded-xl p-5 space-y-2">
+          <h2 className="text-sm font-semibold">Your License Key</h2>
+          <p className="text-xs text-muted-foreground">Enter this key in the ARIA desktop app to activate.</p>
+          <LicenseKeyDisplay licenseKey={licenseKey} />
+        </div>
+      )}
 
       {/* Download */}
       <div className="bg-brand-500/5 border border-brand-500/20 rounded-xl p-5 flex items-center justify-between">

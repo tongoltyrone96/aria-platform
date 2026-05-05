@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { profiles, subscriptions } from '@aria/db';
-import { generateReferralCode } from '../../lib/crypto.js';
+import { profiles, subscriptions, licenses } from '@aria/db';
+import { generateReferralCode, generateLicenseKey } from '../../lib/crypto.js';
 import { Errors } from '../../lib/errors.js';
 import { emailService } from '../../services/email.js';
 
@@ -47,17 +47,25 @@ export async function signupRoute(fastify: FastifyInstance) {
       referralCode: generateReferralCode(),
     });
 
-    await fastify.db.insert(subscriptions).values({
+    const [sub] = await fastify.db.insert(subscriptions).values({
       userId: supabaseUser.id,
       plan: 'trial',
       status: 'trialing',
       trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+    }).returning();
+
+    const licenseKey = generateLicenseKey();
+    await fastify.db.insert(licenses).values({
+      userId: supabaseUser.id,
+      subscriptionId: sub!.id,
+      key: licenseKey,
+      maxDevices: 1,
     });
 
     fastify.posthog?.capture({ distinctId: supabaseUser.id, event: 'signup_completed', properties: { country } });
 
     await emailService.sendWelcome(supabaseUser.id, email).catch(() => {});
 
-    return reply.status(201).send({ userId: supabaseUser.id, requiresEmailVerification: true });
+    return reply.status(201).send({ userId: supabaseUser.id, licenseKey, requiresEmailVerification: true });
   });
 }
