@@ -8,6 +8,9 @@ declare module 'fastify' {
 }
 
 export default fp(async (fastify) => {
-  const db = createDb(process.env['DATABASE_URL']!);
+  const { db, client } = createDb(process.env['DATABASE_URL']!);
   fastify.decorate('db', db);
+  fastify.addHook('onClose', async () => {
+    await client.end();
+  });
 });

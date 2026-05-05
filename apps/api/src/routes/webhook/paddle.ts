@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
-import { subscriptions, licenses, invoices, profiles } from '@aria/db';
+import { subscriptions, licenses, invoices } from '@aria/db';
 import { generateLicenseKey } from '../../lib/crypto.js';
 import { emailService } from '../../services/email.js';
 import { Errors } from '../../lib/errors.js';
@@ -84,7 +84,7 @@ async function handleSubCreated(fastify: FastifyInstance, data: Record<string, u
     expiresAt: periodEnd,
   });
 
-  await emailService.sendLicenseDelivery(userId, licenseKey).catch((e) => fastify.log.error(e));
+  await emailService.sendLicenseDelivery(fastify.db, userId, licenseKey).catch((e) => fastify.log.error(e));
 
   fastify.posthog?.capture({ distinctId: userId, event: 'paid_subscription_started', properties: { plan } });
 }

@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import { eq } from 'drizzle-orm';
-import { profiles } from '@aria/db';
+import { profiles, type Db } from '@aria/db';
 
 const resend = new Resend(process.env['RESEND_API_KEY'] ?? 'placeholder_disabled');
 const FROM = process.env['EMAIL_FROM'] ?? 'ARIA <noreply@aria-ai.com>';
@@ -38,12 +38,8 @@ export const emailService = {
     await resend.emails.send({ from: FROM, to: email, subject: 'Welcome to ARIA — your trial has started', html });
   },
 
-  async sendLicenseDelivery(userId: string, licenseKey: string) {
-    const [profile] = await import('@aria/db').then(async (db) => {
-      const { createDb } = db;
-      const d = createDb(process.env['DATABASE_URL']!);
-      return d.select().from(profiles).where(eq(profiles.id, userId)).limit(1);
-    });
+  async sendLicenseDelivery(db: Db, userId: string, licenseKey: string) {
+    const [profile] = await db.select().from(profiles).where(eq(profiles.id, userId)).limit(1);
 
     const email = profile?.email;
     const name = profile?.fullName ?? 'there';
