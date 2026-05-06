@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -73,7 +73,7 @@ export function Footer() {
     <footer className="bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-12">
-          {/* Brand + newsletter — spans 2 cols on lg */}
+          {/* Brand + newsletter â€” spans 2 cols on lg */}
           <div className="lg:col-span-2 flex flex-col gap-5">
             <div>
               <span className="text-brand-500 font-bold text-xl tracking-tight">ARIA</span>
@@ -88,7 +88,7 @@ export function Footer() {
                 Get tips &amp; updates
               </p>
               {submitted ? (
-                <p className="text-sm text-brand-500 font-medium">Thanks — you&apos;re in!</p>
+                <p className="text-sm text-brand-500 font-medium">Thanks â€” you&apos;re in!</p>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex gap-2">
                   <input
@@ -152,7 +152,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} ARIA AI Inc. All rights reserved.
           </p>
           <a
-            href="https://status.aria-ai.com"
+            href="https://status.ariainterview.com"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"

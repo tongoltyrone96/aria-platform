@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { UsageChart } from '@/components/dashboard/UsageChart';
 
-const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.aria-ai.com';
+const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
 
 export default async function UsagePage() {
   const supabase = await createClient();
@@ -27,7 +27,7 @@ export default async function UsagePage() {
       <div>
         <h1 className="text-2xl font-bold">Usage</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          {usage?.period?.start} — {usage?.period?.end}
+          {usage?.period?.start} â€” {usage?.period?.end}
         </p>
       </div>
 

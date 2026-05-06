@@ -1,10 +1,10 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { UsageChart } from '@/components/dashboard/UsageChart';
 import { Download, Zap, Monitor, Clock } from 'lucide-react';
 import { LicenseKeyDisplay } from '@/components/dashboard/LicenseKeyDisplay';
 
-const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.aria-ai.com';
-const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.aria-ai.com';
+const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
+const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.ariainterview.com';
 
 async function getAccountData(token: string) {
   try {
@@ -67,7 +67,7 @@ export default async function DashboardPage() {
         {[
           { icon: Zap, label: 'Answers this month', value: `${usedThisMonth} / ${limit}` },
           { icon: Monitor, label: 'Active devices', value: String(activeDevices) },
-          { icon: Clock, label: 'Days in trial', value: plan === 'trial' ? '14' : '—' },
+          { icon: Clock, label: 'Days in trial', value: plan === 'trial' ? '14' : 'â€”' },
         ].map(({ icon: Icon, label, value }) => (
           <div key={label} className="bg-card border border-border rounded-xl p-4 space-y-2">
             <div className="flex items-center gap-2 text-muted-foreground">

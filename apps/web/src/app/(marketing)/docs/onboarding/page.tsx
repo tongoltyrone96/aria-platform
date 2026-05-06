@@ -1,6 +1,6 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Getting Started — ARIA Docs' };
+export const metadata: Metadata = { title: 'Getting Started â€” ARIA Docs' };
 
 export default function OnboardingPage() {
   return (
@@ -12,8 +12,8 @@ export default function OnboardingPage() {
 
       <h2 className="text-xl font-semibold">1. Create your account</h2>
       <p>
-        Go to <a href="/signup" className="text-brand-500 hover:underline">aria-ai.com/signup</a> and register with your
-        work or personal email. You will receive a verification email — click the link to activate your account.
+        Go to <a href="/signup" className="text-brand-500 hover:underline">ariainterview.com/signup</a> and register with your
+        work or personal email. You will receive a verification email â€” click the link to activate your account.
       </p>
 
       <h2 className="text-xl font-semibold">2. Start your free trial</h2>
@@ -60,7 +60,7 @@ export default function OnboardingPage() {
         <li>Join your video call (Zoom, Teams, Google Meet, etc.) as normal.</li>
         <li>When the interviewer asks a question, press <kbd className="bg-muted px-1.5 py-0.5 rounded text-foreground text-xs font-mono">Ctrl+Alt+A</kbd> to generate an answer.</li>
         <li>ARIA will stream a response into the overlay within 1 second.</li>
-        <li>Read the answer naturally — the overlay is invisible to screen-share.</li>
+        <li>Read the answer naturally â€” the overlay is invisible to screen-share.</li>
       </ol>
 
       <div className="bg-brand-500/5 border border-brand-500/20 rounded-xl p-4 text-sm">

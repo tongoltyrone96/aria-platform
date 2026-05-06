@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Troubleshooting — ARIA Docs' };
+export const metadata: Metadata = { title: 'Troubleshooting â€” ARIA Docs' };
 
 export default function TroubleshootingPage() {
   const issues = [
     {
       q: 'ARIA cannot capture system audio',
-      a: 'Make sure "Stereo Mix" or "WASAPI Loopback" is enabled in Windows Sound settings. Right-click the speaker icon → Sounds → Recording tab → right-click empty area → Show Disabled Devices.',
+      a: 'Make sure "Stereo Mix" or "WASAPI Loopback" is enabled in Windows Sound settings. Right-click the speaker icon â†’ Sounds â†’ Recording tab â†’ right-click empty area â†’ Show Disabled Devices.',
     },
     {
       q: 'License activation fails',
-      a: 'Check your internet connection. If behind a corporate proxy, add api.aria-ai.com to the allowlist. Contact support if the issue persists.',
+      a: 'Check your internet connection. If behind a corporate proxy, add api.ariainterview.com to the allowlist. Contact support if the issue persists.',
     },
     {
       q: 'ARIA shows "Device limit reached"',
@@ -18,7 +18,7 @@ export default function TroubleshootingPage() {
     },
     {
       q: 'Answer generation is slow',
-      a: 'Expected latency is under 1 second for the first token. If you experience delays >3s, check your network latency to api.aria-ai.com and ensure DeepSeek services are operational (see status.aria-ai.com).',
+      a: 'Expected latency is under 1 second for the first token. If you experience delays >3s, check your network latency to api.ariainterview.com and ensure DeepSeek services are operational (see status.ariainterview.com).',
     },
     {
       q: 'Windows Defender blocks the installer',
@@ -38,7 +38,7 @@ export default function TroubleshootingPage() {
         ))}
       </div>
       <p className="text-sm text-muted-foreground">
-        Still stuck? Email <a href="mailto:support@aria-ai.com" className="text-brand-500 hover:underline">support@aria-ai.com</a>.
+        Still stuck? Email <a href="mailto:support@ariainterview.com" className="text-brand-500 hover:underline">support@ariainterview.com</a>.
       </p>
     </article>
   );

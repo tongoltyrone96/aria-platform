@@ -1,4 +1,4 @@
-import type { FastifyInstance } from 'fastify';
+﻿import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 import { profiles, subscriptions } from '@aria/db';
@@ -29,7 +29,7 @@ export async function billingRoutes(fastify: FastifyInstance) {
     if (!body.success) throw Errors.validation(body.error.message);
 
     const { plan } = body.data;
-    const successUrl = `${process.env['NEXT_PUBLIC_WEB_URL'] ?? 'https://www.aria-ai.com'}/dashboard?checkout=success`;
+    const successUrl = `${process.env['NEXT_PUBLIC_WEB_URL'] ?? 'https://www.ariainterview.com'}/dashboard?checkout=success`;
 
     try {
       const checkoutUrl = await createPaddleCheckout(userId, email, plan, successUrl);

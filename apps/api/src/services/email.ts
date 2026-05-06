@@ -3,9 +3,9 @@ import { eq } from 'drizzle-orm';
 import { profiles, type Db } from '@aria/db';
 
 const resend = new Resend(process.env['RESEND_API_KEY'] ?? 'placeholder_disabled');
-const FROM = process.env['EMAIL_FROM'] ?? 'ARIA <noreply@aria-ai.com>';
-const WEB_URL = process.env['NEXT_PUBLIC_WEB_URL'] ?? 'https://www.aria-ai.com';
-const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.aria-ai.com';
+const FROM = process.env['EMAIL_FROM'] ?? 'ARIA <noreply@ariainterview.com>';
+const WEB_URL = process.env['NEXT_PUBLIC_WEB_URL'] ?? 'https://www.ariainterview.com';
+const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.ariainterview.com';
 
 function emailLayout(title: string, body: string): string {
   return `<!DOCTYPE html>
@@ -20,7 +20,7 @@ function emailLayout(title: string, body: string): string {
       ${body}
     </div>
     <p style="text-align:center;font-size:12px;color:#888;margin-top:24px">
-      © 2026 ARIA AI · <a href="${WEB_URL}/privacy">Privacy</a> · <a href="${WEB_URL}/dashboard/settings">Unsubscribe</a>
+      &copy; 2026 ARIA AI &middot; <a href="${WEB_URL}/privacy">Privacy</a> &middot; <a href="${WEB_URL}/dashboard/settings">Unsubscribe</a>
     </p>
   </div>
 </body>
@@ -30,7 +30,7 @@ function emailLayout(title: string, body: string): string {
 export const emailService = {
   async sendWelcome(userId: string, email: string) {
     const html = emailLayout('Welcome to ARIA', `
-      <h2 style="color:#1F6FEB">Welcome to ARIA! 🎉</h2>
+      <h2 style="color:#1F6FEB">Welcome to ARIA!</h2>
       <p>Your 14-day free trial has started. Download ARIA and start your first interview session.</p>
       <a href="${WEB_URL}/dashboard" style="display:inline-block;background:#1F6FEB;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">Go to Dashboard</a>
       <p style="color:#666;font-size:14px">Need help? Reply to this email or chat at ${WEB_URL}</p>
@@ -69,7 +69,7 @@ export const emailService = {
   async sendPaymentReceipt(email: string, amountUsd: number, receiptUrl?: string) {
     const amount = (amountUsd / 100).toFixed(2);
     const html = emailLayout('Payment Receipt', `
-      <h2>Payment confirmed ✓</h2>
+      <h2>Payment confirmed</h2>
       <p>Thank you for your payment of <strong>$${amount} USD</strong>.</p>
       ${receiptUrl ? `<a href="${receiptUrl}" style="display:inline-block;background:#1F6FEB;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">View Receipt</a>` : ''}
     `);
@@ -96,7 +96,7 @@ export const emailService = {
 
   async sendWinback(email: string) {
     const html = emailLayout('We miss you', `
-      <h2>Come back to ARIA 👋</h2>
+      <h2>Come back to ARIA</h2>
       <p>We noticed you cancelled your subscription. We'd love to have you back.</p>
       <p>Use code <strong>BACK50</strong> for 50% off your first month when you resubscribe.</p>
       <a href="${WEB_URL}/pricing" style="display:inline-block;background:#1F6FEB;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">Resubscribe</a>

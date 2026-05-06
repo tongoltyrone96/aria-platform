@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'WASAPI Setup — ARIA Docs' };
+export const metadata: Metadata = { title: 'WASAPI Setup â€” ARIA Docs' };
 
 export default function WasapiSetupPage() {
   const steps = [
     {
       heading: 'Open Windows Sound settings',
-      body: 'Right-click the speaker icon in the system tray and select Open Sound settings, or go to Settings → System → Sound.',
+      body: 'Right-click the speaker icon in the system tray and select Open Sound settings, or go to Settings â†’ System â†’ Sound.',
     },
     {
       heading: 'Enable recording devices',
@@ -18,7 +18,7 @@ export default function WasapiSetupPage() {
     },
     {
       heading: 'Select your device in ARIA',
-      body: 'Open ARIA → Settings → Audio. Under System Audio Capture, choose the same output device (speakers or headphones) that your video call plays through. ARIA uses WASAPI loopback on that device.',
+      body: 'Open ARIA â†’ Settings â†’ Audio. Under System Audio Capture, choose the same output device (speakers or headphones) that your video call plays through. ARIA uses WASAPI loopback on that device.',
     },
     {
       heading: 'Test the capture',
@@ -30,8 +30,8 @@ export default function WasapiSetupPage() {
     <article className="space-y-6">
       <h1 className="text-3xl font-bold">WASAPI Setup</h1>
       <p className="text-muted-foreground">
-        ARIA uses <strong>Windows Audio Session API (WASAPI) loopback</strong> to capture your system audio — including
-        the interviewer's voice — with zero additional processes and no visible recording indicators.
+        ARIA uses <strong>Windows Audio Session API (WASAPI) loopback</strong> to capture your system audio â€” including
+        the interviewer's voice â€” with zero additional processes and no visible recording indicators.
         This page explains how to configure it correctly.
       </p>
 
@@ -68,11 +68,11 @@ export default function WasapiSetupPage() {
           </thead>
           <tbody className="divide-y divide-border">
             {[
-              ['Speakers / headphones (default)', '✅ Yes', 'WASAPI loopback on default output'],
-              ['USB headset with own sound card', '✅ Yes', 'Select the USB device in ARIA audio settings'],
-              ['Bluetooth headphones', '⚠️ Usually', 'Some BT stacks have loopback restrictions; test first'],
-              ['Virtual audio cable (e.g. VB-Cable)', '✅ Yes', 'Route call audio through the virtual device'],
-              ['Exclusive mode applications', '⚠️ Limited', 'Disable exclusive mode in device Properties → Advanced'],
+              ['Speakers / headphones (default)', 'âœ… Yes', 'WASAPI loopback on default output'],
+              ['USB headset with own sound card', 'âœ… Yes', 'Select the USB device in ARIA audio settings'],
+              ['Bluetooth headphones', 'âš ï¸ Usually', 'Some BT stacks have loopback restrictions; test first'],
+              ['Virtual audio cable (e.g. VB-Cable)', 'âœ… Yes', 'Route call audio through the virtual device'],
+              ['Exclusive mode applications', 'âš ï¸ Limited', 'Disable exclusive mode in device Properties â†’ Advanced'],
             ].map(([setup, works, notes]) => (
               <tr key={setup as string}>
                 <td className="py-2 pr-4">{setup}</td>
@@ -88,16 +88,16 @@ export default function WasapiSetupPage() {
       <div className="space-y-4">
         {[
           {
-            q: 'No audio captured — waveform flat',
+            q: 'No audio captured â€” waveform flat',
             a: 'Make sure ARIA is set to loopback the same device your call audio plays through. Check that the device is not muted in Windows Volume Mixer.',
           },
           {
             q: 'Choppy or delayed transcription',
-            a: 'Close other applications using the audio device. Set the audio device sample rate to 44100 Hz in Device Properties → Advanced.',
+            a: 'Close other applications using the audio device. Set the audio device sample rate to 44100 Hz in Device Properties â†’ Advanced.',
           },
           {
             q: 'ARIA only captures microphone, not system audio',
-            a: "Verify the device selected in ARIA → Settings → Audio is an output device (playback), not an input (recording) device.",
+            a: "Verify the device selected in ARIA â†’ Settings â†’ Audio is an output device (playback), not an input (recording) device.",
           },
         ].map(({ q, a }) => (
           <div key={q} className="border border-border rounded-xl p-4">
@@ -110,7 +110,7 @@ export default function WasapiSetupPage() {
       <p className="text-sm text-muted-foreground">
         Still having trouble? See the{' '}
         <a href="/docs/troubleshooting" className="text-brand-500 hover:underline">Troubleshooting guide</a> or email{' '}
-        <a href="mailto:support@aria-ai.com" className="text-brand-500 hover:underline">support@aria-ai.com</a>.
+        <a href="mailto:support@ariainterview.com" className="text-brand-500 hover:underline">support@ariainterview.com</a>.
       </p>
     </article>
   );

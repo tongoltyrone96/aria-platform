@@ -1,4 +1,4 @@
-import { createDb, profiles, subscriptions, licenses } from './client.js';
+﻿import { createDb, profiles, subscriptions, licenses } from './client.js';
 import crypto from 'crypto';
 
 const db = createDb(process.env['DATABASE_URL']!);
@@ -9,7 +9,7 @@ async function seed() {
   const adminId = crypto.randomUUID();
   await db.insert(profiles).values({
     id: adminId,
-    email: 'admin@aria-ai.com',
+    email: 'admin@ariainterview.com',
     fullName: 'ARIA Admin',
     country: 'US',
     referralCode: 'ADMIN001',

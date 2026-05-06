@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -33,7 +33,7 @@ export default function SettingsPage() {
   }
 
   async function handleDeleteAccount() {
-    const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.aria-ai.com';
+    const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
     const supabase = createClient();
     const { data: { session } } = await supabase.auth.getSession();
     await fetch(`${API_URL}/v1/account/data-delete`, {
@@ -54,7 +54,7 @@ export default function SettingsPage() {
       {/* Email */}
       <div className="bg-card border border-border rounded-xl p-5 space-y-3">
         <h2 className="text-sm font-semibold">Email address</h2>
-        <p className="text-sm text-muted-foreground">{email || '—'}</p>
+        <p className="text-sm text-muted-foreground">{email || 'â€”'}</p>
       </div>
 
       {/* Password */}
@@ -74,7 +74,7 @@ export default function SettingsPage() {
         <button type="submit" disabled={pwLoading}
           className="px-4 py-2 bg-brand-500 text-white text-sm font-medium rounded-lg hover:bg-brand-600 transition-colors disabled:opacity-50"
         >
-          {pwLoading ? 'Updating…' : 'Update password'}
+          {pwLoading ? 'Updatingâ€¦' : 'Update password'}
         </button>
       </form>
 
@@ -84,7 +84,7 @@ export default function SettingsPage() {
         <p className="text-sm text-muted-foreground">Download a copy of all your ARIA data (GDPR).</p>
         <button
           onClick={async () => {
-            const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.aria-ai.com';
+            const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
             const supabase = createClient();
             const { data: { session } } = await supabase.auth.getSession();
             await fetch(`${API_URL}/v1/account/data-export`, { method: 'POST', headers: { Authorization: `Bearer ${session?.access_token}` } });

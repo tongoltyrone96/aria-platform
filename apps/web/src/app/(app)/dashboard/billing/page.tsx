@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/supabase/server';
+﻿import { createClient } from '@/lib/supabase/server';
 import { ExternalLink } from 'lucide-react';
 
-const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.aria-ai.com';
+const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
 
 export default async function BillingPage() {
   const supabase = await createClient();
@@ -42,7 +42,7 @@ export default async function BillingPage() {
               <p className="text-sm text-muted-foreground mt-1">
                 {PLAN_PRICES[subscription.plan] ?? ''}
                 {subscription.currentPeriodEnd && (
-                  <> · {subscription.cancelAtPeriodEnd ? 'Cancels' : 'Renews'}{' '}
+                  <> Â· {subscription.cancelAtPeriodEnd ? 'Cancels' : 'Renews'}{' '}
                     {new Date(subscription.currentPeriodEnd).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</>
                 )}
               </p>

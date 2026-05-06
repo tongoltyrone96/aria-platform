@@ -1,9 +1,9 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
-    'ARIA AI Privacy Policy — how we collect, use, and protect your data.',
+    'ARIA AI Privacy Policy â€” how we collect, use, and protect your data.',
 };
 
 export default function PrivacyPage() {
@@ -130,10 +130,10 @@ export default function PrivacyPage() {
               Depending on your location, you may have the right to access, correct, delete, or
               restrict processing of your personal data. To exercise these rights, contact us at{' '}
               <a
-                href="mailto:privacy@aria-ai.com"
+                href="mailto:privacy@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                privacy@aria-ai.com
+                privacy@ariainterview.com
               </a>
               . We will respond within 30 days. EU/EEA users may also lodge a complaint with their
               local supervisory authority.
@@ -173,10 +173,10 @@ export default function PrivacyPage() {
             <p className="leading-relaxed">
               Privacy questions:{' '}
               <a
-                href="mailto:privacy@aria-ai.com"
+                href="mailto:privacy@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                privacy@aria-ai.com
+                privacy@ariainterview.com
               </a>
               <br />
               ARIA AI Inc., 1234 Technology Drive, Wilmington, DE 19801, USA

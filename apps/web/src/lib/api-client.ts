@@ -1,4 +1,4 @@
-const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.aria-ai.com';
+﻿const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
 
 class ApiClient {
   private token: string | null = null;

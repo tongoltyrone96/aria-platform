@@ -1,8 +1,8 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'ARIA AI Terms of Service — the rules and conditions governing your use of ARIA.',
+  description: 'ARIA AI Terms of Service â€” the rules and conditions governing your use of ARIA.',
 };
 
 export default function TermsPage() {
@@ -149,10 +149,10 @@ export default function TermsPage() {
             <p className="leading-relaxed">
               For questions about these Terms, contact us at{' '}
               <a
-                href="mailto:legal@aria-ai.com"
+                href="mailto:legal@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                legal@aria-ai.com
+                legal@ariainterview.com
               </a>
               .
             </p>

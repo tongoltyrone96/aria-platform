@@ -1,11 +1,11 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import { FAQAccordion } from '@/components/marketing/FAQAccordion';
 import { allFAQs } from '@/lib/faq-data';
 
 export const metadata: Metadata = {
   title: 'FAQ',
   description:
-    'Frequently asked questions about ARIA AI Interview Copilot — how it works, stealth, pricing, audio capture, and more.',
+    'Frequently asked questions about ARIA AI Interview Copilot â€” how it works, stealth, pricing, audio capture, and more.',
 };
 
 export default function FAQPage() {
@@ -18,7 +18,7 @@ export default function FAQPage() {
             Frequently asked questions
           </h1>
           <p className="text-lg text-muted-foreground">
-            Everything you need to know about ARIA — how it works, what it captures, and why it
+            Everything you need to know about ARIA â€” how it works, what it captures, and why it
             stays invisible.
           </p>
         </div>
@@ -39,7 +39,7 @@ export default function FAQPage() {
             Our team typically responds within a few hours during business days.
           </p>
           <a
-            href="mailto:support@aria-ai.com"
+            href="mailto:support@ariainterview.com"
             className="inline-flex items-center justify-center rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-semibold px-6 py-3 transition-colors"
           >
             Contact support

@@ -1,9 +1,9 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Refund Policy',
-  description: 'ARIA AI Refund Policy — 30-day money-back guarantee on all plans.',
+  description: 'ARIA AI Refund Policy â€” 30-day money-back guarantee on all plans.',
 };
 
 export default function RefundPage() {
@@ -21,7 +21,7 @@ export default function RefundPage() {
             <p className="leading-relaxed">
               We want you to be completely satisfied with ARIA. If ARIA doesn&apos;t work for your
               setup or you&apos;re unhappy for any reason, we offer a straightforward money-back
-              guarantee — no lengthy forms, no interrogation.
+              guarantee â€” no lengthy forms, no interrogation.
             </p>
           </section>
 
@@ -45,7 +45,7 @@ export default function RefundPage() {
               Lifetime license purchases may be refunded within{' '}
               <strong className="text-foreground">14 days</strong> of the purchase date. After 14
               days, lifetime purchases are final. If you encounter a technical issue that prevents
-              ARIA from functioning on your system, contact support — we&apos;ll do everything
+              ARIA from functioning on your system, contact support â€” we&apos;ll do everything
               possible to resolve it or issue a refund at our discretion.
             </p>
           </section>
@@ -65,10 +65,10 @@ export default function RefundPage() {
               <li>
                 Email{' '}
                 <a
-                  href="mailto:billing@aria-ai.com"
+                  href="mailto:billing@ariainterview.com"
                   className="text-brand-500 hover:text-brand-600 underline"
                 >
-                  billing@aria-ai.com
+                  billing@ariainterview.com
                 </a>{' '}
                 from the email address on your ARIA account.
               </li>
@@ -79,7 +79,7 @@ export default function RefundPage() {
               </li>
             </ol>
             <p className="leading-relaxed mt-4">
-              We will process your refund within 5–10 business days. Refunds are returned to the
+              We will process your refund within 5â€“10 business days. Refunds are returned to the
               original payment method.
             </p>
           </section>
@@ -98,10 +98,10 @@ export default function RefundPage() {
             <p className="leading-relaxed">
               Questions about billing or refunds:{' '}
               <a
-                href="mailto:billing@aria-ai.com"
+                href="mailto:billing@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                billing@aria-ai.com
+                billing@ariainterview.com
               </a>
               . Or{' '}
               <Link href="/contact" className="text-brand-500 hover:text-brand-600 underline">

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import type { Metadata } from 'next';
 import { useState } from 'react';
@@ -14,8 +14,8 @@ const contactChannels = [
     icon: Mail,
     title: 'Email support',
     description: 'For billing, technical issues, and general questions.',
-    value: 'support@aria-ai.com',
-    href: 'mailto:support@aria-ai.com',
+    value: 'support@ariainterview.com',
+    href: 'mailto:support@ariainterview.com',
     cta: 'Send email',
   },
   {
@@ -114,7 +114,7 @@ function ContactForm() {
           onChange={handleChange}
           className="rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
         >
-          <option value="">Select a topic…</option>
+          <option value="">Select a topicâ€¦</option>
           <option value="billing">Billing &amp; refund</option>
           <option value="technical">Technical support</option>
           <option value="feature">Feature request</option>
@@ -134,7 +134,7 @@ function ContactForm() {
           rows={5}
           value={form.message}
           onChange={handleChange}
-          placeholder="Tell us what's on your mind…"
+          placeholder="Tell us what's on your mindâ€¦"
           className="rounded-lg border border-input bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition resize-y"
         />
       </div>
@@ -144,7 +144,7 @@ function ContactForm() {
         disabled={loading}
         className="inline-flex items-center justify-center rounded-xl bg-brand-500 hover:bg-brand-600 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold px-6 py-3 transition-colors self-start"
       >
-        {loading ? 'Sending…' : 'Send message'}
+        {loading ? 'Sendingâ€¦' : 'Send message'}
       </button>
     </form>
   );
@@ -160,7 +160,7 @@ export default function ContactPage() {
             Contact us
           </h1>
           <p className="text-lg text-muted-foreground">
-            Questions, bug reports, or partnership inquiries — we&apos;re happy to hear from you.
+            Questions, bug reports, or partnership inquiries â€” we&apos;re happy to hear from you.
           </p>
         </div>
       </section>
