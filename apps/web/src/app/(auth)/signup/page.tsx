@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils';
+
+const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
 
 const COUNTRIES = [
   { code: 'US', name: 'United States' }, { code: 'GB', name: 'United Kingdom' },
@@ -16,31 +16,40 @@ const COUNTRIES = [
 ];
 
 export default function SignupPage() {
-  const router = useRouter();
   const [form, setForm] = useState({ email: '', password: '', country: 'US', marketing: false });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    const supabase = createClient();
-    const { error: authError } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      options: { data: { country: form.country, marketing_opt_in: form.marketing } },
-    });
+    try {
+      const res = await fetch(`${API_URL}/v1/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+          country: form.country,
+          marketingOptIn: form.marketing,
+        }),
+      });
 
-    if (authError) {
-      setError(authError.message);
+      if (!res.ok) {
+        const err = await res.json() as { details?: string };
+        setError(err.details ?? 'Signup failed. Please try again.');
+        setLoading(false);
+        return;
+      }
+
+      setDone(true);
+    } catch {
+      setError('Connection error. Please try again.');
       setLoading(false);
-      return;
     }
-
-    setDone(true);
   }
 
   if (done) {

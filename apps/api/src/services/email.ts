@@ -104,6 +104,16 @@ export const emailService = {
     await resend.emails.send({ from: FROM, to: email, subject: '50% off to come back to ARIA', html });
   },
 
+  async sendEmailVerification(email: string, verificationLink: string) {
+    const html = emailLayout('Verify your ARIA email', `
+      <h2>Verify your email address</h2>
+      <p>Click the button below to verify your email and activate your 14-day free trial.</p>
+      <a href="${verificationLink}" style="display:inline-block;background:#1F6FEB;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin:16px 0">Verify Email</a>
+      <p style="color:#666;font-size:14px">This link expires in 24 hours. If you didn't create an account, ignore this email.</p>
+    `);
+    await resend.emails.send({ from: FROM, to: email, subject: 'Verify your ARIA email address', html });
+  },
+
   async sendDeviceActivated(email: string, hostname: string, os: string) {
     const html = emailLayout('New device activated', `
       <h2>New device activated on your ARIA account</h2>

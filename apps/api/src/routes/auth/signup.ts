@@ -8,7 +8,7 @@ import { emailService } from '../../services/email.js';
 const SignupSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
-  country: z.string().length(2).optional(),
+  country: z.string().max(10).optional(),
   marketingOptIn: z.boolean().optional().default(false),
 });
 
@@ -21,26 +21,35 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     const supabaseUrl = process.env['SUPABASE_URL']!;
     const serviceKey = process.env['SUPABASE_SERVICE_ROLE_KEY']!;
+    const webUrl = process.env['NEXT_PUBLIC_WEB_URL'] ?? 'https://www.ariainterview.com';
 
-    const res = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
+    // generate_link creates the user AND returns a verification URL in one step
+    const res = await fetch(`${supabaseUrl}/auth/v1/admin/generate_link`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         apikey: serviceKey,
         Authorization: `Bearer ${serviceKey}`,
       },
-      body: JSON.stringify({ email, password, email_confirm: false }),
+      body: JSON.stringify({
+        type: 'signup',
+        email,
+        password,
+        options: { redirect_to: `${webUrl}/auth/callback` },
+      }),
     });
 
     if (!res.ok) {
-      const err = await res.json() as { message?: string };
-      throw Errors.validation(err.message ?? 'Signup failed');
+      const err = await res.json() as { message?: string; msg?: string };
+      throw Errors.validation(err.message ?? err.msg ?? 'Signup failed');
     }
 
-    const supabaseUser = await res.json() as { id: string };
+    const linkData = await res.json() as { action_link: string; user: { id: string } };
+    const userId = linkData.user.id;
+    const verificationLink = linkData.action_link;
 
     await fastify.db.insert(profiles).values({
-      id: supabaseUser.id,
+      id: userId,
       email,
       country: country ?? null,
       marketingOptIn: marketingOptIn ?? false,
@@ -48,7 +57,7 @@ export async function signupRoute(fastify: FastifyInstance) {
     });
 
     const [sub] = await fastify.db.insert(subscriptions).values({
-      userId: supabaseUser.id,
+      userId,
       plan: 'trial',
       status: 'trialing',
       trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
@@ -56,16 +65,16 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     const licenseKey = generateLicenseKey();
     await fastify.db.insert(licenses).values({
-      userId: supabaseUser.id,
+      userId,
       subscriptionId: sub!.id,
       key: licenseKey,
       maxDevices: 1,
     });
 
-    fastify.posthog?.capture({ distinctId: supabaseUser.id, event: 'signup_completed', properties: { country } });
+    fastify.posthog?.capture({ distinctId: userId, event: 'signup_completed', properties: { country } });
 
-    await emailService.sendWelcome(supabaseUser.id, email).catch(() => {});
+    await emailService.sendEmailVerification(email, verificationLink).catch(() => {});
 
-    return reply.status(201).send({ userId: supabaseUser.id, licenseKey, requiresEmailVerification: true });
+    return reply.status(201).send({ userId, requiresEmailVerification: true });
   });
 }
