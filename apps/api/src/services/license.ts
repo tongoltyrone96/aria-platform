@@ -1,4 +1,4 @@
-import { eq, and } from 'drizzle-orm';
+import { eq, and, asc } from 'drizzle-orm';
 import type { Db } from '@aria/db';
 import { licenses, devices, subscriptions } from '@aria/db';
 import { PLAN_LIMITS } from '@aria/shared';
@@ -19,19 +19,23 @@ export async function activateDevice(
   if (license.revokedAt) throw Errors.licenseRevoked();
   if (license.expiresAt && license.expiresAt < new Date()) throw Errors.licenseExpired();
 
+  const sub = license.subscriptionId
+    ? await db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
+    : null;
+  const plan = (sub?.plan ?? 'free') as Plan;
+
   const activeDevices = await db
     .select()
     .from(devices)
-    .where(and(eq(devices.licenseId, license.id), eq(devices.status, 'active')));
+    .where(and(eq(devices.licenseId, license.id), eq(devices.status, 'active')))
+    .orderBy(asc(devices.lastSeenAt));
 
+  // Same machine re-activating — just refresh
   const sameMachine = activeDevices.find((d) => d.hwFingerprint === hwFingerprint);
-
   if (sameMachine) {
-    await db.update(devices).set({ lastSeenAt: new Date(), appVersion: appVersion ?? null }).where(eq(devices.id, sameMachine.id));
-    const sub = license.subscriptionId
-      ? await db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
-      : null;
-    const plan = (sub?.plan ?? 'free') as Plan;
+    await db.update(devices)
+      .set({ lastSeenAt: new Date(), appVersion: appVersion ?? null })
+      .where(eq(devices.id, sameMachine.id));
     return {
       jwt: signDeviceJwt(license.userId, sameMachine.id, license.id, plan, hwFingerprint),
       plan,
@@ -40,8 +44,14 @@ export async function activateDevice(
     };
   }
 
+  // At device limit — auto-revoke the least recently seen device to make room
   if (activeDevices.length >= license.maxDevices) {
-    throw Errors.deviceLimit(activeDevices.length);
+    const oldest = activeDevices[0];
+    if (oldest) {
+      await db.update(devices)
+        .set({ status: 'revoked', revokedAt: new Date() })
+        .where(eq(devices.id, oldest.id));
+    }
   }
 
   const [device] = await db.insert(devices).values({
@@ -54,11 +64,6 @@ export async function activateDevice(
   }).returning();
 
   if (!device) throw Errors.internal('Failed to create device');
-
-  const sub = license.subscriptionId
-    ? await db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
-    : null;
-  const plan = (sub?.plan ?? 'trial') as Plan;
 
   return {
     jwt: signDeviceJwt(license.userId, device.id, license.id, plan, hwFingerprint),

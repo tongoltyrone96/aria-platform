@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  LayoutDashboard, BarChart2, Monitor, CreditCard,
+  LayoutDashboard, BarChart2, CreditCard,
   Settings, MessageCircle, Download, LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -12,7 +12,6 @@ import { createClient } from '@/lib/supabase/client';
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { href: '/dashboard/usage', label: 'Usage', icon: BarChart2 },
-  { href: '/dashboard/devices', label: 'Devices', icon: Monitor },
   { href: '/dashboard/billing', label: 'Billing', icon: CreditCard },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
   { href: '/dashboard/support', label: 'Support', icon: MessageCircle },
