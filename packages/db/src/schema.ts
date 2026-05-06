@@ -10,6 +10,8 @@ import {
   index,
 } from 'drizzle-orm/pg-core';
 
+export const sessionTypeEnum = pgEnum('session_type', ['interview', 'coding']);
+
 export const planEnum = pgEnum('plan', [
   'trial',
   'free',
@@ -121,6 +123,24 @@ export const invoices = pgTable('invoices', {
   raw: jsonb('raw'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
+
+// Tracks each interview call (Start→End = 1 session) and live coding sessions.
+// Used to enforce per-call answer limits and monthly call/coding-session counts.
+export const sessions = pgTable(
+  'sessions',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => profiles.id, { onDelete: 'cascade' }),
+    deviceId: uuid('device_id').references(() => devices.id),
+    type: sessionTypeEnum('type').notNull().default('interview'),
+    startedAt: timestamp('started_at').defaultNow().notNull(),
+    endedAt: timestamp('ended_at'),
+    answerCount: integer('answer_count').default(0).notNull(),
+  },
+  (table) => [index('idx_sessions_user_ts').on(table.userId, table.startedAt)],
+);
 
 export const referrals = pgTable('referrals', {
   id: uuid('id').defaultRandom().primaryKey(),

@@ -39,7 +39,7 @@ export async function heartbeatRoute(fastify: FastifyInstance) {
     const sub = license.subscriptionId
       ? await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
       : null;
-    const plan = (sub?.plan ?? 'trial') as Plan;
+    const plan = (sub?.plan ?? 'free') as Plan;
 
     // Renew JWT if < 24h to expiry
     const now = Math.floor(Date.now() / 1000);

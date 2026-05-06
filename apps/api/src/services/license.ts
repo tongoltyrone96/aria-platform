@@ -31,7 +31,7 @@ export async function activateDevice(
     const sub = license.subscriptionId
       ? await db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
       : null;
-    const plan = (sub?.plan ?? 'trial') as Plan;
+    const plan = (sub?.plan ?? 'free') as Plan;
     return {
       jwt: signDeviceJwt(license.userId, sameMachine.id, license.id, plan, hwFingerprint),
       plan,

@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
-import { eq, and, gte, lt, sql } from 'drizzle-orm';
-import { usageLog } from '@aria/db';
+import { eq, and, gte, sql } from 'drizzle-orm';
+import { usageLog, sessions } from '@aria/db';
 import { PLAN_LIMITS } from '@aria/shared';
 import type { Plan } from '@aria/shared';
 import { Errors } from '../lib/errors.js';
@@ -12,7 +12,7 @@ export async function usageRoutes(fastify: FastifyInstance) {
     if (!auth?.startsWith('Bearer ')) throw Errors.authRequired();
 
     let userId: string;
-    let plan: Plan = 'trial';
+    let plan: Plan = 'free';
 
     try {
       const payload = verifyUserJwt(auth.replace('Bearer ', ''));
@@ -31,12 +31,40 @@ export async function usageRoutes(fastify: FastifyInstance) {
     const periodStart = new Date(now.getFullYear(), now.getMonth(), 1);
     const periodEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
+    // Total answers this month
     const [totalResult] = await fastify.db
       .select({ count: sql<number>`count(*)` })
       .from(usageLog)
       .where(and(eq(usageLog.userId, userId), gte(usageLog.ts, periodStart)));
 
-    const used = Number(totalResult?.count ?? 0);
+    // Calls (interview sessions) this month
+    const [callsResult] = await fastify.db
+      .select({ count: sql<number>`count(*)` })
+      .from(sessions)
+      .where(
+        and(
+          eq(sessions.userId, userId),
+          eq(sessions.type, 'interview'),
+          gte(sessions.startedAt, periodStart),
+        ),
+      );
+
+    // Coding sessions this month
+    const [codingResult] = await fastify.db
+      .select({ count: sql<number>`count(*)` })
+      .from(sessions)
+      .where(
+        and(
+          eq(sessions.userId, userId),
+          eq(sessions.type, 'coding'),
+          gte(sessions.startedAt, periodStart),
+        ),
+      );
+
+    const usedAnswers = Number(totalResult?.count ?? 0);
+    const usedCalls = Number(callsResult?.count ?? 0);
+    const usedCodingSessions = Number(codingResult?.count ?? 0);
+    const limits = PLAN_LIMITS[plan];
 
     // Build by-day for last 30 days
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
@@ -54,8 +82,18 @@ export async function usageRoutes(fastify: FastifyInstance) {
         start: periodStart.toISOString().split('T')[0],
         end: periodEnd.toISOString().split('T')[0],
       },
-      used,
-      limit: PLAN_LIMITS[plan].perMonth,
+      answers: {
+        used: usedAnswers,
+      },
+      calls: {
+        used: usedCalls,
+        limit: limits.callsPerMonth,
+      },
+      codingSessions: {
+        used: usedCodingSessions,
+        limit: limits.codingSessionsPerMonth,
+      },
+      answersPerCall: limits.answersPerCall,
       byDay: dailyRows.map((r) => ({ date: r.date, count: Number(r.count) })),
     });
   });

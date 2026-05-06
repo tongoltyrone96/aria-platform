@@ -4,10 +4,10 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianG
 
 interface UsageChartProps {
   data: Array<{ date: string; count: number }>;
-  limit: number;
+  limit?: number;
 }
 
-export function UsageChart({ data, limit }: UsageChartProps) {
+export function UsageChart({ data }: UsageChartProps) {
   return (
     <ResponsiveContainer width="100%" height={200}>
       <LineChart data={data} margin={{ top: 4, right: 4, bottom: 4, left: -20 }}>

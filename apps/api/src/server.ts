@@ -16,6 +16,7 @@ import { usageRoutes } from './routes/usage.js';
 import { accountRoutes } from './routes/account.js';
 import { billingRoutes } from './routes/billing.js';
 import { paddleWebhookRoute } from './routes/webhook/paddle.js';
+import { sessionRoutes } from './routes/session.js';
 
 const devLogger =
   process.env['NODE_ENV'] !== 'production'
@@ -43,6 +44,7 @@ async function buildServer() {
   await fastify.register(accountRoutes);
   await fastify.register(billingRoutes);
   await fastify.register(paddleWebhookRoute);
+  await fastify.register(sessionRoutes);
 
   return fastify;
 }

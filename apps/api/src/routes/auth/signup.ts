@@ -58,9 +58,8 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     const [sub] = await fastify.db.insert(subscriptions).values({
       userId,
-      plan: 'trial',
-      status: 'trialing',
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+      plan: 'free',
+      status: 'active',
     }).returning();
 
     const licenseKey = generateLicenseKey();
