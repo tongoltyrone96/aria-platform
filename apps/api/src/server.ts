@@ -7,6 +7,7 @@ import corsPlugin from './plugins/cors.js';
 import rateLimitPlugin from './plugins/ratelimit.js';
 import sentryPlugin from './plugins/sentry.js';
 import posthogPlugin from './plugins/posthog.js';
+import { ApiError } from './lib/errors.js';
 
 import { healthRoutes } from './routes/health.js';
 import { authRoutes } from './routes/auth/index.js';
@@ -29,6 +30,18 @@ const fastify = Fastify({
 });
 
 async function buildServer() {
+  fastify.setErrorHandler((error, _req, reply) => {
+    if (error instanceof ApiError) {
+      return reply.status(error.statusCode).send({
+        code: error.code,
+        details: error.details,
+      });
+    }
+    fastify.log.error(error);
+    const msg = error instanceof Error ? error.message : String(error);
+    return reply.status(500).send({ code: 'ERR_INTERNAL', details: msg });
+  });
+
   await fastify.register(fp(helmet));
   await fastify.register(corsPlugin);
   await fastify.register(rateLimitPlugin);

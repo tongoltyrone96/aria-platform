@@ -48,27 +48,44 @@ export async function signupRoute(fastify: FastifyInstance) {
     const userId = linkData.user.id;
     const verificationLink = linkData.action_link;
 
-    await fastify.db.insert(profiles).values({
-      id: userId,
-      email,
-      country: country ?? null,
-      marketingOptIn: marketingOptIn ?? false,
-      referralCode: generateReferralCode(),
-    });
+    try {
+      await fastify.db.insert(profiles).values({
+        id: userId,
+        email,
+        country: country ?? null,
+        marketingOptIn: marketingOptIn ?? false,
+        referralCode: generateReferralCode(),
+      });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      throw Errors.internal(`profiles insert failed: ${msg}`);
+    }
 
-    const [sub] = await fastify.db.insert(subscriptions).values({
-      userId,
-      plan: 'starter',
-      status: 'active',
-    }).returning();
+    let sub: { id: string } | undefined;
+    try {
+      const [inserted] = await fastify.db.insert(subscriptions).values({
+        userId,
+        plan: 'starter',
+        status: 'active',
+      }).returning();
+      sub = inserted;
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      throw Errors.internal(`subscriptions insert failed: ${msg}`);
+    }
 
     const licenseKey = generateLicenseKey();
-    await fastify.db.insert(licenses).values({
-      userId,
-      subscriptionId: sub!.id,
-      key: licenseKey,
-      maxDevices: 1,
-    });
+    try {
+      await fastify.db.insert(licenses).values({
+        userId,
+        subscriptionId: sub!.id,
+        key: licenseKey,
+        maxDevices: 1,
+      });
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      throw Errors.internal(`licenses insert failed: ${msg}`);
+    }
 
     fastify.posthog?.capture({ distinctId: userId, event: 'signup_completed', properties: { country } });
 
