@@ -43,8 +43,9 @@ export async function signupRoute(fastify: FastifyInstance) {
       return reply.status(400).send({ code: 'ERR_VALIDATION', details: err.message ?? err.msg ?? 'Signup failed' });
     }
 
-    const linkData = await res.json() as { action_link: string; user: { id: string } };
-    const userId = linkData.user.id;
+    // Supabase generate_link embeds user fields at the top level (not under a 'user' key)
+    const linkData = await res.json() as { action_link: string; id: string };
+    const userId = linkData.id;
     const verificationLink = linkData.action_link;
 
     try {
