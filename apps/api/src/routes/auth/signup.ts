@@ -2,7 +2,6 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { profiles, subscriptions, licenses } from '@aria/db';
 import { generateReferralCode, generateLicenseKey } from '../../lib/crypto.js';
-import { Errors } from '../../lib/errors.js';
 import { emailService } from '../../services/email.js';
 
 const SignupSchema = z.object({
@@ -15,7 +14,7 @@ const SignupSchema = z.object({
 export async function signupRoute(fastify: FastifyInstance) {
   fastify.post('/signup', async (req, reply) => {
     const body = SignupSchema.safeParse(req.body);
-    if (!body.success) throw Errors.validation(body.error.message);
+    if (!body.success) return reply.status(400).send({ code: 'ERR_VALIDATION', details: body.error.message });
 
     const { email, password, country, marketingOptIn } = body.data;
 
@@ -41,7 +40,7 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     if (!res.ok) {
       const err = await res.json() as { message?: string; msg?: string };
-      throw Errors.validation(err.message ?? err.msg ?? 'Signup failed');
+      return reply.status(400).send({ code: 'ERR_VALIDATION', details: err.message ?? err.msg ?? 'Signup failed' });
     }
 
     const linkData = await res.json() as { action_link: string; user: { id: string } };
@@ -58,33 +57,33 @@ export async function signupRoute(fastify: FastifyInstance) {
       });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      throw Errors.internal(`profiles insert failed: ${msg}`);
+      return reply.status(500).send({ code: 'ERR_PROFILES_INSERT', details: msg });
     }
 
-    let sub: { id: string } | undefined;
+    let subId: string;
     try {
       const [inserted] = await fastify.db.insert(subscriptions).values({
         userId,
         plan: 'starter',
         status: 'active',
       }).returning();
-      sub = inserted;
+      subId = inserted!.id;
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      throw Errors.internal(`subscriptions insert failed: ${msg}`);
+      return reply.status(500).send({ code: 'ERR_SUBSCRIPTIONS_INSERT', details: msg });
     }
 
     const licenseKey = generateLicenseKey();
     try {
       await fastify.db.insert(licenses).values({
         userId,
-        subscriptionId: sub!.id,
+        subscriptionId: subId,
         key: licenseKey,
         maxDevices: 1,
       });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);
-      throw Errors.internal(`licenses insert failed: ${msg}`);
+      return reply.status(500).send({ code: 'ERR_LICENSES_INSERT', details: msg });
     }
 
     fastify.posthog?.capture({ distinctId: userId, event: 'signup_completed', properties: { country } });
