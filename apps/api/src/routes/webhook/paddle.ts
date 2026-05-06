@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import crypto from 'crypto';
 import { eq } from 'drizzle-orm';
 import { subscriptions, licenses, invoices } from '@aria/db';
+import type { Plan } from '@aria/shared';
 import { generateLicenseKey } from '../../lib/crypto.js';
 import { emailService } from '../../services/email.js';
 import { Errors } from '../../lib/errors.js';
@@ -69,7 +70,7 @@ async function handleSubCreated(fastify: FastifyInstance, data: Record<string, u
 
   const [sub] = await fastify.db.insert(subscriptions).values({
     userId,
-    plan: plan as 'starter' | 'pro' | 'pro_annual',
+    plan: plan as Plan,
     status: 'active',
     paddleSubscriptionId: data['id'] as string,
     currentPeriodEnd: periodEnd,

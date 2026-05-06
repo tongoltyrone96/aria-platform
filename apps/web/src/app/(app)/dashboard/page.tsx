@@ -21,12 +21,18 @@ async function getAccountData(token: string) {
 }
 
 function planLabel(plan: string) {
-  if (plan === 'trial' || plan === 'free') return 'Free';
-  return plan.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  const labels: Record<string, string> = {
+    starter: 'Free',
+    pro: 'Pro', pro_annual: 'Pro',
+    elite: 'Elite', elite_annual: 'Elite',
+    // legacy
+    trial: 'Free', free: 'Free', lifetime: 'Elite',
+  };
+  return labels[plan] ?? plan.replace('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function isPaidPlan(plan: string) {
-  return plan !== 'trial' && plan !== 'free';
+  return plan !== 'starter' && plan !== 'trial' && plan !== 'free';
 }
 
 export default async function DashboardPage() {

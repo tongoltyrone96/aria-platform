@@ -62,7 +62,7 @@ export default function SignupPage() {
         </div>
         <h2 className="text-2xl font-bold">Check your email</h2>
         <p className="text-muted-foreground">
-          We sent a verification link to <strong>{form.email}</strong>. Click it to activate your account and start your 14-day free trial.
+          We sent a verification link to <strong>{form.email}</strong>. Click it to activate your account and get started for free.
         </p>
         <Link href="/login" className="text-brand-500 hover:underline text-sm">
           Back to sign in
@@ -76,7 +76,7 @@ export default function SignupPage() {
       <div className="text-center">
         <h1 className="text-2xl font-bold">Start your free trial</h1>
         <p className="text-muted-foreground mt-2">
-          14 days free, no credit card required.{' '}
+          Free plan, no credit card required.{' '}
           <Link href="/login" className="text-brand-500 hover:underline font-medium">Sign in</Link>
         </p>
       </div>

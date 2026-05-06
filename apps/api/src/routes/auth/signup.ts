@@ -58,7 +58,7 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     const [sub] = await fastify.db.insert(subscriptions).values({
       userId,
-      plan: 'free',
+      plan: 'starter',
       status: 'active',
     }).returning();
 

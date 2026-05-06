@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { eq, and, gte, sql } from 'drizzle-orm';
 import { usageLog, sessions } from '@aria/db';
-import { PLAN_LIMITS } from '@aria/shared';
+import { PLAN_LIMITS, normalizePlan } from '@aria/shared';
 import type { Plan } from '@aria/shared';
 import { Errors } from '../lib/errors.js';
 import { verifyUserJwt, verifyDeviceJwt, verifySupabaseToken } from '../lib/jwt.js';
@@ -13,7 +13,8 @@ export async function usageRoutes(fastify: FastifyInstance) {
     if (!auth?.startsWith('Bearer ')) throw Errors.authRequired();
 
     let userId: string;
-    let plan: Plan = 'free';
+    let plan: Plan = 'starter';
+    let planResolved = false;
     const token = auth.replace('Bearer ', '');
 
     try {
@@ -23,7 +24,8 @@ export async function usageRoutes(fastify: FastifyInstance) {
       try {
         const devicePayload = verifyDeviceJwt(token);
         userId = devicePayload.sub;
-        plan = devicePayload.plan;
+        plan = normalizePlan(devicePayload.plan);
+        planResolved = true;
       } catch {
         // Supabase ECC token from web dashboard
         const supabaseId = await verifySupabaseToken(token);
@@ -33,11 +35,11 @@ export async function usageRoutes(fastify: FastifyInstance) {
     }
 
     // If plan not resolved from device JWT, look it up from DB
-    if (plan === 'free' && userId) {
+    if (!planResolved) {
       const userLicense = await fastify.db.select().from(licenses).where(eq(licenses.userId, userId)).limit(1).then((r) => r[0]);
       if (userLicense?.subscriptionId) {
         const sub = await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, userLicense.subscriptionId)).limit(1).then((r) => r[0]);
-        if (sub?.plan) plan = sub.plan as Plan;
+        if (sub?.plan) plan = normalizePlan(sub.plan);
       }
     }
 

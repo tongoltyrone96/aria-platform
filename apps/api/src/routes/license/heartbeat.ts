@@ -2,8 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 import { devices, licenses, subscriptions } from '@aria/db';
-import { PLAN_LIMITS } from '@aria/shared';
-import type { Plan } from '@aria/shared';
+import { PLAN_LIMITS, normalizePlan } from '@aria/shared';
 import { Errors } from '../../lib/errors.js';
 import { verifyDeviceJwt, signDeviceJwt } from '../../lib/jwt.js';
 
@@ -39,7 +38,7 @@ export async function heartbeatRoute(fastify: FastifyInstance) {
     const sub = license.subscriptionId
       ? await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
       : null;
-    const plan = (sub?.plan ?? 'free') as Plan;
+    const plan = normalizePlan(sub?.plan);
 
     // Renew JWT if < 24h to expiry
     const now = Math.floor(Date.now() / 1000);

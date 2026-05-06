@@ -1,9 +1,8 @@
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { eq, and, sql } from 'drizzle-orm';
-import { usageLog, licenses, subscriptions, sessions } from '@aria/db';
-import { PLAN_LIMITS } from '@aria/shared';
-import type { Plan } from '@aria/shared';
+import { usageLog, sessions } from '@aria/db';
+import { PLAN_LIMITS, normalizePlan } from '@aria/shared';
 import { Errors } from '../lib/errors.js';
 import { verifyDeviceJwt } from '../lib/jwt.js';
 import { maskPII } from '../services/pii.js';
@@ -39,14 +38,8 @@ export async function generateRoute(fastify: FastifyInstance) {
 
     const { messages, max_tokens, temperature, stream, sessionId } = body.data;
 
-    // Resolve plan and limits
-    const [license] = await fastify.db.select().from(licenses).where(eq(licenses.id, payload.licenseId)).limit(1);
-    if (!license || license.revokedAt) throw Errors.licenseRevoked();
-
-    const sub = license.subscriptionId
-      ? await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
-      : null;
-    const plan = (sub?.plan ?? 'free') as Plan;
+    // Plan from JWT — avoids DB roundtrips on every generation request
+    const plan = normalizePlan(payload.plan);
     const limits = PLAN_LIMITS[plan];
 
     // Check per-call answer limit (when sessionId is provided and limit is finite)
@@ -68,8 +61,8 @@ export async function generateRoute(fastify: FastifyInstance) {
       content: m.role === 'user' ? maskPII(m.content) : m.content,
     }));
 
-    // Insert placeholder usage row
-    const [usageRow] = await fastify.db.insert(usageLog).values({
+    // Fire-and-forget usageLog — does not block DeepSeek start
+    const usageInsert = fastify.db.insert(usageLog).values({
       userId: payload.sub,
       deviceId: payload.deviceId,
       kind: 'generate',
@@ -99,16 +92,20 @@ export async function generateRoute(fastify: FastifyInstance) {
       }
 
       const durationMs = Date.now() - startMs;
-      if (usageRow) {
-        await fastify.db.update(usageLog).set({ inputTokens, outputTokens, durationMs }).where(eq(usageLog.id, usageRow.id));
-      }
 
-      // Increment session answer count
+      // Post-stream bookkeeping — fire-and-forget, does not block response
+      usageInsert.then(([usageRow]) => {
+        if (usageRow) {
+          fastify.db.update(usageLog).set({ inputTokens, outputTokens, durationMs }).where(eq(usageLog.id, usageRow.id)).catch(() => {});
+        }
+      }).catch(() => {});
+
       if (sessionId) {
-        await fastify.db
+        fastify.db
           .update(sessions)
           .set({ answerCount: sql`${sessions.answerCount} + 1` })
-          .where(and(eq(sessions.id, sessionId), eq(sessions.userId, payload.sub)));
+          .where(and(eq(sessions.id, sessionId), eq(sessions.userId, payload.sub)))
+          .catch(() => {});
       }
 
       fastify.posthog?.capture({
@@ -124,15 +121,18 @@ export async function generateRoute(fastify: FastifyInstance) {
     const { content, inputTokens, outputTokens } = await callDeepseek(maskedMessages, max_tokens, temperature);
     const durationMs = Date.now() - startMs;
 
-    if (usageRow) {
-      await fastify.db.update(usageLog).set({ inputTokens, outputTokens, durationMs }).where(eq(usageLog.id, usageRow.id));
-    }
+    usageInsert.then(([usageRow]) => {
+      if (usageRow) {
+        fastify.db.update(usageLog).set({ inputTokens, outputTokens, durationMs }).where(eq(usageLog.id, usageRow.id)).catch(() => {});
+      }
+    }).catch(() => {});
 
     if (sessionId) {
-      await fastify.db
+      fastify.db
         .update(sessions)
         .set({ answerCount: sql`${sessions.answerCount} + 1` })
-        .where(and(eq(sessions.id, sessionId), eq(sessions.userId, payload.sub)));
+        .where(and(eq(sessions.id, sessionId), eq(sessions.userId, payload.sub)))
+        .catch(() => {});
     }
 
     fastify.posthog?.capture({

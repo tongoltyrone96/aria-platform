@@ -42,8 +42,8 @@ const plans: PricingPlan[] = [
   },
   {
     name: 'Pro',
-    monthlyPrice: 19,
-    annualPrice: 190,
+    monthlyPrice: 17.99,
+    annualPrice: 190.03,
     annualMonthlyRate: 15.83,
     badge: 'Most Popular',
     highlighted: true,
@@ -65,9 +65,9 @@ const plans: PricingPlan[] = [
   },
   {
     name: 'Elite',
-    monthlyPrice: 29,
-    annualPrice: 290,
-    annualMonthlyRate: 24.17,
+    monthlyPrice: 27.99,
+    annualPrice: 295.56,
+    annualMonthlyRate: 24.63,
     description: 'For power users & teams.',
     highlighted: false,
     features: [
@@ -139,7 +139,7 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
         </div>
         {billing === 'annual' && annualSavings > 0 && (
           <p className="text-xs text-green-500 font-medium mt-1">
-            Billed ${plan.annualPrice}/yr — save ${annualSavings}/yr
+            Billed ${plan.annualPrice}/yr — save ${Math.round(annualSavings)}/yr
           </p>
         )}
         {billing === 'monthly' && plan.monthlyPrice > 0 && (
@@ -210,7 +210,7 @@ export function PricingTable() {
         <span className={cn('text-sm font-medium transition-colors', billing === 'annual' ? 'text-foreground' : 'text-muted-foreground')}>
           Annual
           <span className="ml-1.5 inline-flex items-center rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-semibold text-green-600">
-            Save 17%
+            Save 12%
           </span>
         </span>
       </div>

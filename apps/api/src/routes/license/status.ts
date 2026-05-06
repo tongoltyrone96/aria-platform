@@ -1,8 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { eq, and, gte, sql } from 'drizzle-orm';
 import { devices, licenses, subscriptions, usageLog } from '@aria/db';
-import { PLAN_LIMITS } from '@aria/shared';
-import type { Plan } from '@aria/shared';
+import { PLAN_LIMITS, normalizePlan } from '@aria/shared';
 import { Errors } from '../../lib/errors.js';
 import { verifyDeviceJwt } from '../../lib/jwt.js';
 
@@ -27,7 +26,7 @@ export async function statusRoute(fastify: FastifyInstance) {
     const sub = license.subscriptionId
       ? await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, license.subscriptionId)).limit(1).then((r) => r[0])
       : null;
-    const plan = (sub?.plan ?? 'trial') as Plan;
+    const plan = normalizePlan(sub?.plan);
     const limits = PLAN_LIMITS[plan];
 
     const periodStart = new Date();

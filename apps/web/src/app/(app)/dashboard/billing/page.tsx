@@ -9,7 +9,6 @@ export default async function BillingPage() {
   const token = session?.access_token ?? '';
 
   let subscription = null;
-  let invoices: unknown[] = [];
   try {
     const res = await fetch(`${API_URL}/v1/account`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -22,7 +21,11 @@ export default async function BillingPage() {
   } catch { /* ignore */ }
 
   const PLAN_PRICES: Record<string, string> = {
-    starter: '$19/mo', pro: '$29/mo', pro_annual: '$290/yr', lifetime: '$249 once', trial: 'Free trial',
+    starter: 'Free',
+    pro: '$17.99/mo', pro_annual: '$190.03/yr',
+    elite: '$27.99/mo', elite_annual: '$295.56/yr',
+    // legacy
+    trial: 'Free', free: 'Free', lifetime: 'Lifetime',
   };
 
   return (
@@ -38,7 +41,9 @@ export default async function BillingPage() {
         {subscription ? (
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xl font-bold capitalize">{subscription.plan.replace('_', ' ')}</p>
+              <p className="text-xl font-bold capitalize">
+            {{ starter: 'Free', pro: 'Pro', pro_annual: 'Pro', elite: 'Elite', elite_annual: 'Elite' }[subscription.plan as string] ?? subscription.plan.replace('_', ' ')}
+          </p>
               <p className="text-sm text-muted-foreground mt-1">
                 {PLAN_PRICES[subscription.plan] ?? ''}
                 {subscription.currentPeriodEnd && (
@@ -89,9 +94,9 @@ export default async function BillingPage() {
       {/* Pricing quick links */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { plan: 'starter', name: 'Starter', price: '$19/mo', href: '/pricing' },
-          { plan: 'pro', name: 'Pro', price: '$29/mo', href: '/pricing' },
-          { plan: 'pro_annual', name: 'Pro Annual', price: '$290/yr', href: '/pricing' },
+          { plan: 'pro', name: 'Pro', price: '$17.99/mo', href: '/pricing' },
+          { plan: 'pro_annual', name: 'Pro Annual', price: '$190/yr', href: '/pricing' },
+          { plan: 'elite', name: 'Elite', price: '$27.99/mo', href: '/pricing' },
         ].map((p) => (
           <a
             key={p.plan}

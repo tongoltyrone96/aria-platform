@@ -12,12 +12,18 @@ import {
 
 export const sessionTypeEnum = pgEnum('session_type', ['interview', 'coding']);
 
+// DB enum keeps legacy values so existing rows stay valid.
+// Run: UPDATE subscriptions SET plan='starter' WHERE plan IN ('trial','free');
+//      UPDATE subscriptions SET plan='elite_annual' WHERE plan = 'lifetime';
 export const planEnum = pgEnum('plan', [
-  'trial',
-  'free',
   'starter',
   'pro',
   'pro_annual',
+  'elite',
+  'elite_annual',
+  // legacy — do not use in new code
+  'trial',
+  'free',
   'lifetime',
 ]);
 

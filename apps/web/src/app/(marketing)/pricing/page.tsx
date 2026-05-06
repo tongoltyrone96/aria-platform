@@ -30,7 +30,7 @@ export default function PricingPage() {
             Simple, honest pricing
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Start with a 14-day free trial — no credit card required. Upgrade when ARIA helps you
+            Free plan — no credit card required. Upgrade when ARIA helps you
             land the offer.
           </p>
         </div>

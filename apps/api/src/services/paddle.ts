@@ -1,10 +1,11 @@
 import { createHmac } from 'node:crypto';
-import type { Plan } from '@aria/shared';
 
 const PRICE_MAP: Record<string, string> = {
   starter: process.env['PADDLE_PRICE_STARTER'] ?? '',
   pro: process.env['PADDLE_PRICE_PRO'] ?? '',
   pro_annual: process.env['PADDLE_PRICE_PRO_ANNUAL'] ?? '',
+  elite: process.env['PADDLE_PRICE_ELITE'] ?? '',
+  elite_annual: process.env['PADDLE_PRICE_ELITE_ANNUAL'] ?? '',
   lifetime: process.env['PADDLE_PRICE_LIFETIME'] ?? '',
 };
 
@@ -16,7 +17,7 @@ export function getPaddlePriceId(plan: string): string {
 
 export async function createPaddleCheckout(
   userId: string,
-  userEmail: string,
+  _userEmail: string,
   plan: string,
   successUrl: string,
 ): Promise<string> {
