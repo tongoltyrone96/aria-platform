@@ -1,21 +1,26 @@
-import type { FastifyInstance } from 'fastify';
+import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { eq } from 'drizzle-orm';
 import { profiles, subscriptions, licenses, devices } from '@aria/db';
 import { Errors } from '../lib/errors.js';
-import { verifyUserJwt } from '../lib/jwt.js';
+import { verifyUserJwt, verifySupabaseToken } from '../lib/jwt.js';
+
+/** Resolves userId from either our custom JWT or a Supabase access token. */
+async function resolveUserId(req: FastifyRequest): Promise<string> {
+  const auth = req.headers['authorization'];
+  if (!auth?.startsWith('Bearer ')) throw Errors.authRequired();
+  const token = auth.replace('Bearer ', '');
+  try {
+    return verifyUserJwt(token).sub;
+  } catch {
+    const id = await verifySupabaseToken(token);
+    if (!id) throw Errors.authExpired();
+    return id;
+  }
+}
 
 export async function accountRoutes(fastify: FastifyInstance) {
   fastify.get('/v1/account', async (req, reply) => {
-    const auth = req.headers['authorization'];
-    if (!auth?.startsWith('Bearer ')) throw Errors.authRequired();
-
-    let userId: string;
-    try {
-      const payload = verifyUserJwt(auth.replace('Bearer ', ''));
-      userId = payload.sub;
-    } catch {
-      throw Errors.authExpired();
-    }
+    const userId = await resolveUserId(req);
 
     const [profile] = await fastify.db.select().from(profiles).where(eq(profiles.id, userId)).limit(1);
     if (!profile) throw Errors.notFound('Profile');
@@ -75,52 +80,19 @@ export async function accountRoutes(fastify: FastifyInstance) {
   });
 
   fastify.post('/v1/account/data-export', async (req, reply) => {
-    const auth = req.headers['authorization'];
-    if (!auth?.startsWith('Bearer ')) throw Errors.authRequired();
-
-    let userId: string;
-    try {
-      const payload = verifyUserJwt(auth.replace('Bearer ', ''));
-      userId = payload.sub;
-    } catch {
-      throw Errors.authExpired();
-    }
-
-    // In production: trigger async export job and email the user
+    const userId = await resolveUserId(req);
     fastify.log.info({ userId }, 'Data export requested');
     return reply.send({ ok: true, message: 'Export will be emailed to you within 24 hours.' });
   });
 
   fastify.post('/v1/account/data-delete', async (req, reply) => {
-    const auth = req.headers['authorization'];
-    if (!auth?.startsWith('Bearer ')) throw Errors.authRequired();
-
-    let userId: string;
-    try {
-      const payload = verifyUserJwt(auth.replace('Bearer ', ''));
-      userId = payload.sub;
-    } catch {
-      throw Errors.authExpired();
-    }
-
-    // Mark for deletion (30-day grace period)
+    const userId = await resolveUserId(req);
     fastify.log.info({ userId }, 'Account deletion requested — 30-day grace starts now');
     return reply.send({ ok: true, message: 'Account scheduled for deletion in 30 days.' });
   });
 
-  // Revoke a specific device
   fastify.delete('/v1/account/devices/:deviceId', async (req, reply) => {
-    const auth = req.headers['authorization'];
-    if (!auth?.startsWith('Bearer ')) throw Errors.authRequired();
-
-    let userId: string;
-    try {
-      const payload = verifyUserJwt(auth.replace('Bearer ', ''));
-      userId = payload.sub;
-    } catch {
-      throw Errors.authExpired();
-    }
-
+    const userId = await resolveUserId(req);
     const { deviceId } = req.params as { deviceId: string };
 
     const [device] = await fastify.db.select().from(devices).where(eq(devices.id, deviceId)).limit(1);

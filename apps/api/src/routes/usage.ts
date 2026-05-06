@@ -4,7 +4,8 @@ import { usageLog, sessions } from '@aria/db';
 import { PLAN_LIMITS } from '@aria/shared';
 import type { Plan } from '@aria/shared';
 import { Errors } from '../lib/errors.js';
-import { verifyUserJwt, verifyDeviceJwt } from '../lib/jwt.js';
+import { verifyUserJwt, verifyDeviceJwt, verifySupabaseToken } from '../lib/jwt.js';
+import { licenses, subscriptions } from '@aria/db';
 
 export async function usageRoutes(fastify: FastifyInstance) {
   fastify.get('/v1/usage', async (req, reply) => {
@@ -13,17 +14,30 @@ export async function usageRoutes(fastify: FastifyInstance) {
 
     let userId: string;
     let plan: Plan = 'free';
+    const token = auth.replace('Bearer ', '');
 
     try {
-      const payload = verifyUserJwt(auth.replace('Bearer ', ''));
+      const payload = verifyUserJwt(token);
       userId = payload.sub;
     } catch {
       try {
-        const devicePayload = verifyDeviceJwt(auth.replace('Bearer ', ''));
+        const devicePayload = verifyDeviceJwt(token);
         userId = devicePayload.sub;
         plan = devicePayload.plan;
       } catch {
-        throw Errors.authExpired();
+        // Supabase ECC token from web dashboard
+        const supabaseId = await verifySupabaseToken(token);
+        if (!supabaseId) throw Errors.authExpired();
+        userId = supabaseId;
+      }
+    }
+
+    // If plan not resolved from device JWT, look it up from DB
+    if (plan === 'free' && userId) {
+      const userLicense = await fastify.db.select().from(licenses).where(eq(licenses.userId, userId)).limit(1).then((r) => r[0]);
+      if (userLicense?.subscriptionId) {
+        const sub = await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, userLicense.subscriptionId)).limit(1).then((r) => r[0]);
+        if (sub?.plan) plan = sub.plan as Plan;
       }
     }
 
