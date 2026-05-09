@@ -14,8 +14,8 @@ const contactChannels = [
     icon: Mail,
     title: 'Email support',
     description: 'For billing, technical issues, and general questions.',
-    value: 'support@ariainterview.com',
-    href: 'mailto:support@ariainterview.com',
+    value: 'contact@ariainterview.com',
+    href: 'mailto:contact@ariainterview.com',
     cta: 'Send email',
   },
   {
@@ -114,7 +114,7 @@ function ContactForm() {
           onChange={handleChange}
           className="rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
         >
-          <option value="">Select a topicâ€¦</option>
+          <option value="">Select a topic¦</option>
           <option value="billing">Billing &amp; refund</option>
           <option value="technical">Technical support</option>
           <option value="feature">Feature request</option>

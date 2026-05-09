@@ -6,7 +6,7 @@ import { allFAQs } from '@/lib/faq-data';
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Simple, transparent pricing for ARIA AI Interview Copilot. Start free for 14 days. Plans from $19/mo. Lifetime deal available.',
+    'Simple, transparent pricing for ARIA AI Interview Copilot. Start free for Free plan. Plans from $17.99/mo. Lifetime deal available.',
 };
 
 // Pricing-specific FAQs

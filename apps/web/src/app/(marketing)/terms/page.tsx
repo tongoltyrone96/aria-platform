@@ -149,10 +149,10 @@ export default function TermsPage() {
             <p className="leading-relaxed">
               For questions about these Terms, contact us at{' '}
               <a
-                href="mailto:legal@ariainterview.com"
+                href="mailto:contact@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                legal@ariainterview.com
+                contact@ariainterview.com
               </a>
               .
             </p>

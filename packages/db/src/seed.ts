@@ -9,9 +9,9 @@ async function seed() {
   const adminId = crypto.randomUUID();
   await db.insert(profiles).values({
     id: adminId,
-    email: 'admin@ariainterview.com',
+    email: 'contact@ariainterview.com',
     fullName: 'ARIA Admin',
-    country: 'US',
+    country: 'Philippines',
     referralCode: 'ADMIN001',
   }).onConflictDoNothing();
 

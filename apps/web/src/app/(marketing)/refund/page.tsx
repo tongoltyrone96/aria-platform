@@ -45,7 +45,7 @@ export default function RefundPage() {
               Lifetime license purchases may be refunded within{' '}
               <strong className="text-foreground">14 days</strong> of the purchase date. After 14
               days, lifetime purchases are final. If you encounter a technical issue that prevents
-              ARIA from functioning on your system, contact support â€” we&apos;ll do everything
+              ARIA from functioning on your system, contact support” we&apos;ll do everything
               possible to resolve it or issue a refund at our discretion.
             </p>
           </section>
@@ -53,7 +53,7 @@ export default function RefundPage() {
           <section>
             <h2 className="text-xl font-bold text-foreground mb-3">Free Trial</h2>
             <p className="leading-relaxed">
-              ARIA&apos;s 14-day free trial requires no credit card. You will not be charged
+              ARIA&apos;s Free plan requires no credit card. You will not be charged
               anything during the trial period. A refund request during a free trial is not
               applicable since no payment has been made.
             </p>
@@ -65,10 +65,10 @@ export default function RefundPage() {
               <li>
                 Email{' '}
                 <a
-                  href="mailto:billing@ariainterview.com"
+                  href="mailto:contact@ariainterview.com"
                   className="text-brand-500 hover:text-brand-600 underline"
                 >
-                  billing@ariainterview.com
+                  contact@ariainterview.com
                 </a>{' '}
                 from the email address on your ARIA account.
               </li>
@@ -98,10 +98,10 @@ export default function RefundPage() {
             <p className="leading-relaxed">
               Questions about billing or refunds:{' '}
               <a
-                href="mailto:billing@ariainterview.com"
+                href="mailto:contact@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                billing@ariainterview.com
+                contact@ariainterview.com
               </a>
               . Or{' '}
               <Link href="/contact" className="text-brand-500 hover:text-brand-600 underline">

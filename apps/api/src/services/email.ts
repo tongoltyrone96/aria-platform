@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm';
 import { profiles, type Db } from '@aria/db';
 
 const resend = new Resend(process.env['RESEND_API_KEY'] ?? 'placeholder_disabled');
-const FROM = process.env['EMAIL_FROM'] ?? 'ARIA <noreply@ariainterview.com>';
+const FROM = process.env['EMAIL_FROM'] ?? 'ARIA <contact@ariainterview.com>';
 const WEB_URL = process.env['NEXT_PUBLIC_WEB_URL'] ?? 'https://www.ariainterview.com';
 const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.ariainterview.com';
 

@@ -94,3 +94,4 @@ export async function signupRoute(fastify: FastifyInstance) {
     return reply.status(201).send({ userId, requiresEmailVerification: true });
   });
 }
+ 

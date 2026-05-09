@@ -39,7 +39,7 @@ export default function FAQPage() {
             Our team typically responds within a few hours during business days.
           </p>
           <a
-            href="mailto:support@ariainterview.com"
+            href="mailto:contact@ariainterview.com"
             className="inline-flex items-center justify-center rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-semibold px-6 py-3 transition-colors"
           >
             Contact support

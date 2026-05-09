@@ -110,7 +110,7 @@ export default function WasapiSetupPage() {
       <p className="text-sm text-muted-foreground">
         Still having trouble? See the{' '}
         <a href="/docs/troubleshooting" className="text-brand-500 hover:underline">Troubleshooting guide</a> or email{' '}
-        <a href="mailto:support@ariainterview.com" className="text-brand-500 hover:underline">support@ariainterview.com</a>.
+        <a href="mailto:contact@ariainterview.com" className="text-brand-500 hover:underline">contact@ariainterview.com</a>.
       </p>
     </article>
   );

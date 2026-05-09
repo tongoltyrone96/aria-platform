@@ -15,11 +15,11 @@
           <p className="text-sm text-muted-foreground mt-1">Setup guides, troubleshooting, and API reference</p>
         </a>
         <a
-          href="mailto:support@ariainterview.com"
+          href="mailto:contact@ariainterview.com"
           className="bg-card border border-border rounded-xl p-5 hover:border-brand-500/50 transition-colors group"
         >
           <h2 className="font-semibold group-hover:text-brand-500 transition-colors">Email support</h2>
-          <p className="text-sm text-muted-foreground mt-1">support@ariainterview.com Â· Reply within 24h</p>
+          <p className="text-sm text-muted-foreground mt-1">contact@ariainterview.com Â· Reply within 24h</p>
         </a>
       </div>
 

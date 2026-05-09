@@ -38,7 +38,7 @@ export default function TroubleshootingPage() {
         ))}
       </div>
       <p className="text-sm text-muted-foreground">
-        Still stuck? Email <a href="mailto:support@ariainterview.com" className="text-brand-500 hover:underline">support@ariainterview.com</a>.
+        Still stuck? Email <a href="mailto:contact@ariainterview.com" className="text-brand-500 hover:underline">contact@ariainterview.com</a>.
       </p>
     </article>
   );

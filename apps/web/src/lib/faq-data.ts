@@ -30,7 +30,7 @@ export const allFAQs: FAQItem[] = [
   },
   {
     q: 'How does the 14-day free trial work?',
-    a: "You can download and use ARIA Pro for 14 days with no credit card required. At the end of the trial period, you'll be prompted to choose a plan. If you don't subscribe, ARIA will stop working — no charge, no hassle. Trial sessions are limited to 10 per week to prevent abuse.",
+    a: "You can download and use ARIA for Free plan with no credit card required. At the end of the trial period, you'll be prompted to choose a plan. If you don't subscribe, ARIA will stop working — no charge, no hassle. Trial sessions are limited to 10 per week to prevent abuse.",
   },
   {
     q: 'What is the refund policy?',

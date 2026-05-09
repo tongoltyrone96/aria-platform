@@ -130,10 +130,10 @@ export default function PrivacyPage() {
               Depending on your location, you may have the right to access, correct, delete, or
               restrict processing of your personal data. To exercise these rights, contact us at{' '}
               <a
-                href="mailto:privacy@ariainterview.com"
+                href="mailto:contact@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                privacy@ariainterview.com
+                contact@ariainterview.com
               </a>
               . We will respond within 30 days. EU/EEA users may also lodge a complaint with their
               local supervisory authority.
@@ -173,10 +173,10 @@ export default function PrivacyPage() {
             <p className="leading-relaxed">
               Privacy questions:{' '}
               <a
-                href="mailto:privacy@ariainterview.com"
+                href="mailto:contact@ariainterview.com"
                 className="text-brand-500 hover:text-brand-600 underline"
               >
-                privacy@ariainterview.com
+                contact@ariainterview.com
               </a>
               <br />
               ARIA AI Inc., 1234 Technology Drive, Wilmington, DE 19801, USA
