@@ -9,7 +9,8 @@ import { cn } from '@/lib/utils';
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const next = searchParams.get('next') ?? '/dashboard';
+  const nextUrl = searchParams.get('next');
+  const next = nextUrl?.startsWith('/') ? nextUrl : '/dashboard';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,16 +22,26 @@ function LoginForm() {
     setError('');
     setLoading(true);
 
-    const supabase = createClient();
-    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+    try {
+      const supabase = createClient();
+      const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (authError) {
-      setError(authError.message);
+      if (authError) {
+        setError(authError.message ?? 'Sign in failed. Please try again.');
+        return;
+      }
+
+      if (!data?.session || !data.user) {
+        setError('Unable to sign in. Please verify your credentials and try again.');
+        return;
+      }
+
+      router.push(next);
+    } catch {
+      setError('Connection error. Please try again.');
+    } finally {
       setLoading(false);
-      return;
     }
-
-    router.push(next);
   }
 
   return (

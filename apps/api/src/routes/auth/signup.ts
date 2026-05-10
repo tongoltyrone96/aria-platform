@@ -2,7 +2,6 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { profiles, subscriptions, licenses } from '@aria/db';
 import { generateReferralCode, generateLicenseKey } from '../../lib/crypto.js';
-import { emailService } from '../../services/email.js';
 
 const SignupSchema = z.object({
   email: z.string().email(),
@@ -20,10 +19,9 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     const supabaseUrl = process.env['SUPABASE_URL']!;
     const serviceKey = process.env['SUPABASE_SERVICE_ROLE_KEY']!;
-    const webUrl = process.env['NEXT_PUBLIC_WEB_URL'] ?? 'https://www.ariainterview.com';
 
-    // generate_link creates the user AND returns a verification URL in one step
-    const res = await fetch(`${supabaseUrl}/auth/v1/admin/generate_link`, {
+    // Create user via admin API with email_confirm: true so they can sign in immediately
+    const res = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,10 +29,9 @@ export async function signupRoute(fastify: FastifyInstance) {
         Authorization: `Bearer ${serviceKey}`,
       },
       body: JSON.stringify({
-        type: 'signup',
         email,
         password,
-        options: { redirect_to: `${webUrl}/auth/callback` },
+        email_confirm: true,
       }),
     });
 
@@ -43,10 +40,8 @@ export async function signupRoute(fastify: FastifyInstance) {
       return reply.status(400).send({ code: 'ERR_VALIDATION', details: err.message ?? err.msg ?? 'Signup failed' });
     }
 
-    // Supabase generate_link embeds user fields at the top level (not under a 'user' key)
-    const linkData = await res.json() as { action_link: string; id: string };
-    const userId = linkData.id;
-    const verificationLink = linkData.action_link;
+    const userData = await res.json() as { id: string };
+    const userId = userData.id;
 
     try {
       await fastify.db.insert(profiles).values({
@@ -89,9 +84,7 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     fastify.posthog?.capture({ distinctId: userId, event: 'signup_completed', properties: { country } });
 
-    await emailService.sendEmailVerification(email, verificationLink).catch(() => {});
-
-    return reply.status(201).send({ userId, requiresEmailVerification: true });
+    return reply.status(201).send({ userId, requiresEmailVerification: false });
   });
 }
  
