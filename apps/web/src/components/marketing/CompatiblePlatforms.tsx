@@ -23,7 +23,7 @@ const categories = [
     label: 'Screen Share',
     color: 'text-violet-400',
     bg: 'bg-violet-500/10 border-violet-500/20',
-    platforms: ['Any screen-share session', 'Remote interviews', 'HireVue', 'Codility', 'HackerRank', 'Karat', 'CoderPad', 'Proctored exams'],
+    platforms: ['Any screen-share session', 'Remote interviews', 'HireVue', 'Codility', 'HackerRank', 'Karat', 'CoderPad', 'Take-home assessments'],
   },
   {
     icon: Bot,

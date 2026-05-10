@@ -78,7 +78,7 @@ export function Footer() {
             <div>
               <span className="text-brand-500 font-bold text-xl tracking-tight">ARIA</span>
               <p className="mt-2 text-sm text-muted-foreground max-w-xs leading-relaxed">
-                AI Interview Copilot for Windows. Native. Stealth. Answers in under 1 second.
+                AI Communication Assistant for Windows. Real-time suggestions grounded in your resume.
               </p>
             </div>
 

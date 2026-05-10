@@ -317,20 +317,20 @@ function SlideDemo() {
 }
 
 /* ─── Slide 2: Two computers — left has ARIA, right doesn't ── */
-const stealthHints = [
+const meetingHints = [
   'Use your Kafka pipeline example — matches their real-time system question.',
   'Emphasize the 40% latency reduction. Concrete metrics land well here.',
   'Add: "This approach scaled to 50k concurrent users in production."',
 ];
 
-function SlideStealthShare() {
+function SlideMeetingMode() {
   const [hintIdx, setHintIdx] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
     setHintIdx(0);
     setSeconds(0);
-    const hintIv = setInterval(() => setHintIdx((h) => (h + 1) % stealthHints.length), 2800);
+    const hintIv = setInterval(() => setHintIdx((h) => (h + 1) % meetingHints.length), 2800);
     const secIv = setInterval(() => setSeconds((s) => s + 1), 1000);
     return () => { clearInterval(hintIv); clearInterval(secIv); };
   }, []);
@@ -424,7 +424,7 @@ function SlideStealthShare() {
                 className="rounded-lg p-2 text-[8px] leading-relaxed flex-1"
                 style={{ background: 'rgba(109,40,217,0.12)', border: '1px solid rgba(109,40,217,0.25)', color: 'rgba(255,255,255,0.72)' }}
               >
-                {stealthHints[hintIdx]}
+                {meetingHints[hintIdx]}
               </motion.div>
             </AnimatePresence>
             <div className="mt-2 flex items-center gap-1">
@@ -731,7 +731,7 @@ const slides = [
     id: 'meeting',
     label: 'Meeting Mode',
     icon: <Zap size={11} />,
-    component: SlideStealthShare,
+    component: SlideMeetingMode,
   },
   {
     id: 'coding',

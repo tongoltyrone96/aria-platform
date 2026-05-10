@@ -1,6 +1,6 @@
 ﻿import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Getting Started â€” ARIA Docs' };
+export const metadata: Metadata = { title: 'Getting Started — ARIA Docs' };
 
 export default function OnboardingPage() {
   return (
@@ -12,13 +12,13 @@ export default function OnboardingPage() {
 
       <h2 className="text-xl font-semibold">1. Create your account</h2>
       <p>
-        Go to <a href="/signup" className="text-brand-500 hover:underline">ariainterview.com/signup</a> and register with your
-        work or personal email. You will receive a verification email â€” click the link to activate your account.
+        Go to <a href=”/signup” className=”text-brand-500 hover:underline”>ariainterview.com/signup</a> and register with your
+        work or personal email. Your account is activated immediately — no email confirmation required.
       </p>
 
       <h2 className="text-xl font-semibold">2. Start your free trial</h2>
       <p>
-        Every new account gets a <strong>14-day free trial</strong> with 50 AI answers per month. No credit card required.
+        Every new account starts on the <strong>Free plan</strong> — 10 interview calls and 6 AI answers per call per month, no credit card required.
         You can upgrade at any time from the <a href="/dashboard/billing" className="text-brand-500 hover:underline">Billing</a> page.
       </p>
 
@@ -39,7 +39,7 @@ export default function OnboardingPage() {
       <h2 className="text-xl font-semibold">5. Configure audio capture</h2>
       <p>
         ARIA uses <strong>WASAPI loopback</strong> to capture system audio with zero latency and no
-        detectable recording artifacts. Open the ARIA settings, go to the <strong>Audio</strong> tab, and select
+        additional processing overhead. Open the ARIA settings, go to the <strong>Audio</strong> tab, and select
         your output device (speakers or headphones). ARIA will capture everything your interviewer says
         through that device.
       </p>
@@ -60,7 +60,7 @@ export default function OnboardingPage() {
         <li>Join your video call (Zoom, Teams, Google Meet, etc.) as normal.</li>
         <li>When the interviewer asks a question, press <kbd className="bg-muted px-1.5 py-0.5 rounded text-foreground text-xs font-mono">Ctrl+Alt+A</kbd> to generate an answer.</li>
         <li>ARIA will stream a response into the overlay within 1 second.</li>
-        <li>Read the answer naturally â€” the overlay is invisible to screen-share.</li>
+        <li>Read the answer naturally — the overlay is visible only on your local display.</li>
       </ol>
 
       <div className="bg-brand-500/5 border border-brand-500/20 rounded-xl p-4 text-sm">

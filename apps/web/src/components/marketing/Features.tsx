@@ -131,8 +131,8 @@ function ProfileAwareVisual() {
   );
 }
 
-/* ── Feature 3: Invisible Overlay ─────────────────────────── */
-function InvisibleVisual() {
+/* ── Feature 3: AI Overlay Panel ──────────────────────────── */
+function OverlayPanelVisual() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-8">
       <div className="w-full grid grid-cols-2 gap-4">
@@ -192,7 +192,7 @@ function InvisibleVisual() {
   );
 }
 
-const featureVisuals = [AudioCaptureVisual, ProfileAwareVisual, InvisibleVisual];
+const featureVisuals = [AudioCaptureVisual, ProfileAwareVisual, OverlayPanelVisual];
 
 interface FeatureBlockProps {
   eyebrow: string;
