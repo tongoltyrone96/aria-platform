@@ -22,7 +22,7 @@ const testimonials: Testimonial[] = [
     role: 'Product Manager',
     company: 'Hired at Figma',
     quote:
-      "ARIA knows my resume better than I do. When they asked about a specific project, it surfaced the exact metrics I'd forgotten. The stealth overlay is genuinely invisible — I used it on four rounds and nobody had a clue.",
+      "ARIA knows my resume better than I do. When they asked about a specific project, it surfaced the exact metrics I'd forgotten. I used the AI overlay across four rounds — it kept me calm, structured, and specific every time.",
     stars: 5,
   },
   {
@@ -46,7 +46,7 @@ const testimonials: Testimonial[] = [
     role: 'Backend Engineer',
     company: 'Hired at Cloudflare',
     quote:
-      "I compared ARIA to a Chrome extension tool. The extension showed up in my task manager during a screenshare and I panicked. ARIA is completely invisible. Plus it's $10 cheaper per month. No-brainer.",
+      "I compared ARIA to a Chrome extension tool. The extension was flaky and platform-dependent. ARIA is a native Windows app — rock-solid on every call platform, better audio capture, and $10 cheaper per month. No-brainer.",
     stars: 5,
   },
   {

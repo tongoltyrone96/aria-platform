@@ -14,11 +14,11 @@ interface Article {
 
 const articles: Article[] = [
   {
-    slug: 'how-aria-stays-invisible-during-screen-share',
+    slug: 'why-native-windows-beats-browser-extensions',
     category: 'Deep Dive',
-    title: 'How ARIA Stays Completely Invisible During Screen Share',
+    title: 'Why a Native Windows App Delivers Better Audio and Privacy Than Browser Extensions',
     excerpt:
-      'Browser extensions show up in OBS, Zoom thumbnails, and task-switcher previews. ARIA runs as a native Windows process — here\'s exactly why that makes it undetectable.',
+      'Browser extensions share audio permissions with every tab, can\'t access system audio, and depend on browser APIs that break across platforms. Here\'s how ARIA\'s native WASAPI architecture solves all three.',
     date: 'Apr 28, 2025',
     readTime: '6 min read',
     featured: true,

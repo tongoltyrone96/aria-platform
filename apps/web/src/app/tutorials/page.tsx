@@ -24,7 +24,7 @@ const tutorials: Tutorial[] = [
     label: 'Real-Time AI',
     title: 'Getting Real-Time AI Answers During Your Interview',
     description:
-      'ARIA listens to both your interviewer and you simultaneously via WASAPI audio capture. The moment a question is detected, it generates a tailored answer in under 1 second — right on your screen, invisible to everyone else.',
+      'ARIA listens to both your interviewer and you simultaneously via WASAPI audio capture. The moment a question is detected, it generates a tailored answer in under 1 second — right on your overlay panel.',
     steps: [
       { step: '01', text: 'Launch ARIA and sign in. The overlay appears as a transparent, click-through window above your video call.' },
       { step: '02', text: 'Upload your resume in Settings → Profile. ARIA memorizes your projects, metrics, and achievements to ground every answer in your real story.' },
@@ -40,7 +40,7 @@ const tutorials: Tutorial[] = [
     label: 'Live Coding',
     title: 'Using ARIA During Live Coding & Technical Interviews',
     description:
-      'Technical rounds — whether on HackerRank, CoderPad, or a shared IDE — are where candidates freeze most often. ARIA\'s coding assistant analyzes the problem, explains the approach, and hints at edge cases without ever appearing on a screen share.',
+      'Technical rounds — whether on HackerRank, CoderPad, or a shared IDE — are where candidates freeze most often. ARIA\'s coding assistant analyzes the problem, explains the approach, and hints at edge cases — visible only on your personal overlay panel.',
     steps: [
       { step: '01', text: 'When a coding question appears, ARIA automatically detects it from the audio transcript — no copy-pasting needed.' },
       { step: '02', text: 'The ARIA panel shows the problem decomposed: time complexity guidance, a suggested algorithmic approach, and language-specific starter logic.' },
@@ -51,20 +51,20 @@ const tutorials: Tutorial[] = [
     tip: 'Tell ARIA your preferred language in Profile settings (Python, JavaScript, Go, etc.) and it will format code hints in that language by default.',
   },
   {
-    id: 'invisible-screen-share',
-    icon: '🕶️',
-    label: 'Stealth Mode',
-    title: 'Staying Completely Invisible During Screen Share',
+    id: 'display-setup',
+    icon: '🖥️',
+    label: 'Display Setup',
+    title: 'Setting Up the AI Overlay for Maximum Comfort',
     description:
-      'Browser extensions appear in OBS capture regions, Zoom screen-share thumbnails, and Windows task-switcher previews. ARIA is a native Windows app — it uses a transparent, click-through overlay window that bypasses every screen-capture detection API.',
+      'ARIA\'s overlay panel is a lightweight, click-through window that sits above your video call. Positioning it well means you can glance at suggestions naturally without breaking eye contact with your camera.',
     steps: [
-      { step: '01', text: 'ARIA\'s overlay is a WS_EX_LAYERED + WS_EX_TRANSPARENT window. It is explicitly excluded from the Windows Graphics Capture API used by Zoom, Teams, and Google Meet.' },
-      { step: '02', text: 'When you share your screen, start the share first, then open ARIA. The overlay attaches after capture is already running, which prevents it from appearing in the shared region.' },
-      { step: '03', text: 'The overlay does not appear in OBS Scene Previews, Streamlabs, or any DirectX/GDI screen capture — only on your physical display.' },
-      { step: '04', text: 'In ARIA Settings → Display, choose which monitor the overlay appears on. Use your secondary monitor or position it to a corner of your primary display that is off-screen from your camera.' },
-      { step: '05', text: 'ARIA also does not appear in the Windows Alt+Tab task switcher, so even if the interviewer asks you to share your entire desktop, it remains hidden.' },
+      { step: '01', text: 'In ARIA Settings → Display, choose which monitor the overlay appears on. A secondary monitor is ideal — you can read suggestions while keeping your primary screen focused on the call.' },
+      { step: '02', text: 'Resize the overlay panel by dragging its edges. A narrower panel at the side of your screen is less distracting than a full-width view during the interview.' },
+      { step: '03', text: 'Use the opacity slider in Settings → Display to find a transparency level that keeps the panel readable without dominating your attention.' },
+      { step: '04', text: 'Enable Focus Mode in Settings — the overlay collapses to a thin edge indicator while you speak or type, and expands when you hold Alt to review suggestions.' },
+      { step: '05', text: 'Position the overlay near your webcam so your eye movement looks natural. Reading suggestions close to the camera line helps maintain perceived eye contact.' },
     ],
-    tip: 'For maximum safety, enable "Focus Mode" in ARIA Settings — the overlay collapses to a thin edge indicator while you type or speak, and expands only when you hold Alt.',
+    tip: 'Test your overlay position during a mock call with a friend before your real interview. Make sure you can read suggestions comfortably at a glance without moving your head noticeably.',
   },
   {
     id: 'wasapi-setup',
@@ -98,7 +98,7 @@ export default function TutorialsPage() {
               Learn How to Use ARIA
             </h1>
             <p className="max-w-xl mx-auto text-base text-white/50 leading-relaxed">
-              Step-by-step guides covering everything from first launch to advanced stealth techniques.
+              Step-by-step guides covering everything from first launch to advanced AI assistant techniques.
             </p>
           </div>
 

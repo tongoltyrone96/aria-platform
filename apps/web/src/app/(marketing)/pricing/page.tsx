@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 // Pricing-specific FAQs
 const pricingFAQs = allFAQs.filter((faq) =>
   [
-    'How does the 14-day free trial work?',
+    'How does the free plan work?',
     'What is the refund policy?',
     'Can multiple people use one ARIA license?',
     'How do I cancel my subscription?',
@@ -47,25 +47,25 @@ export default function PricingPage() {
       <section className="py-16 sm:py-20 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
-            Everything in Pro, none of the browser risk
+            Native Windows technology. On-device privacy.
           </h2>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-8">
-            Unlike Chrome extension competitors, ARIA is a native Windows app. No extension
-            manifest. No browser fingerprint. Just a transparent overlay that nobody else can see.
+            Unlike browser extension alternatives, ARIA is a native Windows application. Direct
+            OS-level audio capture, local data processing, and no browser permissions required.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
             {[
               {
-                title: 'WASAPI Loopback',
-                desc: 'Captures both sides of the call at the OS audio layer — works with every video platform.',
+                title: 'WASAPI Audio Capture',
+                desc: 'Captures both sides of the call at the OS audio layer — works with every video call platform.',
               },
               {
-                title: 'Invisible Overlay',
-                desc: 'Excluded from all screen-capture APIs. Your interviewer sees only you.',
+                title: 'AI Overlay Panel',
+                desc: 'A lightweight, click-through panel above your call — visible only to you, no browser extension needed.',
               },
               {
                 title: 'Resume-Grounded',
-                desc: 'Every answer is personalized to your actual experience, not generic filler.',
+                desc: 'Every suggestion is personalized to your actual experience, not generic filler.',
               },
             ].map((item) => (
               <div
