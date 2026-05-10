@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Play, X, Zap, ChevronLeft, ChevronRight, Code2, EyeOff } from 'lucide-react';
+import { Download, Play, X, Zap, ChevronLeft, ChevronRight, Code2 } from 'lucide-react';
 
 const container = {
   hidden: { opacity: 0 },
@@ -430,7 +430,7 @@ function SlideStealthShare() {
             <div className="mt-2 flex items-center gap-1">
               <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 1.6, repeat: Infinity }}
                 className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'rgba(109,40,217,0.7)' }} />
-              <span className="text-[7px]" style={{ color: 'rgba(255,255,255,0.22)' }}>Invisible to screen share</span>
+              <span className="text-[7px]" style={{ color: 'rgba(255,255,255,0.22)' }}>Your private workspace</span>
             </div>
           </div>
         </div>
@@ -443,7 +443,7 @@ function SlideStealthShare() {
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
           className="text-white/30 text-sm select-none"
         >→</motion.div>
-        <div style={{ writingMode: 'vertical-rl' }} className="text-[7px] text-white/10 rotate-180 select-none">hidden</div>
+        <div style={{ writingMode: 'vertical-rl' }} className="text-[7px] text-white/10 rotate-180 select-none">vs</div>
       </div>
 
       {/* ══ RIGHT — Interviewer's screen: no ARIA ══ */}
@@ -451,8 +451,7 @@ function SlideStealthShare() {
 
         {/* Screen label */}
         <div className="absolute top-1.5 right-2 z-30 flex items-center gap-1.5">
-          <EyeOff size={9} className="text-white/25" />
-          <span className="text-[9px] text-white/30">Interviewer's PC</span>
+          <span className="text-[9px] text-white/30">Interviewer's View</span>
         </div>
 
         {/* Their Google Meet window */}
@@ -484,15 +483,14 @@ function SlideStealthShare() {
             </div>
             <div className="absolute bottom-9 left-3 text-[8px] text-white/50">Tyrone Jhor Tongol</div>
 
-            {/* "ARIA not visible" floating indicator */}
+            {/* Clean view indicator */}
             <motion.div
               animate={{ opacity: [0.3, 0.65, 0.3] }}
               transition={{ duration: 2.8, repeat: Infinity }}
               className="absolute top-10 left-0 right-0 flex justify-center z-10"
             >
               <div className="flex items-center gap-1.5 rounded-lg px-3 py-1.5" style={{ background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <EyeOff size={9} className="text-white/30" />
-                <span className="text-[8px] text-white/35">ARIA not visible here</span>
+                <span className="text-[8px] text-white/35">Standard meeting view</span>
               </div>
             </motion.div>
 
@@ -711,8 +709,7 @@ function SlideLiveCoding() {
         {/* Footer */}
         <div className="px-3 py-2 border-t border-white/10 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-1.5 text-[10px] text-white/25">
-            <EyeOff size={10} />
-            <span>Hidden from screen capture</span>
+            <span>Runs locally on your device</span>
           </div>
           <div className="text-[9px] text-white/20 font-mono">REC 00:00</div>
         </div>
@@ -731,9 +728,9 @@ const slides = [
     component: SlideDemo,
   },
   {
-    id: 'stealth',
-    label: 'Stealth Mode',
-    icon: <EyeOff size={11} />,
+    id: 'meeting',
+    label: 'Meeting Mode',
+    icon: <Zap size={11} />,
     component: SlideStealthShare,
   },
   {
@@ -858,8 +855,8 @@ function ProductMockup() {
         <div className="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 bg-neutral-950/60">
           {[
             { label: 'Response Time', value: '< 1s', color: 'text-green-400' },
-            { label: 'Detection Risk', value: 'Zero', color: 'text-brand-400' },
-            { label: 'Audio Source', value: 'WASAPI', color: 'text-violet-400' },
+            { label: 'Privacy', value: 'On-Device', color: 'text-brand-400' },
+            { label: 'Audio Engine', value: 'WASAPI', color: 'text-violet-400' },
           ].map(({ label, value, color }) => (
             <div key={label} className="px-4 sm:px-6 py-3 text-center">
               <p className={`text-sm font-bold ${color}`}>{value}</p>
@@ -910,10 +907,10 @@ export function Hero() {
               variants={item}
               className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.06]"
             >
-              <span className="text-white">Ace Every Interview.</span>
+              <span className="text-white">Communicate with Clarity.</span>
               <br />
               <span className="bg-gradient-to-r from-brand-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent">
-                Without Anyone Knowing.
+                Powered by Real-Time AI.
               </span>
             </motion.h1>
 
@@ -921,9 +918,9 @@ export function Hero() {
               variants={item}
               className="max-w-xl text-base sm:text-lg text-white/55 leading-relaxed"
             >
-              ARIA captures both sides of your call with premium WASAPI audio,
-              knows your resume, and whispers perfect answers in under 1 second.
-              <span className="text-white/80"> Invisible. Instant. Undetectable.</span>
+              ARIA listens to your conversations, knows your resume, and surfaces
+              personalized AI suggestions in under 1 second — so you always have
+              <span className="text-white/80"> the right words at the right moment.</span>
             </motion.p>
 
             <motion.div variants={item} className="flex flex-col sm:flex-row items-center gap-3">

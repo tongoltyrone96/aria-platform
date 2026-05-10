@@ -44,16 +44,63 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-bold text-foreground mb-3">3. Permitted Use</h2>
             <p className="leading-relaxed">
-              ARIA is intended to help users communicate more effectively during job interviews by
-              surfacing relevant information from their own professional background. You are solely
-              responsible for ensuring that your use of ARIA complies with any applicable
-              assessment, employment, or platform terms you have agreed to with third parties.
-              ARIA does not endorse misrepresentation of qualifications or experience.
+              ARIA is a professional productivity tool designed to help users communicate more
+              effectively during job interviews, meetings, and professional conversations by
+              surfacing relevant information from their own background and experience. Permitted
+              uses include:
+            </p>
+            <ul className="list-disc list-inside space-y-2 mt-2">
+              <li>Interview preparation and real-time communication coaching.</li>
+              <li>Meeting assistance and note-taking support.</li>
+              <li>Professional skill development and articulation practice.</li>
+              <li>Communication coaching for non-native speakers.</li>
+            </ul>
+            <p className="leading-relaxed mt-3">
+              You are solely responsible for ensuring that your use of ARIA complies with any
+              applicable assessment, employment, or platform terms you have agreed to with third
+              parties. ARIA does not endorse misrepresentation of qualifications or fabrication
+              of experience.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">4. Prohibited Conduct</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">4. Acceptable Use Policy</h2>
+            <p className="leading-relaxed mb-3">
+              ARIA is intended for lawful, professional use. By using ARIA, you agree to the
+              following:
+            </p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>
+                <strong>Honest representation.</strong> You will not use ARIA to fabricate
+                qualifications, credentials, or experience you do not possess.
+              </li>
+              <li>
+                <strong>Compliance with third-party terms.</strong> You will not use ARIA in
+                contexts where doing so violates the terms of service of an assessment platform,
+                employer, or educational institution.
+              </li>
+              <li>
+                <strong>No academic dishonesty.</strong> You will not use ARIA to cheat on
+                academic examinations, proctored assessments, or certifications.
+              </li>
+              <li>
+                <strong>No unauthorized recording.</strong> You will comply with all applicable
+                consent and recording laws in your jurisdiction when using ARIA&apos;s audio
+                capture features.
+              </li>
+              <li>
+                <strong>No illegal activity.</strong> You will not use ARIA in furtherance of
+                fraud, impersonation, or any other illegal activity.
+              </li>
+            </ul>
+            <p className="leading-relaxed mt-3">
+              Violation of this Acceptable Use Policy may result in immediate account termination
+              without refund.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-foreground mb-3">5. Prohibited Conduct</h2>
             <p className="leading-relaxed">You agree not to:</p>
             <ul className="list-disc list-inside space-y-2 mt-2">
               <li>Reverse engineer, decompile, or disassemble the Software.</li>
@@ -68,7 +115,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">5. Subscription and Billing</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">6. Subscription and Billing</h2>
             <p className="leading-relaxed">
               Paid subscriptions are billed monthly or annually in advance. Your subscription
               automatically renews at the end of each billing period unless you cancel before
@@ -83,7 +130,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">6. Intellectual Property</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">7. Intellectual Property</h2>
             <p className="leading-relaxed">
               ARIA and all related trademarks, logos, software, and documentation are the exclusive
               property of ARIA AI Inc. Nothing in these Terms grants you any ownership interest in
@@ -93,7 +140,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">7. Disclaimer of Warranties</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">8. Disclaimer of Warranties</h2>
             <p className="leading-relaxed">
               THE SOFTWARE IS PROVIDED &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
               IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
@@ -104,7 +151,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-xl font-bold text-foreground mb-3">
-              8. Limitation of Liability
+              9. Limitation of Liability
             </h2>
             <p className="leading-relaxed">
               TO THE MAXIMUM EXTENT PERMITTED BY LAW, ARIA AI INC. SHALL NOT BE LIABLE FOR ANY
@@ -116,7 +163,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">9. Termination</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">10. Termination</h2>
             <p className="leading-relaxed">
               We may terminate or suspend your access to ARIA immediately and without notice if you
               breach these Terms. Upon termination, your license to use the Software ceases
@@ -126,7 +173,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">10. Governing Law</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">11. Governing Law</h2>
             <p className="leading-relaxed">
               These Terms are governed by the laws of the State of Delaware, United States, without
               regard to conflict of law principles. Any disputes shall be resolved in the federal or
@@ -136,7 +183,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">11. Changes to Terms</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">12. Changes to Terms</h2>
             <p className="leading-relaxed">
               We may update these Terms from time to time. We will notify you of material changes
               via email or in-app notification. Continued use of ARIA after the effective date
@@ -145,7 +192,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-foreground mb-3">12. Contact</h2>
+            <h2 className="text-xl font-bold text-foreground mb-3">13. Contact</h2>
             <p className="leading-relaxed">
               For questions about these Terms, contact us at{' '}
               <a

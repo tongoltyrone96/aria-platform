@@ -11,14 +11,14 @@ export function CTASection() {
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-[1.15] mb-6">
-          Stop fumbling for words.
+          Prepare smarter.
           <br />
-          <span className="text-brand-100">Start speaking like the candidate they want.</span>
+          <span className="text-brand-100">Communicate with confidence.</span>
         </h2>
         <p className="max-w-xl mx-auto text-base sm:text-lg text-white/75 mb-10 leading-relaxed">
-          ARIA hears your interview, knows your resume, and gives you the right answer in under a
-          second — invisibly, natively, on Windows. Join thousands of engineers and PMs who stopped
-          leaving offers on the table.
+          ARIA listens to your conversations, knows your resume, and delivers personalized AI
+          suggestions in under a second — natively on Windows. Join thousands of professionals
+          who communicate more clearly in every interview and meeting.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link

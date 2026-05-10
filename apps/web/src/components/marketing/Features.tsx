@@ -164,16 +164,14 @@ function InvisibleVisual() {
 
         {/* What interviewer sees */}
         <div className="flex flex-col gap-2">
-          <div className="text-[10px] text-white/35 uppercase tracking-wide font-semibold text-center">Their Screen</div>
+          <div className="text-[10px] text-white/35 uppercase tracking-wide font-semibold text-center">Clean Meeting View</div>
           <div className="aspect-video bg-neutral-800 rounded-xl border border-white/10 overflow-hidden relative">
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-700 to-neutral-900" />
-            {/* Same fake video call — no overlay */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-10 h-10 rounded-full bg-neutral-600/60 border border-white/10" />
             </div>
-            {/* No ARIA visible */}
             <div className="absolute bottom-2 left-2 right-2 flex items-center justify-center">
-              <span className="text-[8px] text-white/20 italic">— no overlay visible —</span>
+              <span className="text-[8px] text-white/20 italic">— your personal workspace —</span>
             </div>
           </div>
         </div>
@@ -187,7 +185,7 @@ function InvisibleVisual() {
           className="w-2 h-2 rounded-full bg-brand-400"
         />
         <span className="text-xs text-white/55">
-          <span className="text-white/80 font-semibold">Zero</span> screen-capture detection risk
+          <span className="text-white/80 font-semibold">100%</span> local — your data never leaves your device
         </span>
       </div>
     </div>
@@ -262,9 +260,9 @@ const features = [
     imageRight: true,
   },
   {
-    eyebrow: 'Zero Digital Footprint',
-    heading: 'Completely Invisible to Everyone Else',
-    body: "ARIA runs as a native Windows process — never a browser extension. It doesn't appear in screen-share thumbnails, OBS capture regions, or task-switcher previews. The overlay is a transparent, click-through window that sits above your video call without triggering any screen-capture detection APIs. You see everything. Your interviewer sees nothing unusual.",
+    eyebrow: 'Private by Design',
+    heading: 'Your Personal AI Workspace',
+    body: "ARIA runs as a native Windows application — not a browser extension. Your audio and resume data stay on your device and are never uploaded to third-party servers. The overlay is a lightweight, click-through window that sits above your video call, visible only to you. No browser permissions required, no cloud dependency, no data sharing.",
     imageRight: false,
   },
 ];
@@ -281,11 +279,11 @@ export function Features() {
           className="text-center mb-24"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Every advantage. Zero compromise.
+            Every advantage. Built for professionals.
           </h2>
           <p className="max-w-2xl mx-auto text-base text-muted-foreground leading-relaxed">
-            ARIA combines premium Windows audio APIs, state-of-the-art AI, and a pixel-perfect
-            invisible overlay to give you a genuine, undetectable edge in any interview.
+            ARIA combines premium Windows audio capture, state-of-the-art AI, and deep resume
+            personalization to give you a genuine competitive advantage in any conversation.
           </p>
         </motion.div>
 

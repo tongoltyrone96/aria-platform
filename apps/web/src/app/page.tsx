@@ -34,8 +34,8 @@ export default function HomePage() {
                 How ARIA compares to other AI assistants
               </h2>
               <p className="max-w-2xl mx-auto text-base text-muted-foreground">
-                Most interview tools are browser extensions — visible, detectable, and limited.
-                ARIA is a native Windows app that operates at a deeper level.
+                Most AI assistants are browser extensions — limited by what a browser can access.
+                ARIA is a native Windows app with direct system-level audio capture and on-device privacy.
               </p>
             </div>
             <ComparisonTable />

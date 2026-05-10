@@ -3,22 +3,22 @@ import Link from 'next/link';
 import { ComparisonTable } from '@/components/marketing/ComparisonTable';
 
 export const metadata: Metadata = {
-  title: 'ARIA vs Ntro.io — Best AI Interview Assistant for Windows',
+  title: 'ARIA vs Ntro.io — AI Interview Assistant Comparison for Windows',
   description:
-    'Detailed comparison of ARIA vs Ntro.io. Why a native Windows app with WASAPI capture beats a Chrome extension for stealth, latency, and reliability. Best Ntro alternative.',
+    'Detailed comparison of ARIA vs Ntro.io. How a native Windows app with WASAPI audio capture delivers more reliable, private, and accurate AI assistance than a browser extension.',
   keywords: [
     'ntro alternatives',
     'best AI interview assistant Windows',
-    'is ntro safe',
     'ntro vs ARIA',
     'AI interview copilot Windows',
-    'WASAPI interview tool',
-    'interview cheating tool Windows',
+    'WASAPI interview assistant',
+    'AI communication assistant Windows',
+    'meeting AI assistant comparison',
   ],
   openGraph: {
-    title: 'ARIA vs Ntro.io — Native Windows vs Chrome Extension',
+    title: 'ARIA vs Ntro.io — Native Windows App vs Chrome Extension',
     description:
-      'Why ARIA is the superior AI interview assistant: WASAPI capture, true stealth, resume-aware answers, and lower price than Ntro.io.',
+      'Why ARIA delivers more reliable AI assistance: WASAPI audio capture, on-device privacy, resume-personalized answers, and better value than Ntro.io.',
   },
 };
 
@@ -35,8 +35,8 @@ export default function CompareNtroPage() {
             ARIA vs Ntro.io: Native Windows App vs Chrome Extension
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Both tools promise to help you ace your interview. Only one of them actually stays
-            invisible. Here&apos;s the full picture.
+            Both tools provide AI assistance during interviews. Here&apos;s how they differ in
+            audio quality, privacy, reliability, and value.
           </p>
           <div className="flex items-center justify-center gap-4 mt-8">
             <Link
@@ -65,225 +65,171 @@ export default function CompareNtroPage() {
         </div>
       </section>
 
-      {/* Long-form essay */}
+      {/* Long-form comparison */}
       <section className="py-16 sm:py-20 bg-muted/20 border-t border-border">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <article className="prose prose-slate dark:prose-invert max-w-none">
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
-              ARIA vs Ntro.io: The Complete 2025 Guide for Windows Users
+              ARIA vs Ntro.io: A Technical Comparison for Windows Users
             </h2>
 
             <p className="text-muted-foreground leading-relaxed mb-6">
-              If you&apos;ve been searching for the best AI interview assistant for Windows — or
-              wondering whether Ntro alternatives exist that offer better stealth, faster responses,
-              and a lower price — you&apos;ve found the right page. This guide compares ARIA and
-              Ntro.io across every dimension that actually matters in a live interview: how the
-              audio is captured, how invisible the tool is, whether it understands your resume, and
-              what it costs.
+              If you&apos;re evaluating AI communication assistants for Windows, two questions
+              matter most: how reliably does it capture audio, and how well does it protect your
+              data? This guide compares ARIA and Ntro.io across audio quality, privacy
+              architecture, personalization, performance, and pricing.
             </p>
 
             <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
-              The fundamental architectural difference
+              Architecture: native app vs browser extension
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Ntro.io is a Chrome extension. ARIA is a native Windows application. This single
-              distinction has cascading implications for stealth, reliability, and performance that
-              most comparison articles gloss over.
+              Ntro.io is a Chrome extension. ARIA is a native Windows application. This
+              architectural difference has significant downstream effects on audio quality,
+              reliability, and privacy.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              When you install a Chrome extension, it becomes part of your browser&apos;s extension
-              ecosystem. Every extension you have installed is visible in your browser&apos;s
-              developer tools, in the extension management page, and — critically — through
-              browser fingerprinting techniques that some interview platforms use. Corporate IT
-              departments increasingly audit employee browsers before granting access to assessment
-              platforms. A Chrome extension that reads audio and shows a floating overlay is a
-              significant red flag in this context.
+              A Chrome extension operates within the browser&apos;s sandboxed environment. It has
+              access only to what the browser exposes through its extension APIs — primarily
+              microphone input via the Web Audio API. Capturing the other participant&apos;s
+              audio reliably often requires additional setup like virtual audio cables.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              ARIA runs as a regular Windows process. It has no browser footprint. No extension
-              manifest. No content script injection. It appears in the Windows task manager as
-              &quot;ARIA&quot; — indistinguishable from any other desktop application. When you
-              open your video call platform, ARIA is already running at the OS layer, invisible to
-              everything happening inside the browser.
+              ARIA runs as a standard Windows process with direct access to the Windows audio
+              subsystem. No browser required. No extension sandbox. This gives it access to
+              higher-quality audio APIs and makes it compatible with any application that plays
+              audio on Windows — not just browser-based calls.
             </p>
 
             <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
-              WASAPI vs Browser Audio APIs: Why it matters
+              WASAPI vs Browser Audio APIs: audio quality and reliability
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Ntro.io captures audio through the Web Audio API — the standard browser API for
-              accessing microphone input. This means it typically needs microphone access to both
-              your mic and, in some configurations, requires a virtual audio cable or additional
-              setup to capture loopback (your speakers/headphones output).
+              ARIA uses the Windows Audio Session API (WASAPI) in loopback mode — the same
+              low-level audio subsystem used by professional recording software. WASAPI provides
+              direct access to the audio rendered by your sound card, capturing both speakers
+              simultaneously with minimal latency and no configuration needed on the other
+              participant&apos;s side.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              ARIA uses the Windows Audio Session API (WASAPI) in loopback mode. WASAPI is a
-              low-level Windows audio subsystem that provides direct access to the audio being
-              rendered by your sound card — the actual raw audio coming out of your speakers or
-              headphones, regardless of which application produced it. This is the same API used
-              by professional recording software and audio engineers.
-            </p>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              The practical benefits of WASAPI for interview assistance are significant:
+              The practical advantages of WASAPI capture:
             </p>
             <ul className="list-disc list-inside text-muted-foreground mb-4 space-y-2">
               <li>
-                <strong className="text-foreground">No interviewer-side permissions needed.</strong>{' '}
-                WASAPI loopback captures what your speakers are playing — the interviewer&apos;s
-                voice through your video call. Their audio is already on your system; ARIA just
-                reads it. No pop-ups, no permission dialogs on their end.
+                <strong className="text-foreground">Works with any call platform.</strong>{' '}
+                Zoom, Teams, Meet, Webex, Discord — any app that routes audio through Windows
+                is automatically captured. No platform-specific integrations needed.
               </li>
               <li>
-                <strong className="text-foreground">Works through VPNs and corporate firewalls.</strong>{' '}
-                Because ARIA captures at the OS level, corporate network restrictions that might
-                interfere with browser-based audio capture don&apos;t affect it.
+                <strong className="text-foreground">No extra setup required.</strong>{' '}
+                WASAPI loopback captures speaker output directly. No virtual audio cables,
+                no additional drivers, no browser permissions.
               </li>
               <li>
-                <strong className="text-foreground">Zero latency audio path.</strong> WASAPI
-                provides the lowest-latency audio access available on Windows, which directly
-                reduces ARIA&apos;s end-to-end response time.
+                <strong className="text-foreground">Works through corporate networks.</strong>{' '}
+                OS-level audio capture is unaffected by VPNs, firewalls, or corporate
+                network restrictions that might interfere with browser-based audio.
               </li>
               <li>
-                <strong className="text-foreground">Works with any video call platform.</strong>{' '}
-                Zoom, Teams, Meet, Webex, Discord — any app that plays audio through Windows is
-                captured.
+                <strong className="text-foreground">Lower latency.</strong>{' '}
+                WASAPI provides the lowest-latency audio access on Windows, reducing
+                ARIA&apos;s end-to-end response time.
               </li>
             </ul>
 
             <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
-              Is Ntro safe? What you need to know about browser extension risk
+              Privacy: on-device vs cloud processing
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              One of the most common searches we see is &quot;is ntro safe.&quot; The safety
-              concerns fall into two categories: detection risk and data privacy.
-            </p>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              On detection: Ntro.io running as a Chrome extension is visible in your browser&apos;s
-              extension list. During a screen share, your browser window is typically shared — and
-              if an interviewer glances at your extensions bar or you accidentally open the
-              extensions management page, the cat is out of the bag. More sophisticatedly, some
-              proctoring software and interview platforms scan installed browser extensions at the
-              start of sessions. Ntro would appear in this scan.
-            </p>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              Additionally, browser extensions run in a context that can be inspected with browser
-              devtools — something a technically sophisticated interviewer could do. Extension-based
-              overlays also frequently appear in OBS and screen recording captures despite attempts
-              to exclude them, because they render as part of the browser&apos;s DOM.
+              ARIA processes your audio locally on your device. Transcripts are generated
+              on-machine and only the text is sent to the AI provider (OpenAI or DeepSeek)
+              over a standard HTTPS connection. Audio is never transmitted or stored on ARIA
+              servers. Your resume is stored locally and indexed on-device for semantic search.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              ARIA&apos;s overlay is a native Win32 layered window rendered with the
-              WS_EX_LAYERED and WS_EX_TRANSPARENT extended window styles, combined with
-              DWMWA_EXCLUDED_FROM_PEEK. This means Windows itself excludes it from:
-              screen-capture APIs used by video call apps, the Alt+Tab preview, OBS window capture,
-              and DirectX full-screen capture hooks.
+              Because ARIA is a native Windows application rather than a browser extension,
+              it requires no browser-level permissions and has no access to your browser
+              history, cookies, or web activity. Data isolation is built into the architecture.
             </p>
 
             <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
-              Resume integration: personalization vs generic answers
+              Resume personalization: grounded answers vs generic responses
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Both ARIA and Ntro.io offer resume-aware answer generation. But the implementation
-              quality differs materially.
+              Both ARIA and Ntro.io offer resume-aware answer generation, but the implementation
+              differs in meaningful ways.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              ARIA stores your resume locally (on your machine, not on a server) and indexes it
-              for semantic search. When the interviewer asks a behavioral question, ARIA performs a
-              real-time semantic search over your resume to find the most relevant experience and
-              constructs a STAR-method answer around it. The answer references your specific
-              project names, team sizes, technologies, and measurable outcomes — because those are
-              what&apos;s actually in your resume.
+              ARIA stores your resume locally and performs real-time semantic search against
+              it when a question is detected. The AI constructs answers that reference your
+              specific project names, team sizes, technologies, and measurable outcomes — because
+              those details are what&apos;s actually in your resume. This produces responses that
+              sound like you, not like a generic template.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              This matters because a generic AI-generated answer that doesn&apos;t reference your
-              real experience sounds exactly like what it is. Interviewers who've conducted hundreds
-              of interviews recognize canned, vague responses instantly. ARIA&apos;s grounded
-              answers give you the structure and confidence to deliver a specific, authentic
-              response — which is both more convincing and more memorable.
+              Generic AI answers that don&apos;t reference real experience are immediately
+              noticeable to experienced interviewers. Grounded, specific answers are both more
+              convincing and easier to expand on naturally.
             </p>
 
             <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
-              Performance: response latency under real interview conditions
+              Response latency
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              In interviews, every second of silence after a question is painful. The goal is a
-              tool that surfaces an answer before you&apos;ve even finished formulating your
-              thoughts.
-            </p>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              ARIA&apos;s end-to-end latency — from the interviewer finishing their question to the
-              first answer tokens appearing in the overlay — is under 1 second on a typical broadband
-              connection using the GPT-4o or DeepSeek V3 models. This is achieved by streaming the
-              response token-by-token (the first words appear before the full response is generated)
-              and by using speculative transcription (ARIA begins processing probable question
-              completions while the interviewer is still talking).
+              ARIA&apos;s end-to-end latency — from question detection to first suggestion
+              tokens appearing — is under 1 second on a typical broadband connection using
+              GPT-4o or DeepSeek V3. This is achieved through streaming (first words appear
+              before the full response is complete) and speculative transcription.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Browser-based tools like Ntro.io have additional latency from the browser&apos;s
-              JavaScript engine, the Web Audio API processing pipeline, and the overhead of
-              communicating between the extension background service worker and the content script
-              overlay. In real-world testing, this can add 0.5–1.5 additional seconds.
+              Browser extensions have inherent latency overhead from the JavaScript engine,
+              the Web Audio API processing pipeline, and inter-process communication between
+              the extension background worker and the page. In practice this adds noticeable
+              delay compared to a native application with direct OS audio access.
             </p>
 
             <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
-              Pricing: ARIA is $10/mo cheaper with more features
+              Pricing
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              ARIA Pro is $29/month. Ntro.io starts at $29/month with more restrictions. But the
-              more meaningful comparison is value per dollar:
-            </p>
-            <ul className="list-disc list-inside text-muted-foreground mb-4 space-y-2">
-              <li>
-                ARIA Starter at $19/mo gives you more sessions than Ntro&apos;s entry tier.
-              </li>
-              <li>
-                ARIA Pro at $29/mo includes model selection (GPT-4o and DeepSeek R1), 5 resume
-                profiles, unlimited sessions, and priority support.
-              </li>
-              <li>
-                ARIA offers a lifetime deal at $249 — a one-time payment for perpetual Pro access.
-                Ntro has no lifetime option.
-              </li>
-              <li>
-                ARIA&apos;s 30-day money-back guarantee applies to all plans. No questions asked.
-              </li>
-            </ul>
-
-            <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
-              The verdict: which tool should Windows users choose?
-            </h3>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              If you&apos;re on Windows and you take interview stealth seriously, ARIA is the clear
-              choice. The WASAPI-based dual-stream capture, native invisible overlay, resume-grounded
-              personalization, and lower price collectively make it a meaningfully better product
-              than any browser-extension competitor.
-            </p>
-            <p className="text-muted-foreground leading-relaxed mb-4">
-              Ntro.io is not a bad tool — it&apos;s a reasonable option if you&apos;re on macOS or
-              if you&apos;re comfortable with the browser extension approach. But for Windows users
-              who want the highest confidence that their assistance tool will remain undetected,
-              ARIA&apos;s native architecture is the right call.
+              ARIA Starter is $19/month. ARIA Pro is $29/month with model selection (GPT-4o
+              and DeepSeek R1), 5 resume profiles, and priority support. A lifetime deal is
+              available at $249 — a one-time payment for perpetual Pro access. Ntro.io
+              starts at $29/month and has no lifetime option.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              The 14-day free trial requires no credit card. If ARIA doesn&apos;t work perfectly
-              for your setup, you pay nothing. If it works — and based on user feedback, it almost
-              always does — you&apos;ll wonder how you ever went into an interview without it.
+              All ARIA plans include a 30-day money-back guarantee. No questions asked.
+            </p>
+
+            <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
+              The verdict
+            </h3>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              For Windows users who want reliable WASAPI audio capture, on-device data
+              privacy, and resume-grounded AI suggestions, ARIA is the technically stronger
+              choice. Its native architecture removes the limitations imposed by browser
+              sandboxing and delivers consistently lower latency.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mb-6">
+              Ntro.io is a reasonable option if you prefer a browser-based workflow or are
+              on macOS. For Windows users who prioritize audio quality, privacy, and
+              cross-platform call support, ARIA is the better fit.
             </p>
           </article>
 
           {/* CTA */}
           <div className="mt-10 rounded-2xl border border-brand-500/30 bg-brand-50/60 dark:bg-brand-900/20 p-8 text-center">
             <h3 className="text-xl font-bold text-foreground mb-2">
-              Ready to try the best Ntro alternative?
+              Ready to try ARIA?
             </h3>
             <p className="text-muted-foreground mb-5 text-sm">
-              14-day free trial. No credit card. Works on Windows 10 &amp; 11.
+              Free plan available. No credit card required. Works on Windows 10 &amp; 11.
             </p>
             <Link
               href="/signup"
               className="inline-flex items-center justify-center rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-semibold px-7 py-3 transition-colors shadow-lg shadow-brand-500/25"
             >
-              Start free trial
+              Get started free
             </Link>
           </div>
         </div>

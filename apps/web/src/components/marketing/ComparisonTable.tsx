@@ -24,11 +24,11 @@ const rows: ComparisonRow[] = [
   { feature: 'Works with VPNs & corporate networks', aria: true, others: false, category: 'Audio' },
   { feature: 'Phone call support (VoIP)', aria: true, others: false, category: 'Audio' },
 
-  // Stealth
-  { feature: 'Invisible to screen-share / OBS', aria: true, others: false, category: 'Stealth' },
-  { feature: 'No visible browser extension', aria: true, others: false, category: 'Stealth' },
-  { feature: 'Click-through transparent overlay', aria: true, others: false, category: 'Stealth' },
-  { feature: 'Detectable via extension audit', aria: false, others: true, category: 'Stealth' },
+  // Privacy & Security
+  { feature: 'Audio processed on-device', aria: true, others: false, category: 'Privacy & Security' },
+  { feature: 'No browser extension permissions needed', aria: true, others: false, category: 'Privacy & Security' },
+  { feature: 'No third-party audio sharing', aria: true, others: false, category: 'Privacy & Security' },
+  { feature: 'Works without internet (local AI)', aria: true, others: false, category: 'Privacy & Security' },
 
   // AI
   { feature: 'Resume-grounded personalized answers', aria: true, others: true, category: 'AI & Answers' },
@@ -37,9 +37,9 @@ const rows: ComparisonRow[] = [
   { feature: 'STAR-method coaching', aria: true, others: true, category: 'AI & Answers' },
   { feature: 'Live coding support', aria: true, others: 'Limited', category: 'AI & Answers' },
 
-  // Privacy
-  { feature: 'Data stays on your machine', aria: true, others: false, category: 'Privacy' },
-  { feature: 'No audio sent to third parties', aria: true, others: false, category: 'Privacy' },
+  // Reliability
+  { feature: 'Works on any video call platform', aria: true, others: false, category: 'Reliability' },
+  { feature: 'Works through VPNs & corporate networks', aria: true, others: false, category: 'Reliability' },
 
   // Pricing
   { feature: 'Free plan available', aria: true, others: false, category: 'Pricing' },
