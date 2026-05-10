@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
@@ -16,12 +17,12 @@ const COUNTRIES = [
 ];
 
 export default function SignupPage() {
+  const router = useRouter();
   const [form, setForm] = useState({ email: '', password: '', country: 'US', marketing: false });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -45,30 +46,11 @@ export default function SignupPage() {
         return;
       }
 
-      setDone(true);
+      router.push('/login');
     } catch {
       setError('Connection error. Please try again.');
       setLoading(false);
     }
-  }
-
-  if (done) {
-    return (
-      <div className="w-full max-w-md text-center space-y-4">
-        <div className="w-16 h-16 bg-brand-500/10 rounded-full flex items-center justify-center mx-auto">
-          <svg className="w-8 h-8 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h2 className="text-2xl font-bold">Check your email</h2>
-        <p className="text-muted-foreground">
-          We sent a verification link to <strong>{form.email}</strong>. Click it to activate your account and get started for free.
-        </p>
-        <Link href="/login" className="text-brand-500 hover:underline text-sm">
-          Back to sign in
-        </Link>
-      </div>
-    );
   }
 
   return (
