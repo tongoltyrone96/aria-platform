@@ -25,7 +25,7 @@ export function CTASection() {
             href="/signup"
             className="inline-flex items-center justify-center rounded-xl bg-white hover:bg-brand-50 text-brand-700 text-base font-bold px-8 py-4 transition-colors shadow-xl shadow-brand-900/30"
           >
-            Start 14-day free trial
+            Start with Free plan
           </Link>
           <Link
             href="/pricing"
