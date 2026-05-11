@@ -148,6 +148,20 @@ export const sessions = pgTable(
   (table) => [index('idx_sessions_user_ts').on(table.userId, table.startedAt)],
 );
 
+export const cryptoPayments = pgTable('crypto_payments', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => profiles.id, { onDelete: 'cascade' }),
+  nowpaymentsId: text('nowpayments_id').unique(),
+  plan: text('plan').notNull(),
+  status: text('status').notNull().default('pending'),
+  amountUsd: integer('amount_usd').notNull(),
+  raw: jsonb('raw'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
 export const referrals = pgTable('referrals', {
   id: uuid('id').defaultRandom().primaryKey(),
   referrerId: uuid('referrer_id')

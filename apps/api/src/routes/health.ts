@@ -1,6 +1,10 @@
 import type { FastifyInstance } from 'fastify';
 
 export async function healthRoutes(fastify: FastifyInstance) {
+  fastify.get('/health', async () => {
+    return { status: 'ok', service: 'aria-api' };
+  });
+
   fastify.get('/v1/health', {
     schema: {
       response: {

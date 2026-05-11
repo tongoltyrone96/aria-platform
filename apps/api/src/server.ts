@@ -17,6 +17,8 @@ import { usageRoutes } from './routes/usage.js';
 import { accountRoutes } from './routes/account.js';
 import { billingRoutes } from './routes/billing.js';
 import { paddleWebhookRoute } from './routes/webhook/paddle.js';
+import { nowpaymentsWebhookRoute } from './routes/webhook/nowpayments.js';
+import { cryptoPaymentRoutes } from './routes/payments/crypto.js';
 import { sessionRoutes } from './routes/session.js';
 
 const devLogger =
@@ -57,6 +59,8 @@ async function buildServer() {
   await fastify.register(accountRoutes);
   await fastify.register(billingRoutes);
   await fastify.register(paddleWebhookRoute);
+  await fastify.register(nowpaymentsWebhookRoute);
+  await fastify.register(cryptoPaymentRoutes);
   await fastify.register(sessionRoutes);
 
   return fastify;
