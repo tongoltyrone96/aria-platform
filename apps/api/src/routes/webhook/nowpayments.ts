@@ -12,10 +12,12 @@ const DAYS_MS = 24 * 60 * 60 * 1000;
 
 function resolvePlan(plan: string): { dbPlan: Plan; expiresAt: Date } {
   const now = Date.now();
-  if (plan === 'pro_yearly') {
-    return { dbPlan: 'pro_annual', expiresAt: new Date(now + 365 * DAYS_MS) };
+  switch (plan) {
+    case 'pro_yearly':    return { dbPlan: 'pro_annual',    expiresAt: new Date(now + 365 * DAYS_MS) };
+    case 'elite_monthly': return { dbPlan: 'elite',         expiresAt: new Date(now + 30  * DAYS_MS) };
+    case 'elite_yearly':  return { dbPlan: 'elite_annual',  expiresAt: new Date(now + 365 * DAYS_MS) };
+    default:              return { dbPlan: 'pro',           expiresAt: new Date(now + 30  * DAYS_MS) };
   }
-  return { dbPlan: 'pro', expiresAt: new Date(now + 30 * DAYS_MS) };
 }
 
 export async function nowpaymentsWebhookRoute(fastify: FastifyInstance) {

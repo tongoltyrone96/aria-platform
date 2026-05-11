@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Check, Users } from 'lucide-react';
+import { Check, Users, Loader2, Bitcoin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { createClient } from '@/lib/supabase/client';
+
+const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
 
 type BillingCycle = 'monthly' | 'annual';
 
@@ -17,8 +21,12 @@ interface PricingPlan {
   highlighted?: boolean;
   description: string;
   features: string[];
-  cta: string;
-  ctaHref: string;
+  /** If set, card shows a crypto payment button using this plan ID */
+  cryptoPlanMonthly?: string;
+  cryptoPlanAnnual?: string;
+  /** Fallback link CTA (Free plan only) */
+  ctaLabel?: string;
+  ctaHref?: string;
 }
 
 const plans: PricingPlan[] = [
@@ -37,7 +45,7 @@ const plans: PricingPlan[] = [
       'Multi-user simultaneous access',
       'Resume upload (1 profile)',
     ],
-    cta: 'Download Free',
+    ctaLabel: 'Download Free',
     ctaHref: '/dashboard',
   },
   {
@@ -60,8 +68,8 @@ const plans: PricingPlan[] = [
       'STAR-method coaching mode',
       'Priority support',
     ],
-    cta: 'Start for Free',
-    ctaHref: '/signup',
+    cryptoPlanMonthly: 'pro_monthly',
+    cryptoPlanAnnual: 'pro_yearly',
   },
   {
     name: 'Elite',
@@ -84,10 +92,85 @@ const plans: PricingPlan[] = [
       'Early access to new features',
       'Dedicated support',
     ],
-    cta: 'Start for Free',
-    ctaHref: '/signup',
+    cryptoPlanMonthly: 'elite_monthly',
+    cryptoPlanAnnual: 'elite_yearly',
   },
 ];
+
+// ── Crypto pay button ────────────────────────────────────────
+
+interface CryptoPayButtonProps {
+  cryptoPlan: string;
+  highlighted: boolean;
+}
+
+function CryptoPayButton({ cryptoPlan, highlighted }: CryptoPayButtonProps) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleClick = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        router.push('/login');
+        return;
+      }
+
+      const res = await fetch(`${API_URL}/api/payments/crypto/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ plan: cryptoPlan }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({})) as { details?: string };
+        throw new Error(data.details ?? `Server error ${res.status}`);
+      }
+
+      const { paymentUrl } = await res.json() as { paymentUrl: string };
+      window.location.href = paymentUrl;
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-2">
+      <button
+        type="button"
+        onClick={handleClick}
+        disabled={loading}
+        className={cn(
+          'inline-flex items-center justify-center gap-2 rounded-xl text-sm font-semibold px-5 py-3 transition-all',
+          'disabled:opacity-60 disabled:cursor-not-allowed',
+          highlighted
+            ? 'bg-brand-500 hover:bg-brand-600 text-white shadow-lg shadow-brand-500/25 hover:-translate-y-0.5'
+            : 'border border-border bg-background hover:bg-muted text-foreground',
+        )}
+      >
+        {loading
+          ? <Loader2 size={14} className="animate-spin shrink-0" />
+          : <Bitcoin size={14} className="shrink-0" />}
+        {loading ? 'Redirecting to checkout…' : 'Pay with Crypto'}
+      </button>
+      {error && (
+        <p className="text-xs text-red-500 text-center leading-snug">{error}</p>
+      )}
+    </div>
+  );
+}
+
+// ── Plan card ────────────────────────────────────────────────
 
 function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: BillingCycle; index: number }) {
   const price =
@@ -100,6 +183,11 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
       ? plan.monthlyPrice * 12 - plan.annualPrice
       : 0;
 
+  const cryptoPlan =
+    billing === 'annual' && plan.cryptoPlanAnnual
+      ? plan.cryptoPlanAnnual
+      : plan.cryptoPlanMonthly;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}
@@ -111,7 +199,7 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
         'relative flex flex-col rounded-2xl border p-8 transition-all',
         plan.highlighted
           ? 'border-brand-500 shadow-2xl shadow-brand-500/15 bg-background scale-[1.02]'
-          : 'border-border bg-background'
+          : 'border-border bg-background',
       )}
     >
       {plan.badge && (
@@ -122,6 +210,7 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
         </div>
       )}
 
+      {/* Price header */}
       <div className="mb-6">
         <h3 className="text-lg font-bold text-foreground mb-0.5">{plan.name}</h3>
         <p className="text-xs text-muted-foreground mb-4">{plan.description}</p>
@@ -131,7 +220,7 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
           ) : (
             <>
               <span className="text-4xl font-bold text-foreground">
-                ${(Math.round(price * 100) / 100).toString()}
+                ${(Math.round(price * 100) / 100).toFixed(2)}
               </span>
               <span className="text-muted-foreground text-sm mb-1.5">/mo</span>
             </>
@@ -153,6 +242,7 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
         Multiple users can share one account simultaneously
       </div>
 
+      {/* Feature list */}
       <ul className="flex flex-col gap-3 mb-8 flex-1">
         {plan.features.map((f) => (
           <li key={f} className="flex items-start gap-2.5">
@@ -165,27 +255,34 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
         ))}
       </ul>
 
-      <Link
-        href={plan.ctaHref}
-        className={cn(
-          'inline-flex items-center justify-center rounded-xl text-sm font-semibold px-5 py-3 transition-all',
-          plan.highlighted
-            ? 'bg-brand-500 hover:bg-brand-600 text-white shadow-lg shadow-brand-500/25 hover:-translate-y-0.5'
-            : 'border border-border bg-background hover:bg-muted text-foreground'
-        )}
-      >
-        {plan.cta}
-      </Link>
+      {/* CTA */}
+      {cryptoPlan ? (
+        <CryptoPayButton cryptoPlan={cryptoPlan} highlighted={plan.highlighted ?? false} />
+      ) : (
+        <Link
+          href={plan.ctaHref ?? '/dashboard'}
+          className={cn(
+            'inline-flex items-center justify-center rounded-xl text-sm font-semibold px-5 py-3 transition-all',
+            plan.highlighted
+              ? 'bg-brand-500 hover:bg-brand-600 text-white shadow-lg shadow-brand-500/25 hover:-translate-y-0.5'
+              : 'border border-border bg-background hover:bg-muted text-foreground',
+          )}
+        >
+          {plan.ctaLabel ?? 'Get Started'}
+        </Link>
+      )}
     </motion.div>
   );
 }
+
+// ── PricingTable ─────────────────────────────────────────────
 
 export function PricingTable() {
   const [billing, setBilling] = useState<BillingCycle>('monthly');
 
   return (
     <div className="flex flex-col gap-10">
-      {/* Toggle */}
+      {/* Billing toggle */}
       <div className="flex items-center justify-center gap-3">
         <span className={cn('text-sm font-medium transition-colors', billing === 'monthly' ? 'text-foreground' : 'text-muted-foreground')}>
           Monthly
@@ -197,7 +294,7 @@ export function PricingTable() {
           onClick={() => setBilling((b) => (b === 'monthly' ? 'annual' : 'monthly'))}
           className={cn(
             'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors',
-            billing === 'annual' ? 'bg-brand-500' : 'bg-muted'
+            billing === 'annual' ? 'bg-brand-500' : 'bg-muted',
           )}
         >
           <motion.span
@@ -229,7 +326,7 @@ export function PricingTable() {
         viewport={{ once: true }}
         className="text-center text-xs text-muted-foreground"
       >
-        Free plan available forever — no credit card needed. Upgrade or cancel anytime.
+        Free plan available forever — no credit card needed. Crypto payments are one-time charges; renewal required each cycle.
       </motion.p>
     </div>
   );

@@ -5,12 +5,14 @@ import { verifyUserJwt, verifySupabaseToken } from '../../lib/jwt.js';
 import { createNowPaymentsInvoice } from '../../services/nowpayments.js';
 
 const PLAN_PRICES: Record<string, { amount: number; label: string }> = {
-  pro_monthly: { amount: 19, label: 'ARIA Pro — Monthly' },
-  pro_yearly: { amount: 190, label: 'ARIA Pro — Annual' },
+  pro_monthly:   { amount: 17.99,  label: 'ARIA Pro — Monthly' },
+  pro_yearly:    { amount: 190.03, label: 'ARIA Pro — Annual' },
+  elite_monthly: { amount: 27.99,  label: 'ARIA Elite — Monthly' },
+  elite_yearly:  { amount: 295.56, label: 'ARIA Elite — Annual' },
 };
 
 const CreateCryptoSchema = z.object({
-  plan: z.enum(['pro_monthly', 'pro_yearly']),
+  plan: z.enum(['pro_monthly', 'pro_yearly', 'elite_monthly', 'elite_yearly']),
 });
 
 async function resolveUserId(req: FastifyRequest): Promise<string> {
