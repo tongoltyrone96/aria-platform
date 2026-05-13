@@ -1,139 +1,130 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Video, Phone, Monitor, Bot } from 'lucide-react';
 
-const categories = [
+const platforms = [
   {
-    icon: Video,
-    label: 'Video Calls',
-    color: 'text-blue-400',
-    bg: 'bg-blue-500/10 border-blue-500/20',
-    platforms: ['Zoom', 'Microsoft Teams', 'Google Meet', 'Discord', 'Webex', 'Whatsapp', 'Viber', 'Slack'],
+    name: 'Zoom',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.498 14.437a1.37 1.37 0 0 1-1.37 1.369H7.314a1.37 1.37 0 0 1-1.37-1.37V9.563c0-.756.614-1.37 1.37-1.37h8.814c.756 0 1.37.614 1.37 1.37v4.874zm1.89-4.22-2.386 1.544v3.478l2.386 1.544c.422.273.974-.027.974-.528V10.745c0-.501-.552-.8-.974-.528z" />
+      </svg>
+    ),
   },
   {
-    icon: Phone,
-    label: 'Phone & VoIP',
-    color: 'text-green-400',
-    bg: 'bg-green-500/10 border-green-500/20',
-    platforms: ['Google Voice', 'Zadarma', 'RingCentral', 'Vonage', 'Dialpad', 'OpenPhone', 'Grasshopper', 'Any SIP app'],
+    name: 'Google Meet',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="7" width="13" height="10" rx="1.5" />
+        <path d="M17 10.5l4-2.5v8l-4-2.5V10.5z" />
+      </svg>
+    ),
   },
   {
-    icon: Monitor,
-    label: 'Screen Share',
-    color: 'text-violet-400',
-    bg: 'bg-violet-500/10 border-violet-500/20',
-    platforms: ['Any screen-share session', 'Remote interviews', 'HireVue', 'Codility', 'HackerRank', 'Karat', 'CoderPad', 'Take-home assessments'],
+    name: 'Microsoft Teams',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.625 7.5h-6.75A.375.375 0 0 0 13.5 7.875v5.25c0 1.657 1.343 3 3 3h.75a.375.375 0 0 0 .375-.375V14.25a.375.375 0 0 0-.375-.375H17.25a1.5 1.5 0 0 1-1.5-1.5V9h4.875A.375.375 0 0 0 21 8.625v-.75A.375.375 0 0 0 20.625 7.5zM17.25 6a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5zM12 13.5V8.625A.375.375 0 0 0 11.625 8.25H3.375A.375.375 0 0 0 3 8.625v4.875A5.625 5.625 0 0 0 8.625 19.125h.375a5.625 5.625 0 0 0 3.375-1.125A5.625 5.625 0 0 0 12 13.5zM7.5 7.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5z" />
+      </svg>
+    ),
   },
   {
-    icon: Bot,
-    label: 'AI-powered Calls',
-    color: 'text-amber-400',
-    bg: 'bg-amber-500/10 border-amber-500/20',
-    platforms: ['AI phone screens', 'Automated interviews', 'Async video platforms', 'Recorded interviews', 'Any audio source', 'VoiceAI systems', 'HR bot calls', 'Assessment centers'],
+    name: 'Slack',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zm0 1.271a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zm10.122 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zm-1.268 0a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zm-2.523 10.122a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zm0-1.268a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Webex',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 3.6a8.4 8.4 0 1 1 0 16.8A8.4 8.4 0 0 1 12 3.6zm-3.6 4.8a1.2 1.2 0 0 0-1.2 1.2v4.8a1.2 1.2 0 0 0 1.2 1.2h4.8a1.2 1.2 0 0 0 1.2-1.2V9.6a1.2 1.2 0 0 0-1.2-1.2H8.4zm6.6 1.2 1.8-1.2v7.2L15 14.4V9.6z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Telegram',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Discord',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.042.03.052a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Skype',
+    icon: (
+      <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12.069 18.874c-4.023 0-5.82-1.979-5.82-3.464 0-.765.561-1.296 1.333-1.296 1.723 0 1.273 2.477 4.487 2.477 1.641 0 2.55-.895 2.55-1.811 0-.551-.269-1.16-1.354-1.429l-3.576-.895c-2.88-.724-3.403-2.286-3.403-3.751 0-3.047 2.861-4.191 5.549-4.191 2.471 0 5.393 1.373 5.393 3.199 0 .784-.688 1.24-1.453 1.24-1.469 0-1.198-2.037-4.164-2.037-1.469 0-2.292.664-2.292 1.617s1.153 1.258 2.157 1.487l2.637.587c2.891.649 3.624 2.346 3.624 3.944 0 2.476-1.902 4.324-5.668 4.324m11.084-4.882l-.029.135-.044-.24A6.33 6.33 0 0 0 23.387 12c0-3.535-2.982-6.4-6.664-6.4-.812 0-1.596.152-2.324.43-.044-.004-.089-.01-.135-.01-1.177 0-2.152.952-2.152 2.125 0 .342.09.659.236.94A6.406 6.406 0 0 0 11.956 12c0 3.535 2.983 6.4 6.664 6.4.88 0 1.715-.176 2.484-.486.11.011.222.016.336.016 1.177 0 2.151-.952 2.151-2.125a2.12 2.12 0 0 0-.438-1.313" />
+      </svg>
+    ),
   },
 ];
-
-const marqueeLogos = [
-  'Zoom', 'Teams', 'Google Meet', 'Discord', 'Webex', 'Whatsapp',
-  'Viber', 'Slack', 'Google Voice', 'Zadarma', 'RingCentral', 'BlueJeans',
-  'HireVue', 'HackerRank', 'CoderPad', 'Karat', 'Codility',
-];
-
-function Marquee({ reverse = false }: { reverse?: boolean }) {
-  return (
-    <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_15%,white_85%,transparent)]">
-      <motion.div
-        animate={{ x: reverse ? ['0%', '50%'] : ['-50%', '0%'] }}
-        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-        className="flex shrink-0 gap-4"
-      >
-        {[...marqueeLogos, ...marqueeLogos, ...marqueeLogos, ...marqueeLogos].map((logo, i) => (
-          <div
-            key={`${logo}-${i}`}
-            className="shrink-0 flex items-center justify-center h-10 px-6 rounded-lg bg-white/5 border border-white/10 text-sm text-white/50 font-medium whitespace-nowrap"
-          >
-            {logo}
-          </div>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
 
 export function CompatiblePlatforms() {
+  const doubled = [...platforms, ...platforms];
+
   return (
-    <section className="py-24 sm:py-32 bg-neutral-950 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
+    <section className="py-24">
+      <div className="container mx-auto max-w-6xl px-4">
+        <motion.h2
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-16 text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-brand-400 mb-4">Universal Compatibility</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Works with every platform you use
-          </h2>
-          <p className="max-w-2xl mx-auto text-base text-white/50 leading-relaxed">
-            Because ARIA captures audio at the Windows system level — not inside a browser — it works with
-            any app that plays sound through your speakers or headphones.
-            <strong className="text-white/80"> If you can hear them, ARIA can hear them.</strong>
-          </p>
-        </motion.div>
+          Compatible with All Meeting Platforms
+        </motion.h2>
 
-        {/* Marquee strips */}
-        <div className="space-y-3 mb-16">
-          <Marquee />
-          <Marquee reverse />
-        </div>
-
-        {/* Category grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {categories.map((cat, i) => (
-            <motion.div
-              key={cat.label}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -4 }}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-5 cursor-default"
-            >
-              <div className={`w-10 h-10 rounded-xl border flex items-center justify-center ${cat.bg}`}>
-                <cat.icon size={20} className={cat.color} />
-              </div>
-              <div>
-                <p className={`text-sm font-bold mb-3 ${cat.color}`}>{cat.label}</p>
-                <ul className="space-y-1.5">
-                  {cat.platforms.map((p) => (
-                    <li key={p} className="flex items-center gap-2 text-sm text-white/50">
-                      <span className={`w-1 h-1 rounded-full shrink-0 ${cat.color.replace('text-', 'bg-')}`} />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Bottom note */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 text-center"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.2 }}
+          className="relative overflow-hidden -mx-4 sm:-mx-8 lg:-mx-16"
         >
-          <p className="text-sm text-white/30">
-            Works silently in the background on <strong className="text-white/50">Windows 10 &amp; 11</strong> with any audio output device.
-            No browser extension. No installation of drivers. Just download and activate.
-          </p>
+          <div
+            className="absolute left-0 top-0 h-full w-28 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to right, white 20%, transparent)' }}
+          />
+          <div
+            className="absolute right-0 top-0 h-full w-28 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to left, white 20%, transparent)' }}
+          />
+          <div
+            className="flex items-center py-2"
+            style={{ animation: 'marquee-rtl 28s linear infinite', width: 'max-content' }}
+          >
+            {doubled.map((platform, i) => (
+              <div key={i} className="flex items-center gap-3 whitespace-nowrap pr-14">
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: '#F05A28' }}
+                >
+                  {platform.icon}
+                </div>
+                <span className="text-sm font-medium">{platform.name}</span>
+              </div>
+            ))}
+          </div>
         </motion.div>
       </div>
+      <style>{`
+        @keyframes marquee-rtl {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
     </section>
   );
 }

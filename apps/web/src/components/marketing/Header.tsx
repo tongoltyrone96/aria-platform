@@ -7,12 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
+import AnimatedLogo from '@/components/AnimatedLogo';
 
 const navLinks = [
-  { label: 'Blogs', href: '/blog' },
+  { label: 'Features', href: '/#features' },
+  { label: 'How It Works', href: '/#how-it-works' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Tutorials', href: '/tutorials' },
-  { label: 'FAQs', href: '/faq' },
+  { label: 'Testimonials', href: '/#testimonials' },
+  { label: 'FAQ', href: '/faq' },
 ];
 
 export function Header() {
@@ -51,36 +53,31 @@ export function Header() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-6 left-4 right-4 z-50 transition-all duration-300',
+        'max-w-5xl mx-auto rounded-full',
         scrolled
-          ? 'bg-neutral-950/90 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20'
-          : 'bg-transparent'
+          ? 'bg-neutral-950/90 backdrop-blur-md shadow-lg shadow-black/20'
+          : 'bg-neutral-950/80 backdrop-blur-sm',
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-
+      <div className="px-4 sm:px-6">
+        <div className="flex items-center justify-between h-14">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="w-7 h-7 rounded-lg bg-brand-500 flex items-center justify-center">
-              <span className="text-white font-black text-sm leading-none">A</span>
-            </div>
-            <span className="text-white font-bold text-lg tracking-tight">ARIA</span>
+          <Link href="/" className="flex items-center shrink-0">
+            <AnimatedLogo />
           </Link>
 
-          {/* Center pill nav — desktop */}
-          <nav className="hidden md:flex items-center">
-            <div className="flex items-center gap-1 rounded-full border border-white/15 bg-white/5 backdrop-blur px-2 py-1.5">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="px-4 py-1.5 text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+          {/* Center nav — desktop */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-4 py-1.5 text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Right — desktop */}
@@ -107,13 +104,13 @@ export function Header() {
                   href="/login"
                   className="text-sm font-medium text-white/60 hover:text-white transition-colors duration-200"
                 >
-                  Sign in
+                  Sign In
                 </Link>
                 <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-full bg-cyan-400 hover:bg-cyan-300 text-neutral-900 text-sm font-bold px-5 py-2 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-cyan-400/20"
+                  href="/signup"
+                  className="inline-flex items-center justify-center rounded-full bg-white text-neutral-900 text-sm font-bold px-5 py-2 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/90"
                 >
-                  Contact Us
+                  Sign Up
                 </Link>
               </>
             )}
@@ -140,7 +137,7 @@ export function Header() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="md:hidden overflow-hidden bg-neutral-950/98 backdrop-blur-md border-b border-white/10"
+            className="md:hidden overflow-hidden rounded-b-2xl bg-neutral-950/98 backdrop-blur-md border-t border-white/10"
           >
             <div className="px-4 py-5 flex flex-col gap-1">
               {navLinks.map((link) => (
@@ -178,14 +175,14 @@ export function Header() {
                       onClick={() => setMobileOpen(false)}
                       className="text-sm font-medium text-white/60 hover:text-white px-3 py-2 transition-colors"
                     >
-                      Sign in
+                      Sign In
                     </Link>
                     <Link
-                      href="/contact"
+                      href="/signup"
                       onClick={() => setMobileOpen(false)}
-                      className="inline-flex items-center justify-center rounded-full bg-cyan-400 text-neutral-900 text-sm font-bold px-5 py-2.5 transition-colors"
+                      className="inline-flex items-center justify-center rounded-full bg-white text-neutral-900 text-sm font-bold px-5 py-2.5 transition-colors"
                     >
-                      Contact Us
+                      Sign Up
                     </Link>
                   </>
                 )}

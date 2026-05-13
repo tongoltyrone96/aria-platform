@@ -1,12 +1,12 @@
 import { Header } from '@/components/marketing/Header';
 import { Hero } from '@/components/marketing/Hero';
-import { Features } from '@/components/marketing/Features';
 import { CompatiblePlatforms } from '@/components/marketing/CompatiblePlatforms';
-import { ComparisonTable } from '@/components/marketing/ComparisonTable';
-import { PricingTable } from '@/components/marketing/PricingTable';
+import { Features } from '@/components/marketing/Features';
+import { Benefits } from '@/components/marketing/Benefits';
+import { HowItWorks } from '@/components/marketing/HowItWorks';
 import { Testimonials } from '@/components/marketing/Testimonials';
+import { PricingTable } from '@/components/marketing/PricingTable';
 import { FAQAccordion } from '@/components/marketing/FAQAccordion';
-import { allFAQs } from '@/lib/faq-data';
 import { CTASection } from '@/components/marketing/CTASection';
 import { Footer } from '@/components/marketing/Footer';
 import Link from 'next/link';
@@ -25,30 +25,14 @@ export default function HomePage() {
         {/* Features */}
         <Features />
 
-        {/* Comparison */}
-        <section className="py-24 sm:py-32 bg-muted/30">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <p className="text-xs font-semibold uppercase tracking-widest text-brand-500 mb-3">Why ARIA</p>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                How ARIA compares to other AI assistants
-              </h2>
-              <p className="max-w-2xl mx-auto text-base text-muted-foreground">
-                Most AI assistants are browser extensions — limited by what a browser can access.
-                ARIA is a native Windows app with direct system-level audio capture and on-device privacy.
-              </p>
-            </div>
-            <ComparisonTable />
-            <div className="text-center mt-8">
-              <Link
-                href="/compare/ntro"
-                className="text-sm font-semibold text-brand-500 hover:text-brand-600 transition-colors"
-              >
-                See the full detailed comparison &rarr;
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* Benefits */}
+        <Benefits />
+
+        {/* How It Works */}
+        <HowItWorks />
+
+        {/* Testimonials */}
+        <Testimonials />
 
         {/* Pricing */}
         <section className="py-24 sm:py-32 bg-background">
@@ -67,24 +51,24 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <Testimonials />
-
         {/* FAQ */}
-        <section className="py-24 sm:py-32 bg-background">
+        <section id="faq" className="py-24 sm:py-32 bg-background">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-                Frequently asked questions
+                Frequently Asked Questions
               </h2>
+              <p className="text-lg text-muted-foreground">
+                Everything you need to know before your next interview.
+              </p>
             </div>
-            <FAQAccordion items={allFAQs.slice(0, 6)} />
+            <FAQAccordion />
             <div className="text-center mt-10">
               <Link
                 href="/faq"
                 className="text-sm font-semibold text-brand-500 hover:text-brand-600 transition-colors"
               >
-                See all {allFAQs.length} questions &rarr;
+                See all questions &rarr;
               </Link>
             </div>
           </div>
