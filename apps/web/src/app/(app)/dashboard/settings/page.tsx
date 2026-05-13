@@ -54,7 +54,7 @@ export default function SettingsPage() {
       {/* Email */}
       <div className="bg-card border border-border rounded-xl p-5 space-y-3">
         <h2 className="text-sm font-semibold">Email address</h2>
-        <p className="text-sm text-muted-foreground">{email || 'â€”'}</p>
+        <p className="text-sm text-muted-foreground">{email || '—'}</p>
       </div>
 
       {/* Password */}
@@ -74,7 +74,7 @@ export default function SettingsPage() {
         <button type="submit" disabled={pwLoading}
           className="px-4 py-2 bg-brand-500 text-white text-sm font-medium rounded-lg hover:bg-brand-600 transition-colors disabled:opacity-50"
         >
-          {pwLoading ? 'Updatingâ€¦' : 'Update password'}
+          {pwLoading ? 'Updating…' : 'Update password'}
         </button>
       </form>
 
