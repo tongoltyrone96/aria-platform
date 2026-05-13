@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Monitor, Shield, Zap, Target, Brain, Globe } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Monitor, Shield, Zap, Target, Brain, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.ariainterview.com';
 
@@ -20,10 +21,114 @@ const FEATURE_BADGES = [
   { icon: Globe, label: 'Every interview format, perfectly handled' },
 ];
 
+const SLIDES = [
+  { src: '/interview1.png', alt: 'ARIA in action during a real interview session' },
+  { src: '/interview2.jpeg', alt: 'Before and after — confidence with ARIA vs without' },
+  { src: '/Log-in.png', alt: 'ARIA Interview Assistant dashboard' },
+];
+
+function HeroSlideshow() {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  const goTo = useCallback((next: number, dir: number) => {
+    setDirection(dir);
+    setIndex(next);
+  }, []);
+
+  const prev = useCallback(() => {
+    goTo((index - 1 + SLIDES.length) % SLIDES.length, -1);
+  }, [index, goTo]);
+
+  const next = useCallback(() => {
+    goTo((index + 1) % SLIDES.length, 1);
+  }, [index, goTo]);
+
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setDirection(1);
+      setIndex((i) => (i + 1) % SLIDES.length);
+    }, 4500);
+    return () => clearInterval(iv);
+  }, []);
+
+  return (
+    <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: '16/9' }}>
+      {/* Slides */}
+      <AnimatePresence mode="wait" custom={direction}>
+        <motion.img
+          key={index}
+          src={SLIDES[index].src}
+          alt={SLIDES[index].alt}
+          custom={direction}
+          initial={{ opacity: 0, x: direction * 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: direction * -60 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </AnimatePresence>
+
+      {/* Prev / Next arrows */}
+      <button
+        type="button"
+        onClick={prev}
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center text-white transition-all hover:scale-105"
+      >
+        <ChevronLeft size={18} />
+      </button>
+      <button
+        type="button"
+        onClick={next}
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-sm flex items-center justify-center text-white transition-all hover:scale-105"
+      >
+        <ChevronRight size={18} />
+      </button>
+
+      {/* Dot indicators */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
+        {SLIDES.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goTo(i, i > index ? 1 : -1)}
+            className="transition-all rounded-full"
+            style={{
+              width: i === index ? '24px' : '8px',
+              height: '8px',
+              backgroundColor: i === index ? '#F05A28' : 'rgba(255,255,255,0.55)',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Stats bubble */}
+      <div className="absolute bottom-4 left-4 z-10 bg-white rounded-xl shadow-lg px-4 py-3">
+        <div className="flex items-center gap-3">
+          <div className="flex items-end gap-1 h-7">
+            {[30, 50, 70, 90].map((h, i) => (
+              <div
+                key={i}
+                className="w-2 rounded-sm"
+                style={{ height: `${h}%`, backgroundColor: '#F05A28', opacity: 0.5 + i * 0.17 }}
+              />
+            ))}
+          </div>
+          <div>
+            <div className="text-xs text-muted-foreground">Interview Success Rate</div>
+            <div className="text-xs font-semibold" style={{ color: '#F05A28' }}>Rapidly Rising</div>
+            <div className="text-lg font-bold leading-none" style={{ color: '#F05A28' }}>98%+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Hero() {
   return (
     <section
-      className="pt-40 pb-20"
+      className="pt-40 pb-24"
       style={{
         backgroundImage: "url('/hero-bg.png')",
         backgroundSize: 'cover',
@@ -32,15 +137,16 @@ export function Hero() {
       }}
     >
       <div className="container mx-auto max-w-6xl px-4">
+        {/* Text + CTA */}
         <div className="text-center space-y-6 max-w-4xl mx-auto">
           <div className="space-y-4">
             <motion.div
               {...fadeUp(0)}
-              className="inline-flex items-center text-foreground px-3 py-1 rounded-full border border-border"
+              className="inline-flex items-center px-3 py-1 rounded-full border border-border"
               style={{ backgroundColor: '#F0F4F8' }}
             >
               <Monitor className="w-4 h-4 mr-2" style={{ color: '#F05A28' }} />
-              <span className="text-sm">AI-Powered Interview Assistant for Windows</span>
+              <span className="text-sm text-foreground">AI-Powered Interview Assistant for Windows</span>
             </motion.div>
 
             <motion.h1
@@ -51,10 +157,7 @@ export function Hero() {
               <span style={{ color: '#F05A28' }}> Real-Time AI Assistance</span>
             </motion.h1>
 
-            <motion.p
-              {...fadeUp(0.2)}
-              className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
-            >
+            <motion.p {...fadeUp(0.2)} className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Every question. Perfect answer. Aria listens live so you never hesitate.
             </motion.p>
           </div>
@@ -62,8 +165,8 @@ export function Hero() {
           <motion.div {...fadeUp(0.3)} className="flex justify-center">
             <a
               href={`${CDN_URL}/releases/ARIA-latest.exe`}
-              className="inline-flex items-center gap-2 text-white text-base font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5"
-              style={{ backgroundColor: '#F05A28' }}
+              className="inline-flex items-center gap-2 text-white text-base font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg"
+              style={{ backgroundColor: '#F05A28', boxShadow: '0 8px 24px rgba(240,90,40,0.35)' }}
             >
               <Monitor className="w-5 h-5" />
               Download for Windows
@@ -105,48 +208,15 @@ export function Hero() {
           ))}
         </div>
 
-        {/* YouTube embed */}
+        {/* Image slideshow */}
         <motion.div
           initial={{ opacity: 0, y: 48, scale: 0.97 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="relative -mx-4 sm:-mx-8 lg:-mx-16"
+          className="-mx-4 sm:-mx-8 lg:-mx-16"
         >
-          <div
-            className="rounded-xl overflow-hidden border-4 border-white"
-            style={{ boxShadow: '0 15px 50px rgba(0,0,0,0.2)' }}
-          >
-            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/0MprWWQILbc?rel=0&modestbranding=1"
-                title="Aria Interview Assistant — Live Demo"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-
-          {/* Stats bubble */}
-          <div className="absolute -bottom-6 -left-6 bg-white rounded-lg shadow-lg p-4 border border-border">
-            <div className="flex items-center space-x-3">
-              <div className="flex items-end gap-1 h-8">
-                {[30, 50, 70, 90].map((h, i) => (
-                  <div
-                    key={i}
-                    className="w-2.5 rounded-sm"
-                    style={{ height: `${h}%`, backgroundColor: '#F05A28', opacity: 0.5 + i * 0.17 }}
-                  />
-                ))}
-              </div>
-              <div>
-                <div className="text-sm text-muted-foreground">Interview Success Rate</div>
-                <div className="text-sm font-semibold" style={{ color: '#F05A28' }}>Rapidly Rising</div>
-                <div className="text-xl font-bold" style={{ color: '#F05A28' }}>98%+</div>
-              </div>
-            </div>
-          </div>
+          <HeroSlideshow />
         </motion.div>
       </div>
     </section>
