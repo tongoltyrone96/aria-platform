@@ -45,12 +45,12 @@ function LoginForm() {
   }
 
   return (
-    <div className="w-full max-w-md space-y-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">Sign in to ARIA</h1>
-        <p className="text-muted-foreground mt-2">
+    <div className="w-full space-y-7">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Welcome back</h1>
+        <p className="text-sm text-muted-foreground mt-1.5">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="text-brand-500 hover:underline font-medium">
+          <Link href="/signup" className="font-medium hover:underline" style={{ color: '#F05A28' }}>
             Sign up free
           </Link>
         </p>
@@ -58,13 +58,13 @@ function LoginForm() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="bg-destructive/10 text-destructive text-sm px-4 py-3 rounded-lg">
+          <div className="bg-destructive/10 text-destructive text-sm px-4 py-3 rounded-xl border border-destructive/20">
             {error}
           </div>
         )}
 
-        <div className="space-y-1">
-          <label htmlFor="email" className="text-sm font-medium">Email</label>
+        <div className="space-y-1.5">
+          <label htmlFor="email" className="text-sm font-medium text-foreground">Email</label>
           <input
             id="email"
             type="email"
@@ -72,15 +72,16 @@ function LoginForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
-            placeholder="you@example.com"
+            className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:outline-none focus:ring-2 text-sm placeholder:text-muted-foreground"
+            style={{ '--tw-ring-color': '#F05A28' } as React.CSSProperties}
+            placeholder="your@email.com"
           />
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <label htmlFor="password" className="text-sm font-medium">Password</label>
-            <Link href="/forgot" className="text-xs text-brand-500 hover:underline">
+            <label htmlFor="password" className="text-sm font-medium text-foreground">Password</label>
+            <Link href="/forgot" className="text-xs hover:underline" style={{ color: '#F05A28' }}>
               Forgot password?
             </Link>
           </div>
@@ -91,8 +92,9 @@ function LoginForm() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
-            placeholder="••••••••"
+            className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:outline-none focus:ring-2 text-sm placeholder:text-muted-foreground"
+            style={{ '--tw-ring-color': '#F05A28' } as React.CSSProperties}
+            placeholder="Min. 8 characters"
           />
         </div>
 
@@ -100,10 +102,11 @@ function LoginForm() {
           type="submit"
           disabled={loading}
           className={cn(
-            'w-full py-2.5 px-4 bg-brand-500 text-white rounded-lg font-medium text-sm',
-            'hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2',
-            'disabled:opacity-50 disabled:cursor-not-allowed transition-colors',
+            'w-full py-3 px-4 text-white rounded-xl font-semibold text-sm',
+            'focus:outline-none focus:ring-2 focus:ring-offset-2',
+            'disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:-translate-y-0.5',
           )}
+          style={{ backgroundColor: '#F05A28' }}
         >
           {loading ? 'Signing in…' : 'Sign in'}
         </button>

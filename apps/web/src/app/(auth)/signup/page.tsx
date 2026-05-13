@@ -54,51 +54,56 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="w-full max-w-md space-y-6">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">Start your free trial</h1>
-        <p className="text-muted-foreground mt-2">
+    <div className="w-full space-y-7">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Create your account</h1>
+        <p className="text-sm text-muted-foreground mt-1.5">
           Free plan, no credit card required.{' '}
-          <Link href="/login" className="text-brand-500 hover:underline font-medium">Sign in</Link>
+          <Link href="/login" className="font-medium hover:underline" style={{ color: '#F05A28' }}>
+            Sign in
+          </Link>
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="bg-destructive/10 text-destructive text-sm px-4 py-3 rounded-lg">
+          <div className="bg-destructive/10 text-destructive text-sm px-4 py-3 rounded-xl border border-destructive/20">
             {error}
           </div>
         )}
 
-        <div className="space-y-1">
-          <label htmlFor="email" className="text-sm font-medium">Email</label>
+        <div className="space-y-1.5">
+          <label htmlFor="email" className="text-sm font-medium text-foreground">Email</label>
           <input
             id="email" type="email" autoComplete="email" required
             value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-            className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
-            placeholder="you@example.com"
+            className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:outline-none focus:ring-2 text-sm placeholder:text-muted-foreground"
+            style={{ '--tw-ring-color': '#F05A28' } as React.CSSProperties}
+            placeholder="your@email.com"
           />
         </div>
 
-        <div className="space-y-1">
-          <label htmlFor="password" className="text-sm font-medium">Password</label>
+        <div className="space-y-1.5">
+          <label htmlFor="password" className="text-sm font-medium text-foreground">Password</label>
           <input
             id="password" type="password" autoComplete="new-password" required minLength={8}
             value={form.password}
             onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-            className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
-            placeholder="At least 8 characters"
+            className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:outline-none focus:ring-2 text-sm placeholder:text-muted-foreground"
+            style={{ '--tw-ring-color': '#F05A28' } as React.CSSProperties}
+            placeholder="Min. 8 characters"
           />
         </div>
 
-        <div className="space-y-1">
-          <label htmlFor="country" className="text-sm font-medium">Country</label>
+        <div className="space-y-1.5">
+          <label htmlFor="country" className="text-sm font-medium text-foreground">Country</label>
           <select
             id="country"
             value={form.country}
             onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))}
-            className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
+            className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:outline-none focus:ring-2 text-sm text-foreground"
+            style={{ '--tw-ring-color': '#F05A28' } as React.CSSProperties}
           >
             {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
           </select>
@@ -109,7 +114,8 @@ export default function SignupPage() {
             type="checkbox"
             checked={form.marketing}
             onChange={(e) => setForm((f) => ({ ...f, marketing: e.target.checked }))}
-            className="mt-0.5 h-4 w-4 rounded border-border text-brand-500 focus:ring-brand-500"
+            className="mt-0.5 h-4 w-4 rounded border-border focus:ring-2"
+            style={{ accentColor: '#F05A28' }}
           />
           <span className="text-sm text-muted-foreground">
             Subscribe to product updates and tips (optional)
@@ -119,10 +125,11 @@ export default function SignupPage() {
         <button
           type="submit" disabled={loading}
           className={cn(
-            'w-full py-2.5 px-4 bg-brand-500 text-white rounded-lg font-medium text-sm',
-            'hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2',
-            'disabled:opacity-50 disabled:cursor-not-allowed transition-colors',
+            'w-full py-3 px-4 text-white rounded-xl font-semibold text-sm',
+            'focus:outline-none focus:ring-2 focus:ring-offset-2',
+            'disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:-translate-y-0.5',
           )}
+          style={{ backgroundColor: '#F05A28' }}
         >
           {loading ? 'Creating account…' : 'Start free trial'}
         </button>
