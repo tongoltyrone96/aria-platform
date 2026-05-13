@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Monitor, Shield, Zap, Target, Brain, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.ariainterview.com';
+const DOWNLOAD_URL = 'https://github.com/tongoltyrone96/aria-releases/releases/download/v0.0.1/ARIA.Setup.0.0.1.exe';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -164,7 +164,7 @@ export function Hero() {
 
           <motion.div {...fadeUp(0.3)} className="flex justify-center">
             <a
-              href={`${CDN_URL}/releases/ARIA-latest.exe`}
+              href={DOWNLOAD_URL}
               className="inline-flex items-center gap-2 text-white text-base font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg"
               style={{ backgroundColor: '#F05A28', boxShadow: '0 8px 24px rgba(240,90,40,0.35)' }}
             >

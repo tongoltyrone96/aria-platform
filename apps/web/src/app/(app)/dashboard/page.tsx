@@ -4,7 +4,7 @@ import { Download, Phone, Code2, Zap } from 'lucide-react';
 import { LicenseKeyDisplay } from '@/components/dashboard/LicenseKeyDisplay';
 
 const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
-const CDN_URL = process.env['NEXT_PUBLIC_CDN_URL'] ?? 'https://cdn.ariainterview.com';
+const DOWNLOAD_URL = 'https://github.com/tongoltyrone96/aria-releases/releases/download/v0.0.1/ARIA.Setup.0.0.1.exe';
 
 async function getAccountData(token: string) {
   try {
@@ -174,7 +174,7 @@ export default async function DashboardPage() {
           <p className="text-sm text-muted-foreground mt-1">Install the desktop app and activate your license</p>
         </div>
         <a
-          href={`${CDN_URL}/releases/ARIA-latest.exe`}
+          href={DOWNLOAD_URL}
           className="flex items-center gap-2 px-4 py-2 bg-brand-500 text-white text-sm font-medium rounded-lg hover:bg-brand-600 transition-colors"
         >
           <Download className="h-4 w-4" />
