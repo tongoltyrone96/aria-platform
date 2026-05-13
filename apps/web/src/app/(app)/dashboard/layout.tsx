@@ -12,7 +12,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex min-h-screen bg-background">
       <IdleTimer />
-      <SidebarNav />
+      <SidebarNav userEmail={user.email ?? undefined} />
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-5xl mx-auto p-6 lg:p-8">
           {children}
