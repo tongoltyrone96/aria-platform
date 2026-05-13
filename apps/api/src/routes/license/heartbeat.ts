@@ -40,12 +40,8 @@ export async function heartbeatRoute(fastify: FastifyInstance) {
       : null;
     const plan = normalizePlan(sub?.plan);
 
-    // Renew JWT if < 24h to expiry
-    const now = Math.floor(Date.now() / 1000);
-    const timeLeft = payload.exp - now;
-    const newJwt = timeLeft < 86400
-      ? signDeviceJwt(payload.sub, payload.deviceId, payload.licenseId, plan, payload.hwFingerprint)
-      : undefined;
+    // Always renew JWT on heartbeat — TTL is 2 h, client heartbeats every 1.5 h
+    const newJwt = signDeviceJwt(payload.sub, payload.deviceId, payload.licenseId, plan, payload.hwFingerprint);
 
     return reply.send({ jwt: newJwt, plan, status: 'active', limits: PLAN_LIMITS[plan] });
   });

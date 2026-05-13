@@ -22,7 +22,7 @@ export function signDeviceJwt(
   return jwt.sign(
     { sub: userId, deviceId, licenseId, plan, hwFingerprint } satisfies Omit<DeviceJwtPayload, 'iat' | 'exp'>,
     JWT_SECRET,
-    { expiresIn: parseInt(process.env['JWT_EXPIRY_DEVICE'] ?? '604800', 10) },
+    { expiresIn: parseInt(process.env['JWT_EXPIRY_DEVICE'] ?? '7200', 10) },
   );
 }
 
