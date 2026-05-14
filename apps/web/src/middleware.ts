@@ -1,14 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
-function createEdgeAdminClient() {
-  return createServerClient(
-    process.env['NEXT_PUBLIC_SUPABASE_URL']!,
-    process.env['SUPABASE_SERVICE_ROLE_KEY']!,
-    { cookies: { getAll: () => [], setAll: () => {} } },
-  );
-}
-
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -36,7 +28,7 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  if (!user && pathname.startsWith('/dashboard')) {
+  if (!user && (pathname.startsWith('/dashboard') || pathname.startsWith('/admin'))) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     url.searchParams.set('next', pathname);
@@ -47,27 +39,6 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = '/dashboard';
     return NextResponse.redirect(url);
-  }
-
-  // Admin route protection
-  if (pathname.startsWith('/admin')) {
-    if (!user) {
-      const url = request.nextUrl.clone();
-      url.pathname = '/login';
-      url.searchParams.set('next', pathname);
-      return NextResponse.redirect(url);
-    }
-    const adminClient = createEdgeAdminClient();
-    const { data: profile } = await adminClient
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
-    if (profile?.role !== 'admin') {
-      const url = request.nextUrl.clone();
-      url.pathname = '/dashboard';
-      return NextResponse.redirect(url);
-    }
   }
 
   return supabaseResponse;
