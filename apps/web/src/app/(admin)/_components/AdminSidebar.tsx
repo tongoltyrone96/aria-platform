@@ -7,9 +7,9 @@ import { cn } from '@/lib/utils';
 import { createClient } from '@/lib/supabase/client';
 
 const NAV = [
-  { href: '/admin', label: '대시보드', icon: LayoutDashboard, exact: true },
-  { href: '/admin/users', label: '사용자 관리', icon: Users },
-  { href: '/admin/subscriptions', label: '구독 관리', icon: CreditCard },
+  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { href: '/admin/users', label: 'Users', icon: Users },
+  { href: '/admin/subscriptions', label: 'Subscriptions', icon: CreditCard },
 ];
 
 export function AdminSidebar({ adminEmail }: { adminEmail: string }) {
@@ -64,7 +64,7 @@ export function AdminSidebar({ adminEmail }: { adminEmail: string }) {
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/40 hover:bg-red-500/10 hover:text-red-400 transition-all w-full"
         >
           <LogOut className="h-4 w-4 shrink-0" />
-          로그아웃
+          Sign Out
         </button>
       </div>
     </aside>

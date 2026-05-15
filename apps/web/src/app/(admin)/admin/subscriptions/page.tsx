@@ -19,18 +19,18 @@ export default async function SubscriptionsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">구독 관리</h1>
-        <p className="text-slate-500 text-sm mt-1">전체 {subs?.length ?? 0}건</p>
+        <h1 className="text-2xl font-bold text-slate-900">Subscriptions</h1>
+        <p className="text-slate-500 text-sm mt-1">Total {subs?.length ?? 0} records</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">사용자</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">플랜</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">상태</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">기간 종료</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">User</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Plan</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Period End</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -49,7 +49,7 @@ export default async function SubscriptionsPage() {
                 </td>
                 <td className="px-5 py-3.5 text-slate-500 text-xs">
                   {s.current_period_end
-                    ? new Date(s.current_period_end).toLocaleDateString('ko-KR')
+                    ? new Date(s.current_period_end).toLocaleDateString('en-US')
                     : '-'}
                 </td>
               </tr>

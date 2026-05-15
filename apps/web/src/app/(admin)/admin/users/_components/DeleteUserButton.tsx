@@ -18,19 +18,19 @@ export function DeleteUserButton({ userId, email }: { userId: string; email: str
   if (confirming) {
     return (
       <div className="flex items-center gap-2 justify-end">
-        <span className="text-xs text-slate-500 max-w-[120px] truncate">{email} 삭제?</span>
+        <span className="text-xs text-slate-500 max-w-[120px] truncate">Delete {email}?</span>
         <button
           onClick={handleDelete}
           disabled={loading}
           className="px-2.5 py-1 text-xs font-semibold bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50"
         >
-          {loading ? '삭제 중...' : '확인'}
+          {loading ? 'Deleting...' : 'Confirm'}
         </button>
         <button
           onClick={() => setConfirming(false)}
           className="px-2.5 py-1 text-xs font-semibold border border-slate-200 rounded-lg hover:bg-slate-50"
         >
-          취소
+          Cancel
         </button>
       </div>
     );

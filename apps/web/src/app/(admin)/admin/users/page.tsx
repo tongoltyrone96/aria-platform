@@ -24,19 +24,19 @@ export default async function UsersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">사용자 관리</h1>
-        <p className="text-slate-500 text-sm mt-1">전체 {profiles?.length ?? 0}명</p>
+        <h1 className="text-2xl font-bold text-slate-900">Users</h1>
+        <p className="text-slate-500 text-sm mt-1">Total {profiles?.length ?? 0} users</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200">
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">이메일</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">플랜</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">상태</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">가입일</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">역할</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Email</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Plan</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Joined</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Role</th>
               <th className="px-5 py-3" />
             </tr>
           </thead>
@@ -66,7 +66,7 @@ export default async function UsersPage() {
                     </span>
                   </td>
                   <td className="px-5 py-3.5 text-slate-500 text-xs">
-                    {new Date(p.created_at).toLocaleDateString('ko-KR')}
+                    {new Date(p.created_at).toLocaleDateString('en-US')}
                   </td>
                   <td className="px-5 py-3.5">
                     {p.role === 'admin' && (

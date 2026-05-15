@@ -26,17 +26,17 @@ export default async function AdminPage() {
   };
 
   const stats = [
-    { label: '전체 사용자', value: totalUsers ?? 0, icon: Users, color: 'bg-blue-500' },
-    { label: '활성 구독', value: active.length, icon: CreditCard, color: 'bg-green-500' },
-    { label: 'Pro 플랜', value: byPlan.pro, icon: TrendingUp, color: 'bg-violet-500' },
-    { label: 'Elite 플랜', value: byPlan.elite, icon: Star, color: 'bg-amber-500' },
+    { label: 'Total Users', value: totalUsers ?? 0, icon: Users, color: 'bg-blue-500' },
+    { label: 'Active Subs', value: active.length, icon: CreditCard, color: 'bg-green-500' },
+    { label: 'Pro Plan', value: byPlan.pro, icon: TrendingUp, color: 'bg-violet-500' },
+    { label: 'Elite Plan', value: byPlan.elite, icon: Star, color: 'bg-amber-500' },
   ];
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">대시보드</h1>
-        <p className="text-slate-500 text-sm mt-1">ARIA 플랫폼 현황</p>
+        <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+        <p className="text-slate-500 text-sm mt-1">ARIA platform overview</p>
       </div>
 
       {/* Stats */}
@@ -56,7 +56,7 @@ export default async function AdminPage() {
 
       {/* Plan breakdown */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6">
-        <h2 className="text-sm font-semibold text-slate-700 mb-4">플랜별 분포</h2>
+        <h2 className="text-sm font-semibold text-slate-700 mb-4">Plan Breakdown</h2>
         <div className="space-y-3">
           {[
             { plan: 'Starter (Free)', count: byPlan.starter, color: 'bg-slate-400' },
