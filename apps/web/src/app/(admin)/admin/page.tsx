@@ -2,15 +2,21 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { Users, CreditCard, TrendingUp, Star } from 'lucide-react';
 
 export default async function AdminPage() {
-  const supabase = createAdminClient();
+  let totalUsers: number | null = 0;
+  let subCounts: { plan: string; status: string }[] | null = [];
 
-  const [
-    { count: totalUsers },
-    { data: subCounts },
-  ] = await Promise.all([
-    supabase.from('profiles').select('*', { count: 'exact', head: true }),
-    supabase.from('subscriptions').select('plan, status'),
-  ]);
+  try {
+    const supabase = createAdminClient();
+    const [{ count }, { data }] = await Promise.all([
+      supabase.from('profiles').select('*', { count: 'exact', head: true }),
+      supabase.from('subscriptions').select('plan, status'),
+    ]);
+    totalUsers = count;
+    subCounts = data;
+    console.log('[AdminPage] loaded ok, users:', count);
+  } catch (e) {
+    console.error('[AdminPage] createAdminClient error:', e);
+  }
 
   const active = subCounts?.filter((s) => s.status === 'active') ?? [];
   const byPlan = {
