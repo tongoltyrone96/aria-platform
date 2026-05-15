@@ -7,13 +7,14 @@ export default async function AdminPage() {
 
   try {
     const supabase = createAdminClient();
-    const [{ count }, { data }] = await Promise.all([
+    const [profilesRes, subsRes] = await Promise.all([
       supabase.from('profiles').select('*', { count: 'exact', head: true }),
       supabase.from('subscriptions').select('plan, status'),
     ]);
-    totalUsers = count;
-    subCounts = data;
-    console.log('[AdminPage] loaded ok, users:', count);
+    console.log('[AdminPage] profiles:', profilesRes.count, 'err:', profilesRes.error?.message);
+    console.log('[AdminPage] subs:', subsRes.data?.length, 'err:', subsRes.error?.message);
+    totalUsers = profilesRes.count;
+    subCounts = subsRes.data;
   } catch (e) {
     console.error('[AdminPage] createAdminClient error:', e);
   }
