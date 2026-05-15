@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { PlanSelect } from './_components/PlanSelect';
 import { StatusSelect } from './_components/StatusSelect';
@@ -27,14 +28,15 @@ export default async function SubscriptionsPage({
   const { q, plan, status } = await searchParams;
   const supabase = createAdminClient();
 
-  const [{ data: subs }, { data: profiles }, { data: licenses }] = await Promise.all([
+  const [{ data: subs }, { data: profiles }] = await Promise.all([
     supabase
       .from('subscriptions')
       .select('id, user_id, plan, status, current_period_end, trial_ends_at')
       .order('id', { ascending: false }),
     supabase.from('profiles').select('id, email'),
-    supabase.from('licenses').select('user_id, key').catch(() => ({ data: null })),
   ]);
+
+  const { data: licenses } = await supabase.from('licenses').select('user_id, key');
 
   const emailMap = Object.fromEntries((profiles ?? []).map((p) => [p.id, p.email]));
   const licenseMap = Object.fromEntries((licenses ?? []).map((l) => [l.user_id, l.key]));
@@ -56,13 +58,15 @@ export default async function SubscriptionsPage({
         </p>
       </div>
 
-      <TableFilters
-        searchPlaceholder="Search by email..."
-        filters={[
-          { key: 'plan', placeholder: 'All Plans', options: PLAN_FILTERS },
-          { key: 'status', placeholder: 'All Statuses', options: STATUS_FILTERS },
-        ]}
-      />
+      <Suspense fallback={<div className="h-10" />}>
+        <TableFilters
+          searchPlaceholder="Search by email..."
+          filters={[
+            { key: 'plan', placeholder: 'All Plans', options: PLAN_FILTERS },
+            { key: 'status', placeholder: 'All Statuses', options: STATUS_FILTERS },
+          ]}
+        />
+      </Suspense>
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <table className="w-full text-sm">

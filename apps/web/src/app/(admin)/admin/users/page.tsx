@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { DeleteUserButton } from './_components/DeleteUserButton';
 import { TableFilters } from '../../_components/TableFilters';
@@ -61,13 +62,15 @@ export default async function UsersPage({
         </p>
       </div>
 
-      <TableFilters
-        searchPlaceholder="Search by email..."
-        filters={[
-          { key: 'plan', placeholder: 'All Plans', options: PLAN_FILTERS },
-          { key: 'status', placeholder: 'All Statuses', options: STATUS_FILTERS },
-        ]}
-      />
+      <Suspense fallback={<div className="h-10" />}>
+        <TableFilters
+          searchPlaceholder="Search by email..."
+          filters={[
+            { key: 'plan', placeholder: 'All Plans', options: PLAN_FILTERS },
+            { key: 'status', placeholder: 'All Statuses', options: STATUS_FILTERS },
+          ]}
+        />
+      </Suspense>
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <table className="w-full text-sm">
