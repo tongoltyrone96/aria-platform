@@ -1,29 +1,36 @@
 import { createAdminClient } from '@/lib/supabase/admin';
-import { Users, CreditCard, TrendingUp, Star } from 'lucide-react';
+import { Users, CreditCard, TrendingUp, Star, UserPlus, ShoppingCart } from 'lucide-react';
 
 export default async function AdminPage() {
   let totalUsers: number | null = 0;
   let subCounts: { plan: string; status: string }[] | null = [];
+  let newUsers24h = 0;
+  let newSubs24h = 0;
 
   try {
     const supabase = createAdminClient();
-    const [profilesRes, subsRes] = await Promise.all([
+    const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+    const [profilesRes, subsRes, newUsersRes, newSubsRes] = await Promise.all([
       supabase.from('profiles').select('*', { count: 'exact', head: true }),
       supabase.from('subscriptions').select('plan, status'),
+      supabase.from('profiles').select('*', { count: 'exact', head: true }).gte('created_at', since24h),
+      supabase.from('subscriptions').select('*', { count: 'exact', head: true }).gte('created_at', since24h),
     ]);
-    console.log('[AdminPage] profiles:', profilesRes.count, 'err:', profilesRes.error?.message);
-    console.log('[AdminPage] subs:', subsRes.data?.length, 'err:', subsRes.error?.message);
+
     totalUsers = profilesRes.count;
     subCounts = subsRes.data;
+    newUsers24h = newUsersRes.count ?? 0;
+    newSubs24h = newSubsRes.count ?? 0;
   } catch (e) {
-    console.error('[AdminPage] createAdminClient error:', e);
+    console.error('[AdminPage] error:', e);
   }
 
   const active = subCounts?.filter((s) => s.status === 'active') ?? [];
   const byPlan = {
     starter: active.filter((s) => s.plan === 'starter').length,
-    pro: active.filter((s) => s.plan === 'pro').length,
-    elite: active.filter((s) => s.plan === 'elite').length,
+    pro: active.filter((s) => s.plan === 'pro' || s.plan === 'pro_annual').length,
+    elite: active.filter((s) => s.plan === 'elite' || s.plan === 'elite_annual').length,
   };
 
   const stats = [
@@ -40,7 +47,7 @@ export default async function AdminPage() {
         <p className="text-slate-500 text-sm mt-1">ARIA platform overview</p>
       </div>
 
-      {/* Stats */}
+      {/* Main stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="bg-white rounded-2xl border border-slate-200 p-5 flex items-center gap-4">
@@ -53,6 +60,31 @@ export default async function AdminPage() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Last 24h */}
+      <div>
+        <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">Last 24 Hours</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white rounded-2xl border border-slate-200 p-5 flex items-center gap-4">
+            <div className="bg-sky-500 w-11 h-11 rounded-xl flex items-center justify-center shrink-0">
+              <UserPlus className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-slate-900">{newUsers24h}</p>
+              <p className="text-xs text-slate-500 mt-0.5">New Users</p>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl border border-slate-200 p-5 flex items-center gap-4">
+            <div className="bg-emerald-500 w-11 h-11 rounded-xl flex items-center justify-center shrink-0">
+              <ShoppingCart className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-slate-900">{newSubs24h}</p>
+              <p className="text-xs text-slate-500 mt-0.5">New Subscriptions</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Plan breakdown */}
