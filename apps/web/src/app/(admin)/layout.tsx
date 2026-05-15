@@ -9,11 +9,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   if (!user) redirect('/login');
 
   const adminSupabase = createAdminClient();
-  const { data: profile } = await adminSupabase
+  const { data: profile, error: profileError } = await adminSupabase
     .from('profiles')
     .select('role, email')
     .eq('id', user.id)
     .single();
+
+  console.log('[AdminLayout] userId:', user.id, 'profile:', profile, 'error:', profileError);
 
   if (profile?.role !== 'admin') redirect('/dashboard');
 
