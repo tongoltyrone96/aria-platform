@@ -4,7 +4,7 @@ import { Download, Phone, Code2, Zap } from 'lucide-react';
 import { LicenseKeyDisplay } from '@/components/dashboard/LicenseKeyDisplay';
 
 const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
-const DOWNLOAD_URL = 'https://github.com/tongoltyrone96/aria-releases/releases/download/v0.2.4/ARIA.Setup.0.2.4.exe';
+const DOWNLOAD_URL = 'https://github.com/tongoltyrone96/aria-releases/releases/download/v0.2.4/ARIA-Setup-0.2.4.exe';
 
 async function getAccountData(token: string) {
   try {
