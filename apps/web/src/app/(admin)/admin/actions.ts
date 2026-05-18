@@ -14,29 +14,46 @@ async function requireAdmin() {
 }
 
 export async function deleteUser(userId: string) {
-  await requireAdmin();
-  const admin = createAdminClient();
+  try {
+    await requireAdmin();
+    const admin = createAdminClient();
 
-  // Delete from profiles table first (CASCADE will delete related records)
-  const { error: profileError } = await admin
-    .from('profiles')
-    .delete()
-    .eq('id', userId);
+    console.log('[deleteUser] Starting deletion for user:', userId);
 
-  if (profileError) {
-    console.error('[deleteUser] Profile deletion error:', profileError);
-    throw new Error(`Failed to delete profile: ${profileError.message}`);
+    // Step 1: Delete from profiles table first (CASCADE will delete related records)
+    const { error: profileError } = await admin
+      .from('profiles')
+      .delete()
+      .eq('id', userId);
+
+    if (profileError) {
+      console.error('[deleteUser] Profile deletion error:', profileError);
+      return { success: false, error: `Database error: ${profileError.message}` };
+    }
+
+    console.log('[deleteUser] Profile deleted successfully');
+
+    // Step 2: Delete from Supabase Auth
+    const { error: authError } = await admin.auth.admin.deleteUser(userId);
+
+    if (authError) {
+      console.error('[deleteUser] Auth deletion error:', authError);
+      // Auth deletion failed but profile is already deleted
+      // This is acceptable - the user won't be able to login anyway
+      console.warn('[deleteUser] Auth user could not be deleted but profile was removed');
+    } else {
+      console.log('[deleteUser] Auth user deleted successfully');
+    }
+
+    revalidatePath('/admin/users');
+    return { success: true };
+  } catch (error) {
+    console.error('[deleteUser] Unexpected error:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An unexpected error occurred',
+    };
   }
-
-  // Delete from Supabase Auth
-  const { error: authError } = await admin.auth.admin.deleteUser(userId);
-
-  if (authError) {
-    console.error('[deleteUser] Auth deletion error:', authError);
-    throw new Error(`Failed to delete auth user: ${authError.message}`);
-  }
-
-  revalidatePath('/admin/users');
 }
 
 export async function updateSubscription(

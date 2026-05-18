@@ -13,9 +13,13 @@ export function DeleteUserButton({ userId, email }: { userId: string; email: str
     setLoading(true);
     setError(null);
     try {
-      await deleteUser(userId);
-      // Success - page will revalidate
-      setConfirming(false);
+      const result = await deleteUser(userId);
+      if (result.success) {
+        // Success - page will revalidate
+        setConfirming(false);
+      } else {
+        setError(result.error || 'Failed to delete user');
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to delete user');
       console.error('[DeleteUserButton]', err);
