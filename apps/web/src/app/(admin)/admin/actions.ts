@@ -16,7 +16,26 @@ async function requireAdmin() {
 export async function deleteUser(userId: string) {
   await requireAdmin();
   const admin = createAdminClient();
-  await admin.auth.admin.deleteUser(userId);
+
+  // Delete from profiles table first (CASCADE will delete related records)
+  const { error: profileError } = await admin
+    .from('profiles')
+    .delete()
+    .eq('id', userId);
+
+  if (profileError) {
+    console.error('[deleteUser] Profile deletion error:', profileError);
+    throw new Error(`Failed to delete profile: ${profileError.message}`);
+  }
+
+  // Delete from Supabase Auth
+  const { error: authError } = await admin.auth.admin.deleteUser(userId);
+
+  if (authError) {
+    console.error('[deleteUser] Auth deletion error:', authError);
+    throw new Error(`Failed to delete auth user: ${authError.message}`);
+  }
+
   revalidatePath('/admin/users');
 }
 
