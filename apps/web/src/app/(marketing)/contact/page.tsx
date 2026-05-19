@@ -2,7 +2,7 @@
 
 import type { Metadata } from 'next';
 import { useState } from 'react';
-import { Mail, MessageSquare, Twitter } from 'lucide-react';
+import { Mail, MessageSquare, Send } from 'lucide-react';
 
 // Note: metadata export can't be used in a 'use client' component.
 // Keep this page as a client component with metadata exported from a parent or use a layout.
@@ -22,17 +22,17 @@ const contactChannels = [
     icon: MessageSquare,
     title: 'Discord community',
     description: 'Join our community for quick answers and feature discussions.',
-    value: 'discord.gg/aria-ai',
-    href: 'https://discord.gg/aria-ai',
+    value: '@tj19960224',
+    href: 'https://discord.com/users/tj19960224',
     cta: 'Join Discord',
   },
   {
-    icon: Twitter,
-    title: 'X / Twitter',
+    icon: Send,
+    title: 'Telegram',
     description: 'DM us for quick questions or just say hi.',
-    value: '@aria_ai_app',
-    href: 'https://twitter.com/aria_ai_app',
-    cta: 'Tweet us',
+    value: '+1 (315) 281-9469',
+    href: 'https://t.me/+13152819469',
+    cta: 'Message us',
   },
 ];
 
