@@ -40,20 +40,40 @@ function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setError(null); // Clear error on input change
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // TODO: wire up contact form API endpoint
-    await new Promise((r) => setTimeout(r, 800)); // simulate network
-    setSubmitted(true);
-    setLoading(false);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || `Server error ${res.status}`);
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to send message. Please try again.');
+      console.error('[ContactForm] Submit error:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -138,6 +158,12 @@ function ContactForm() {
           className="rounded-lg border border-input bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition resize-y"
         />
       </div>
+
+      {error && (
+        <div className="rounded-lg border border-red-500/30 bg-red-50/60 dark:bg-red-900/10 p-4">
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      )}
 
       <button
         type="submit"
