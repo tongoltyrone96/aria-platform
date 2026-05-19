@@ -21,6 +21,16 @@ function resolvePlan(plan: string): { dbPlan: Plan; expiresAt: Date } {
 }
 
 export async function nowpaymentsWebhookRoute(fastify: FastifyInstance) {
+  // Handle GET requests with a friendly message
+  fastify.get('/webhook/nowpayments', async (_req, reply) => {
+    return reply.status(200).send({
+      message: 'NOWPayments Webhook Endpoint',
+      method: 'POST only',
+      status: 'operational',
+      documentation: 'https://documenter.getpostman.com/view/7907941/S1a32n38',
+    });
+  });
+
   fastify.post('/webhook/nowpayments', async (req, reply) => {
     const body = req.body as Record<string, unknown>;
     const sig = req.headers['x-nowpayments-sig'] as string | undefined;
