@@ -80,9 +80,18 @@ function ContactForm() {
     return (
       <div className="rounded-xl border border-green-500/30 bg-green-50/60 dark:bg-green-900/10 p-8 text-center">
         <p className="text-lg font-semibold text-foreground mb-2">Message sent!</p>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground mb-4">
           We typically respond within a few hours on business days.
         </p>
+        <button
+          onClick={() => {
+            setSubmitted(false);
+            setForm({ name: '', email: '', subject: '', message: '' });
+          }}
+          className="text-sm text-brand-500 hover:text-brand-600 underline"
+        >
+          Send another message
+        </button>
       </div>
     );
   }
