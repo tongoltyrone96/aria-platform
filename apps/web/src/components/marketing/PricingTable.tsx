@@ -33,7 +33,7 @@ const plans: PricingPlan[] = [
   {
     name: 'Free',
     monthlyPrice: 0,
-    description: 'Get started — no credit card needed.',
+    description: 'Get started - no credit card needed.',
     highlighted: false,
     features: [
       '10 interview calls / month',
@@ -161,7 +161,7 @@ function CryptoPayButton({ cryptoPlan, highlighted }: CryptoPayButtonProps) {
         {loading
           ? <Loader2 size={14} className="animate-spin shrink-0" />
           : <Bitcoin size={14} className="shrink-0" />}
-        {loading ? 'Redirecting to checkout…' : 'Pay with Crypto'}
+        {loading ? 'Redirecting to checkout...' : 'Pay with Crypto'}
       </button>
       {error && (
         <p className="text-xs text-red-500 text-center leading-snug">{error}</p>
@@ -228,7 +228,7 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
         </div>
         {billing === 'annual' && annualSavings > 0 && (
           <p className="text-xs text-green-500 font-medium mt-1">
-            Billed ${plan.annualPrice}/yr — save ${Math.round(annualSavings)}/yr
+            Billed ${plan.annualPrice}/yr - save ${Math.round(annualSavings)}/yr
           </p>
         )}
         {billing === 'monthly' && plan.monthlyPrice > 0 && (
@@ -326,7 +326,7 @@ export function PricingTable() {
         viewport={{ once: true }}
         className="text-center text-xs text-muted-foreground"
       >
-        Free plan available forever — no credit card needed. Crypto payments are one-time charges; renewal required each cycle.
+        Free plan available forever - no credit card needed. Crypto payments are one-time charges; renewal required each cycle.
       </motion.p>
     </div>
   );

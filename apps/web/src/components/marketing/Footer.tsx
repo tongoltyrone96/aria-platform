@@ -82,7 +82,7 @@ export function Footer() {
             <div>
               <p className="text-sm font-medium text-white/70 mb-2">Get tips &amp; updates</p>
               {submitted ? (
-                <p className="text-sm font-medium" style={{ color: '#F05A28' }}>Thanks — you&apos;re in!</p>
+                <p className="text-sm font-medium" style={{ color: '#F05A28' }}>Thanks - you&apos;re in!</p>
               ) : (
                 <form onSubmit={handleSubscribe} className="flex gap-2">
                   <input

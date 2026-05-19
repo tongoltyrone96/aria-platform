@@ -67,7 +67,7 @@ export function Header() {
             <AnimatedLogo />
           </Link>
 
-          {/* Center nav — desktop */}
+          {/* Center nav - desktop */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
@@ -80,7 +80,7 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Right — desktop */}
+          {/* Right - desktop */}
           <div className="hidden md:flex items-center gap-3">
             {isLoggedIn ? (
               <>

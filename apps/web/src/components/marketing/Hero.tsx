@@ -23,7 +23,7 @@ const FEATURE_BADGES = [
 
 const SLIDES = [
   { src: '/interview1.png', alt: 'ARIA in action during a real interview session' },
-  { src: '/interview2.jpeg', alt: 'Before and after — confidence with ARIA vs without' },
+  { src: '/interview2.jpeg', alt: 'Before and after - confidence with ARIA vs without' },
   { src: '/Log-in.png', alt: 'ARIA Interview Assistant dashboard' },
 ];
 

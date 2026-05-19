@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Getting Started — ARIA Docs' };
+export const metadata: Metadata = { title: 'Getting Started - ARIA Docs' };
 
 export default function OnboardingPage() {
   return (
@@ -17,12 +17,12 @@ export default function OnboardingPage() {
           ariainterview.com/signup
         </a>{' '}
         and register with your work or personal email. Your account is activated immediately{' '}
-        {'—'} no email confirmation required.
+        {'-'} no email confirmation required.
       </p>
 
       <h2 className="text-xl font-semibold">2. Start your free plan</h2>
       <p>
-        Every new account starts on the <strong>Free plan</strong> {'—'} 10 interview calls
+        Every new account starts on the <strong>Free plan</strong> {'-'} 10 interview calls
         and 6 AI answers per call per month, no credit card required. You can upgrade at any time
         from the{' '}
         <a href="/dashboard/billing" className="text-brand-500 hover:underline">
@@ -91,7 +91,7 @@ export default function OnboardingPage() {
           to generate an answer.
         </li>
         <li>ARIA will stream a response into the overlay within 1 second.</li>
-        <li>Read the answer naturally {'—'} the overlay is visible only on your local display.</li>
+        <li>Read the answer naturally {'-'} the overlay is visible only on your local display.</li>
       </ol>
 
       <div className="bg-brand-500/5 border border-brand-500/20 rounded-xl p-4 text-sm">

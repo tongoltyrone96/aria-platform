@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'License Activation — ARIA Docs' };
+export const metadata: Metadata = { title: 'License Activation - ARIA Docs' };
 
 export default function LicenseActivationPage() {
   return (

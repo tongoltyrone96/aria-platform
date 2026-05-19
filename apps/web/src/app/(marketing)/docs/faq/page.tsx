@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { FAQAccordion } from '@/components/marketing/FAQAccordion';
 import { allFAQs } from '@/lib/faq-data';
 
-export const metadata: Metadata = { title: 'FAQ — ARIA Docs' };
+export const metadata: Metadata = { title: 'FAQ - ARIA Docs' };
 
 export default function DocsFAQPage() {
   return (

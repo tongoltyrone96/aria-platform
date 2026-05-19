@@ -30,7 +30,7 @@ export default function PricingPage() {
             Simple, honest pricing
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Free plan — no credit card required. Upgrade when ARIA helps you
+            Free plan - no credit card required. Upgrade when ARIA helps you
             land the offer.
           </p>
         </div>
@@ -57,11 +57,11 @@ export default function PricingPage() {
             {[
               {
                 title: 'WASAPI Audio Capture',
-                desc: 'Captures both sides of the call at the OS audio layer — works with every video call platform.',
+                desc: 'Captures both sides of the call at the OS audio layer - works with every video call platform.',
               },
               {
                 title: 'AI Overlay Panel',
-                desc: 'A lightweight, click-through panel above your call — visible only to you, no browser extension needed.',
+                desc: 'A lightweight, click-through panel above your call - visible only to you, no browser extension needed.',
               },
               {
                 title: 'Resume-Grounded',

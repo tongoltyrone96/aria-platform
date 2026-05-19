@@ -79,7 +79,7 @@ export default function RefundPage() {
               </li>
             </ol>
             <p className="leading-relaxed mt-4">
-              We will process your refund within 5–10 business days. Refunds are returned to the
+              We will process your refund within 5-10 business days. Refunds are returned to the
               original payment method.
             </p>
           </section>

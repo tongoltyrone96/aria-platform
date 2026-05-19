@@ -7,7 +7,7 @@ import { CheckCircle } from 'lucide-react';
 const benefits = [
   'Candidates using Aria land offers 40 to 60% more often',
   'The right answer appears on your screen the instant a question is asked',
-  'Private overlay — invisible to Zoom, Google Meet, Teams, and every major platform',
+  'Private overlay - invisible to Zoom, Google Meet, Teams, and every major platform',
   'Covers technical, behavioral, case, and competency interviews in full',
   'Answers tailored to your resume and the exact job description you uploaded',
   'Post-session breakdown shows exactly where to improve and how',

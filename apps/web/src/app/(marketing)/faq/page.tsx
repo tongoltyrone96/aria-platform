@@ -5,7 +5,7 @@ import { allFAQs } from '@/lib/faq-data';
 export const metadata: Metadata = {
   title: 'FAQ',
   description:
-    'Frequently asked questions about ARIA — how it works, audio capture, privacy, pricing, and more.',
+    'Frequently asked questions about ARIA - how it works, audio capture, privacy, pricing, and more.',
 };
 
 export default function FAQPage() {
@@ -18,7 +18,7 @@ export default function FAQPage() {
             Frequently asked questions
           </h1>
           <p className="text-lg text-muted-foreground">
-            Everything you need to know about ARIA — how it works, what it captures, and how it
+            Everything you need to know about ARIA - how it works, what it captures, and how it
             helps you communicate more clearly.
           </p>
         </div>

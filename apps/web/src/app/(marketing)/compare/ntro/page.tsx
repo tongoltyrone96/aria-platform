@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ComparisonTable } from '@/components/marketing/ComparisonTable';
 
 export const metadata: Metadata = {
-  title: 'ARIA vs Ntro.io — AI Interview Assistant Comparison for Windows',
+  title: 'ARIA vs Ntro.io - AI Interview Assistant Comparison for Windows',
   description:
     'Detailed comparison of ARIA vs Ntro.io. How a native Windows app with WASAPI audio capture delivers more reliable, private, and accurate AI assistance than a browser extension.',
   keywords: [
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'meeting AI assistant comparison',
   ],
   openGraph: {
-    title: 'ARIA vs Ntro.io — Native Windows App vs Chrome Extension',
+    title: 'ARIA vs Ntro.io - Native Windows App vs Chrome Extension',
     description:
       'Why ARIA delivers more reliable AI assistance: WASAPI audio capture, on-device privacy, resume-personalized answers, and better value than Ntro.io.',
   },
@@ -90,7 +90,7 @@ export default function CompareNtroPage() {
             </p>
             <p className="text-muted-foreground leading-relaxed mb-4">
               A Chrome extension operates within the browser&apos;s sandboxed environment. It has
-              access only to what the browser exposes through its extension APIs — primarily
+              access only to what the browser exposes through its extension APIs - primarily
               microphone input via the Web Audio API. Capturing the other participant&apos;s
               audio reliably often requires additional setup like virtual audio cables.
             </p>
@@ -98,14 +98,14 @@ export default function CompareNtroPage() {
               ARIA runs as a standard Windows process with direct access to the Windows audio
               subsystem. No browser required. No extension sandbox. This gives it access to
               higher-quality audio APIs and makes it compatible with any application that plays
-              audio on Windows — not just browser-based calls.
+              audio on Windows - not just browser-based calls.
             </p>
 
             <h3 className="text-xl font-bold text-foreground mt-8 mb-3">
               WASAPI vs Browser Audio APIs: audio quality and reliability
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              ARIA uses the Windows Audio Session API (WASAPI) in loopback mode — the same
+              ARIA uses the Windows Audio Session API (WASAPI) in loopback mode - the same
               low-level audio subsystem used by professional recording software. WASAPI provides
               direct access to the audio rendered by your sound card, capturing both speakers
               simultaneously with minimal latency and no configuration needed on the other
@@ -117,7 +117,7 @@ export default function CompareNtroPage() {
             <ul className="list-disc list-inside text-muted-foreground mb-4 space-y-2">
               <li>
                 <strong className="text-foreground">Works with any call platform.</strong>{' '}
-                Zoom, Teams, Meet, Webex, Discord — any app that routes audio through Windows
+                Zoom, Teams, Meet, Webex, Discord - any app that routes audio through Windows
                 is automatically captured. No platform-specific integrations needed.
               </li>
               <li>
@@ -162,7 +162,7 @@ export default function CompareNtroPage() {
             <p className="text-muted-foreground leading-relaxed mb-4">
               ARIA stores your resume locally and performs real-time semantic search against
               it when a question is detected. The AI constructs answers that reference your
-              specific project names, team sizes, technologies, and measurable outcomes — because
+              specific project names, team sizes, technologies, and measurable outcomes - because
               those details are what&apos;s actually in your resume. This produces responses that
               sound like you, not like a generic template.
             </p>
@@ -176,8 +176,8 @@ export default function CompareNtroPage() {
               Response latency
             </h3>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              ARIA&apos;s end-to-end latency — from question detection to first suggestion
-              tokens appearing — is under 1 second on a typical broadband connection using
+              ARIA&apos;s end-to-end latency - from question detection to first suggestion
+              tokens appearing - is under 1 second on a typical broadband connection using
               GPT-4o or DeepSeek V3. This is achieved through streaming (first words appear
               before the full response is complete) and speculative transcription.
             </p>
@@ -194,7 +194,7 @@ export default function CompareNtroPage() {
             <p className="text-muted-foreground leading-relaxed mb-4">
               ARIA Starter is $19/month. ARIA Pro is $29/month with model selection (GPT-4o
               and DeepSeek R1), 5 resume profiles, and priority support. A lifetime deal is
-              available at $249 — a one-time payment for perpetual Pro access. Ntro.io
+              available at $249 - a one-time payment for perpetual Pro access. Ntro.io
               starts at $29/month and has no lifetime option.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">

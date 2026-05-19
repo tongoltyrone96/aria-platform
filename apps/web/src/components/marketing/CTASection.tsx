@@ -17,7 +17,7 @@ export function CTASection() {
         </h2>
         <p className="max-w-xl mx-auto text-base sm:text-lg text-white/75 mb-10 leading-relaxed">
           ARIA listens to your conversations, knows your resume, and delivers personalized AI
-          suggestions in under a second — natively on Windows. Join thousands of professionals
+          suggestions in under a second - natively on Windows. Join thousands of professionals
           who communicate more clearly in every interview and meeting.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

@@ -11,7 +11,7 @@ const features = [
   {
     icon: Mic,
     title: 'Real-Time Audio Capture',
-    description: 'Premium WASAPI audio capture gives Aria a clean, direct signal from your system — no microphone quality concerns, no background noise interference.',
+    description: 'Premium WASAPI audio capture gives Aria a clean, direct signal from your system - no microphone quality concerns, no background noise interference.',
   },
   {
     icon: Brain,
@@ -26,7 +26,7 @@ const features = [
   {
     icon: Zap,
     title: 'Instant Response',
-    description: 'The moment a question is asked, Aria surfaces your answer. No delay, no searching — just the right response at exactly the right moment.',
+    description: 'The moment a question is asked, Aria surfaces your answer. No delay, no searching - just the right response at exactly the right moment.',
   },
   {
     icon: Star,
@@ -51,7 +51,7 @@ const features = [
   {
     icon: Users,
     title: 'Multi-User Access',
-    description: 'Every plan supports multiple users on the same account simultaneously. Share with your team or interview partners — no per-seat fees ever.',
+    description: 'Every plan supports multiple users on the same account simultaneously. Share with your team or interview partners - no per-seat fees ever.',
   },
 ];
 
@@ -70,7 +70,7 @@ export function Features() {
             Everything You Need to Ace Every Interview
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Aria packs every tool you need into one private Windows overlay — from real-time AI answers to post-session coaching.
+            Aria packs every tool you need into one private Windows overlay - from real-time AI answers to post-session coaching.
           </p>
         </motion.div>
 

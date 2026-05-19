@@ -5,24 +5,24 @@ export const metadata: Metadata = { title: 'WASAPI Setup - ARIA Docs' };
 export default function WasapiSetupPage() {
   const steps = [
     {
-      heading: 'Open Windows Sound settings',
-      body: ‘Right-click the speaker icon in the system tray and select Open Sound settings, or go to Settings → System → Sound.’,
+      heading: "Open Windows Sound settings",
+      body: "Right-click the speaker icon in the system tray and select Open Sound settings, or go to Settings → System → Sound.",
     },
     {
-      heading: 'Enable recording devices',
-      body: 'Scroll to the Input section and click More sound settings. In the classic Sound panel, go to the Recording tab. Right-click an empty area and make sure Show Disabled Devices is checked.',
+      heading: "Enable recording devices",
+      body: "Scroll to the Input section and click More sound settings. In the classic Sound panel, go to the Recording tab. Right-click an empty area and make sure Show Disabled Devices is checked.",
     },
     {
-      heading: 'Enable Stereo Mix (if available)',
-      body: 'If you see Stereo Mix in the list, right-click it and select Enable. Set it as the default recording device. This is the simplest option for most consumer hardware.',
+      heading: "Enable Stereo Mix (if available)",
+      body: "If you see Stereo Mix in the list, right-click it and select Enable. Set it as the default recording device. This is the simplest option for most consumer hardware.",
     },
     {
-      heading: 'Select your device in ARIA',
-      body: ‘Open ARIA → Settings → Audio. Under System Audio Capture, choose the same output device (speakers or headphones) that your video call plays through. ARIA uses WASAPI loopback on that device.’,
+      heading: "Select your device in ARIA",
+      body: "Open ARIA → Settings → Audio. Under System Audio Capture, choose the same output device (speakers or headphones) that your video call plays through. ARIA uses WASAPI loopback on that device.",
     },
     {
-      heading: 'Test the capture',
-      body: 'Click Test Capture in the ARIA audio settings. Play a video or audio clip on your computer. You should see the waveform indicator move. If it does, ARIA is capturing system audio correctly.',
+      heading: "Test the capture",
+      body: "Click Test Capture in the ARIA audio settings. Play a video or audio clip on your computer. You should see the waveform indicator move. If it does, ARIA is capturing system audio correctly.",
     },
   ];
 
@@ -68,11 +68,11 @@ export default function WasapiSetupPage() {
           </thead>
           <tbody className="divide-y divide-border">
             {[
-              ['Speakers / headphones (default)', '✅ Yes', 'WASAPI loopback on default output'],
-              ['USB headset with own sound card', '✅ Yes', 'Select the USB device in ARIA audio settings'],
-              ['Bluetooth headphones', '⚠️ Usually', 'Some BT stacks have loopback restrictions; test first'],
-              ['Virtual audio cable (e.g. VB-Cable)', '✅ Yes', 'Route call audio through the virtual device'],
-              ['Exclusive mode applications', '⚠️ Limited', 'Disable exclusive mode in device Properties → Advanced'],
+              ['Speakers / headphones (default)', '&check; Yes', 'WASAPI loopback on default output'],
+              ['USB headset with own sound card', '&check; Yes', 'Select the USB device in ARIA audio settings'],
+              ['Bluetooth headphones', '&#9888; Usually', 'Some BT stacks have loopback restrictions; test first'],
+              ['Virtual audio cable (e.g. VB-Cable)', '&check; Yes', 'Route call audio through the virtual device'],
+              ['Exclusive mode applications', '&#9888; Limited', 'Disable exclusive mode in device Properties -&gt; Advanced'],
             ].map(([setup, works, notes]) => (
               <tr key={setup as string}>
                 <td className="py-2 pr-4">{setup}</td>
@@ -93,11 +93,11 @@ export default function WasapiSetupPage() {
           },
           {
             q: 'Choppy or delayed transcription',
-            a: 'Close other applications using the audio device. Set the audio device sample rate to 44100 Hz in Device Properties → Advanced.',
+            a: 'Close other applications using the audio device. Set the audio device sample rate to 44100 Hz in Device Properties -&gt; Advanced.',
           },
           {
             q: 'ARIA only captures microphone, not system audio',
-            a: "Verify the device selected in ARIA → Settings → Audio is an output device (playback), not an input (recording) device.",
+            a: "Verify the device selected in ARIA -&gt; Settings -&gt; Audio is an output device (playback), not an input (recording) device.",
           },
         ].map(({ q, a }) => (
           <div key={q} className="border border-border rounded-xl p-4">
