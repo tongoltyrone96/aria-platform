@@ -54,25 +54,37 @@ function ContactForm() {
     setLoading(true);
     setError(null);
 
+    console.log('[ContactForm] Starting submission...', form);
+
     try {
+      console.log('[ContactForm] Calling fetch to /api/contact');
+
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
 
-      const data = await res.json();
+      console.log('[ContactForm] Fetch completed, status:', res.status);
 
       if (!res.ok) {
+        const data = await res.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('[ContactForm] Server error response:', data);
         throw new Error(data.error || `Server error ${res.status}`);
       }
 
+      const data = await res.json();
+      console.log('[ContactForm] Success response:', data);
+
       setSubmitted(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to send message. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to send message. Please try again.';
+      setError(errorMessage);
       console.error('[ContactForm] Submit error:', err);
+      console.error('[ContactForm] Error type:', err instanceof Error ? err.constructor.name : typeof err);
     } finally {
       setLoading(false);
+      console.log('[ContactForm] Submission finished, loading:', false);
     }
   };
 
