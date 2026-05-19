@@ -13,7 +13,13 @@ const ContactSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
+    // Debug: Check if API key is loaded
+    console.log('[Contact API] RESEND_API_KEY exists:', !!process.env['RESEND_API_KEY']);
+    console.log('[Contact API] RESEND_API_KEY length:', process.env['RESEND_API_KEY']?.length);
+
     const body = await req.json();
+    console.log('[Contact API] Received request:', { name: body.name, email: body.email, subject: body.subject });
+
     const validation = ContactSchema.safeParse(body);
 
     if (!validation.success) {
@@ -35,6 +41,9 @@ export async function POST(req: NextRequest) {
     };
 
     // Send notification email to admin
+    console.log('[Contact API] Attempting to send admin notification...');
+    console.log('[Contact API] From:', process.env['EMAIL_FROM'] ?? 'ARIA <contact@ariainterview.com>');
+
     const { data, error } = await resend.emails.send({
       from: process.env['EMAIL_FROM'] ?? 'ARIA <contact@ariainterview.com>',
       to: 'contact@ariainterview.com',
@@ -65,9 +74,11 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) {
-      console.error('[Contact API] Resend error (admin notification):', error);
+      console.error('[Contact API] Resend error (admin notification):', JSON.stringify(error, null, 2));
+      console.error('[Contact API] Error name:', error.name);
+      console.error('[Contact API] Error message:', error.message);
       return NextResponse.json(
-        { error: 'Failed to send email', details: error },
+        { error: 'Failed to send email', details: error.message || error },
         { status: 500 }
       );
     }
