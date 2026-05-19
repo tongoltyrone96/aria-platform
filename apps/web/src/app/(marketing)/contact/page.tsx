@@ -154,7 +154,7 @@ function ContactForm() {
           rows={5}
           value={form.message}
           onChange={handleChange}
-          placeholder="Tell us what's on your mindâ€¦"
+          placeholder="Tell us what's on your mind..."
           className="rounded-lg border border-input bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition resize-y"
         />
       </div>
@@ -170,7 +170,7 @@ function ContactForm() {
         disabled={loading}
         className="inline-flex items-center justify-center rounded-xl bg-brand-500 hover:bg-brand-600 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold px-6 py-3 transition-colors self-start"
       >
-        {loading ? 'Sendingâ€¦' : 'Send message'}
+        {loading ? 'Sending...' : 'Send message'}
       </button>
     </form>
   );
@@ -186,7 +186,7 @@ export default function ContactPage() {
             Contact us
           </h1>
           <p className="text-lg text-muted-foreground">
-            Questions, bug reports, or partnership inquiries â€” we&apos;re happy to hear from you.
+            Questions, bug reports, or partnership inquiries - we&apos;re happy to hear from you.
           </p>
         </div>
       </section>

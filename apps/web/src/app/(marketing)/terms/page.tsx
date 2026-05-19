@@ -2,7 +2,7 @@
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'ARIA AI Terms of Service â€” the rules and conditions governing your use of ARIA.',
+  description: 'ARIA AI Terms of Service - the rules and conditions governing your use of ARIA.',
 };
 
 export default function TermsPage() {

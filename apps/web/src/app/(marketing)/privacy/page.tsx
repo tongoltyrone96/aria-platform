@@ -3,7 +3,7 @@
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
-    'ARIA AI Privacy Policy â€” how we collect, use, and protect your data.',
+    'ARIA AI Privacy Policy - how we collect, use, and protect your data.',
 };
 
 export default function PrivacyPage() {

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Refund Policy',
-  description: 'ARIA AI Refund Policy â€” 30-day money-back guarantee on all plans.',
+  description: 'ARIA AI Refund Policy - 30-day money-back guarantee on all plans.',
 };
 
 export default function RefundPage() {
@@ -21,7 +21,7 @@ export default function RefundPage() {
             <p className="leading-relaxed">
               We want you to be completely satisfied with ARIA. If ARIA doesn&apos;t work for your
               setup or you&apos;re unhappy for any reason, we offer a straightforward money-back
-              guarantee â€” no lengthy forms, no interrogation.
+              guarantee - no lengthy forms, no interrogation.
             </p>
           </section>
 
@@ -79,7 +79,7 @@ export default function RefundPage() {
               </li>
             </ol>
             <p className="leading-relaxed mt-4">
-              We will process your refund within 5â€“10 business days. Refunds are returned to the
+              We will process your refund within 5–10 business days. Refunds are returned to the
               original payment method.
             </p>
           </section>

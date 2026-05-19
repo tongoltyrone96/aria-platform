@@ -96,9 +96,9 @@ export function DeviceList({ licenses: initialLicenses, token }: Props) {
               <tbody>
                 {lic.devices.map((device) => (
                   <tr key={device.id} className="border-b border-border last:border-0">
-                    <td className="px-5 py-3 font-medium">{device.hostname ?? 'â€”'}</td>
-                    <td className="px-5 py-3 text-muted-foreground">{device.os ?? 'â€”'}</td>
-                    <td className="px-5 py-3 text-muted-foreground font-mono">{device.appVersion ?? 'â€”'}</td>
+                    <td className="px-5 py-3 font-medium">{device.hostname ?? '-'}</td>
+                    <td className="px-5 py-3 text-muted-foreground">{device.os ?? '-'}</td>
+                    <td className="px-5 py-3 text-muted-foreground font-mono">{device.appVersion ?? '-'}</td>
                     <td className="px-5 py-3 text-muted-foreground">
                       {new Date(device.lastSeenAt).toLocaleDateString()}
                     </td>

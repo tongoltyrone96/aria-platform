@@ -1,12 +1,12 @@
 ﻿import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Troubleshooting â€” ARIA Docs' };
+export const metadata: Metadata = { title: 'Troubleshooting - ARIA Docs' };
 
 export default function TroubleshootingPage() {
   const issues = [
     {
       q: 'ARIA cannot capture system audio',
-      a: 'Make sure "Stereo Mix" or "WASAPI Loopback" is enabled in Windows Sound settings. Right-click the speaker icon â†’ Sounds â†’ Recording tab â†’ right-click empty area â†’ Show Disabled Devices.',
+      a: 'Make sure "Stereo Mix" or "WASAPI Loopback" is enabled in Windows Sound settings. Right-click the speaker icon → Sounds → Recording tab → right-click empty area → Show Disabled Devices.',
     },
     {
       q: 'License activation fails',
