@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     const { data, error } = await resend.emails.send({
       from: process.env['EMAIL_FROM'] ?? 'ARIA <onboarding@resend.dev>',
-      to: 'contact@ariainterview.com',
+      to: 'tongoltyrone84@gmail.com', // Temporary: testing with verified email
       replyTo: email,
       subject: `[Contact Form] ${subjectLabels[subject]} - ${name}`,
       html: `
