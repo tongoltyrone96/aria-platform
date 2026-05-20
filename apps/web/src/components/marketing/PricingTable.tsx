@@ -73,9 +73,9 @@ const plans: PricingPlan[] = [
   },
   {
     name: 'Elite',
-    monthlyPrice: 27.99,
-    annualPrice: 295.56,
-    annualMonthlyRate: 24.63,
+    monthlyPrice: 1, // TEMP: Testing payment - Original: 27.99
+    annualPrice: 12, // TEMP: Testing payment - Original: 295.56
+    annualMonthlyRate: 1, // TEMP: Testing payment - Original: 24.63
     description: 'For power users & teams.',
     highlighted: false,
     features: [
