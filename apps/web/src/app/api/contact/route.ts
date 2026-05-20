@@ -42,11 +42,11 @@ export async function POST(req: NextRequest) {
 
     // Send notification email to admin
     console.log('[Contact API] Attempting to send admin notification...');
-    console.log('[Contact API] From:', process.env['EMAIL_FROM'] ?? 'ARIA <onboarding@resend.dev>');
+    console.log('[Contact API] From:', process.env['EMAIL_FROM'] ?? 'ARIA <contact@ariainterview.com>');
 
     const { data, error } = await resend.emails.send({
-      from: process.env['EMAIL_FROM'] ?? 'ARIA <onboarding@resend.dev>',
-      to: email, // Send to user's email for testing
+      from: process.env['EMAIL_FROM'] ?? 'ARIA <contact@ariainterview.com>',
+      to: 'contact@ariainterview.com',
       replyTo: email,
       subject: `[Contact Form] ${subjectLabels[subject]} - ${name}`,
       html: `
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
 
     // Send auto-reply confirmation email to user
     const { data: autoReplyData, error: autoReplyError } = await resend.emails.send({
-      from: process.env['EMAIL_FROM'] ?? 'ARIA <onboarding@resend.dev>',
+      from: process.env['EMAIL_FROM'] ?? 'ARIA <contact@ariainterview.com>',
       to: email,
       subject: 'We received your message - ARIA Support',
       html: `
