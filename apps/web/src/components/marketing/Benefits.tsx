@@ -18,7 +18,7 @@ const useCases = [
     title: 'Active Job Seekers',
     description:
       'Whether you\'re targeting FAANG engineering roles or fast-growing startups, Aria adapts to any format and delivers the precise answers that move you to the offer stage.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
+    image: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600',
   },
   {
     title: 'Career Changers',
