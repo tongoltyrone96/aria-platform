@@ -51,8 +51,8 @@ const plans: PricingPlan[] = [
   {
     name: 'Pro',
     monthlyPrice: 17.99,
-    annualPrice: 190.03,
-    annualMonthlyRate: 15.83,
+    annualPrice: 140.33,
+    annualMonthlyRate: 11.69,
     badge: 'Most Popular',
     highlighted: true,
     description: 'For professionals who want the full experience.',
@@ -74,8 +74,8 @@ const plans: PricingPlan[] = [
   {
     name: 'Elite',
     monthlyPrice: 27.99,
-    annualPrice: 295.56,
-    annualMonthlyRate: 24.63,
+    annualPrice: 218.33,
+    annualMonthlyRate: 18.19,
     description: 'For power users & teams.',
     highlighted: false,
     features: [
@@ -278,7 +278,7 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
 // ── PricingTable ─────────────────────────────────────────────
 
 export function PricingTable() {
-  const [billing, setBilling] = useState<BillingCycle>('monthly');
+  const [billing, setBilling] = useState<BillingCycle>('annual');
 
   return (
     <div className="flex flex-col gap-10">
@@ -307,7 +307,7 @@ export function PricingTable() {
         <span className={cn('text-sm font-medium transition-colors', billing === 'annual' ? 'text-foreground' : 'text-muted-foreground')}>
           Annual
           <span className="ml-1.5 inline-flex items-center rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-semibold text-green-600">
-            Save 12%
+            Save 35%
           </span>
         </span>
       </div>

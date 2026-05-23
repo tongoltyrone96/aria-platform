@@ -6,9 +6,9 @@ import { createNowPaymentsInvoice } from '../../services/nowpayments.js';
 
 const PLAN_PRICES: Record<string, { amount: number; label: string }> = {
   pro_monthly:   { amount: 17.99,  label: 'ARIA Pro — Monthly' },
-  pro_yearly:    { amount: 190.03, label: 'ARIA Pro — Annual' },
+  pro_yearly:    { amount: 140.33, label: 'ARIA Pro — Annual (35% off)' },
   elite_monthly: { amount: 27.99,  label: 'ARIA Elite — Monthly' },
-  elite_yearly:  { amount: 295.56, label: 'ARIA Elite — Annual' },
+  elite_yearly:  { amount: 218.33, label: 'ARIA Elite — Annual (35% off)' },
 };
 
 const CreateCryptoSchema = z.object({
