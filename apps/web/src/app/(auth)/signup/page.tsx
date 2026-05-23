@@ -7,20 +7,12 @@ import { cn } from '@/lib/utils';
 
 const API_URL = process.env['NEXT_PUBLIC_API_URL'] ?? 'https://api.ariainterview.com';
 
-const COUNTRIES = [
-  { code: 'US', name: 'United States' }, { code: 'GB', name: 'United Kingdom' },
-  { code: 'KR', name: 'South Korea' }, { code: 'CA', name: 'Canada' },
-  { code: 'AU', name: 'Australia' }, { code: 'DE', name: 'Germany' },
-  { code: 'FR', name: 'France' }, { code: 'JP', name: 'Japan' },
-  { code: 'IN', name: 'India' }, { code: 'SG', name: 'Singapore' },
-  { code: 'OTHER', name: 'Other' },
-];
-
 export default function SignupPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ email: '', password: '', country: 'US', marketing: false });
+  const [form, setForm] = useState({ email: '', password: '', marketing: false });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -34,7 +26,6 @@ export default function SignupPage() {
         body: JSON.stringify({
           email: form.email,
           password: form.password,
-          country: form.country,
           marketingOptIn: form.marketing,
         }),
       });
@@ -46,11 +37,42 @@ export default function SignupPage() {
         return;
       }
 
-      router.push('/login');
+      setSuccess(true);
+      setLoading(false);
     } catch {
       setError('Connection error. Please try again.');
       setLoading(false);
     }
+  }
+
+  if (success) {
+    return (
+      <div className="w-full space-y-7">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto">
+            <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">Check your email</h1>
+          <p className="text-muted-foreground">
+            We've sent a confirmation link to <strong>{form.email}</strong>.
+            <br />
+            Click the link in the email to verify your account.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Didn't receive the email? Check your spam folder.
+          </p>
+          <Link
+            href="/login"
+            className="inline-block mt-4 px-6 py-2.5 rounded-xl font-semibold text-sm text-white transition-all hover:-translate-y-0.5"
+            style={{ backgroundColor: '#F05A28' }}
+          >
+            Go to Sign In
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -94,19 +116,6 @@ export default function SignupPage() {
             style={{ '--tw-ring-color': '#F05A28' } as React.CSSProperties}
             placeholder="Min. 8 characters"
           />
-        </div>
-
-        <div className="space-y-1.5">
-          <label htmlFor="country" className="text-sm font-medium text-foreground">Country</label>
-          <select
-            id="country"
-            value={form.country}
-            onChange={(e) => setForm((f) => ({ ...f, country: e.target.value }))}
-            className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:outline-none focus:ring-2 text-sm text-foreground"
-            style={{ '--tw-ring-color': '#F05A28' } as React.CSSProperties}
-          >
-            {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
-          </select>
         </div>
 
         <label className="flex items-start gap-3 cursor-pointer">

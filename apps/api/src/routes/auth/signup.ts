@@ -20,7 +20,7 @@ export async function signupRoute(fastify: FastifyInstance) {
     const supabaseUrl = process.env['SUPABASE_URL']!;
     const serviceKey = process.env['SUPABASE_SERVICE_ROLE_KEY']!;
 
-    // Create user via admin API with email_confirm: true so they can sign in immediately
+    // Create user via admin API - user must confirm email before signing in
     const res = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
       method: 'POST',
       headers: {
@@ -31,7 +31,7 @@ export async function signupRoute(fastify: FastifyInstance) {
       body: JSON.stringify({
         email,
         password,
-        email_confirm: true,
+        email_confirm: false,
       }),
     });
 
@@ -84,7 +84,7 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     fastify.posthog?.capture({ distinctId: userId, event: 'signup_completed', properties: { country } });
 
-    return reply.status(201).send({ userId, requiresEmailVerification: false });
+    return reply.status(201).send({ userId, requiresEmailVerification: true });
   });
 }
  
