@@ -18,14 +18,15 @@ export async function signupRoute(fastify: FastifyInstance) {
     const { email, password, country, marketingOptIn } = body.data;
 
     const supabaseUrl = process.env['SUPABASE_URL']!;
+    const anonKey = process.env['SUPABASE_ANON_KEY']!;
     const serviceKey = process.env['SUPABASE_SERVICE_ROLE_KEY']!;
 
-    // Create user via signup API - automatically sends confirmation email
+    // Create user via signup API - uses anon key to trigger confirmation email
     const res = await fetch(`${supabaseUrl}/auth/v1/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        apikey: serviceKey,
+        apikey: anonKey,
       },
       body: JSON.stringify({
         email,
