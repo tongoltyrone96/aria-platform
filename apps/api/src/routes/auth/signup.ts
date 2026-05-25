@@ -20,28 +20,29 @@ export async function signupRoute(fastify: FastifyInstance) {
     const supabaseUrl = process.env['SUPABASE_URL']!;
     const serviceKey = process.env['SUPABASE_SERVICE_ROLE_KEY']!;
 
-    // Create user via admin API - user must confirm email before signing in
-    const res = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
+    // Create user via signup API - automatically sends confirmation email
+    const res = await fetch(`${supabaseUrl}/auth/v1/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
       },
       body: JSON.stringify({
         email,
         password,
-        email_confirm: false,
       }),
     });
 
     if (!res.ok) {
-      const err = await res.json() as { message?: string; msg?: string };
-      return reply.status(400).send({ code: 'ERR_VALIDATION', details: err.message ?? err.msg ?? 'Signup failed' });
+      const err = await res.json() as { message?: string; msg?: string; error_description?: string };
+      return reply.status(400).send({ code: 'ERR_VALIDATION', details: err.error_description ?? err.message ?? err.msg ?? 'Signup failed' });
     }
 
-    const userData = await res.json() as { id: string };
-    const userId = userData.id;
+    const signupData = await res.json() as { user?: { id: string } };
+    const userId = signupData.user?.id;
+    if (!userId) {
+      return reply.status(500).send({ code: 'ERR_SIGNUP', details: 'User ID not returned from signup' });
+    }
 
     try {
       await fastify.db.insert(profiles).values({
