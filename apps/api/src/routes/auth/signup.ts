@@ -106,7 +106,7 @@ export async function signupRoute(fastify: FastifyInstance) {
       if (confirmationLink) {
         // Send confirmation email via Resend
         try {
-          await fetch('https://api.resend.com/emails', {
+          const emailRes = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -124,9 +124,16 @@ export async function signupRoute(fastify: FastifyInstance) {
               `,
             }),
           });
-          fastify.log.info({ userId, email }, 'Confirmation email sent via Resend');
+
+          const emailData = await emailRes.json();
+
+          if (emailRes.ok) {
+            fastify.log.info({ userId, email, resendResponse: emailData }, 'Confirmation email sent via Resend - SUCCESS');
+          } else {
+            fastify.log.error({ userId, email, resendResponse: emailData, status: emailRes.status }, 'Resend API returned error');
+          }
         } catch (emailErr) {
-          fastify.log.error({ userId, email, err: emailErr }, 'Failed to send confirmation email');
+          fastify.log.error({ userId, email, err: emailErr }, 'Failed to send confirmation email - EXCEPTION');
         }
       }
     }
