@@ -22,8 +22,8 @@ export default async function BillingPage() {
 
   const PLAN_PRICES: Record<string, string> = {
     starter: 'Free',
-    pro: '$17.99/mo', pro_annual: '$190.03/yr',
-    elite: '$27.99/mo', elite_annual: '$295.56/yr',
+    pro: '$17.99/mo', pro_annual: '$140.33/yr',
+    elite: '$27.99/mo', elite_annual: '$218.33/yr',
     // legacy
     trial: 'Free', free: 'Free', lifetime: 'Lifetime',
   };
@@ -95,7 +95,7 @@ export default async function BillingPage() {
       <div className="grid grid-cols-3 gap-3">
         {[
           { plan: 'pro', name: 'Pro', price: '$17.99/mo', href: '/pricing' },
-          { plan: 'pro_annual', name: 'Pro Annual', price: '$190/yr', href: '/pricing' },
+          { plan: 'pro_annual', name: 'Pro Annual', price: '$140.33/yr', href: '/pricing' },
           { plan: 'elite', name: 'Elite', price: '$27.99/mo', href: '/pricing' },
         ].map((p) => (
           <a

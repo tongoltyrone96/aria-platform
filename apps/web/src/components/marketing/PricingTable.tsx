@@ -42,7 +42,6 @@ const plans: PricingPlan[] = [
       'Premium WASAPI audio capture',
       'State-of-the-art AI models',
       'AI assistant overlay',
-      'Multi-user simultaneous access',
       'Resume upload (1 profile)',
     ],
     ctaLabel: 'Download Free',
@@ -236,11 +235,13 @@ function PlanCard({ plan, billing, index }: { plan: PricingPlan; billing: Billin
         )}
       </div>
 
-      {/* Multi-user badge */}
-      <div className="flex items-center gap-2 mb-5 text-xs font-medium text-brand-500 bg-brand-500/8 border border-brand-500/20 rounded-lg px-3 py-2">
-        <Users size={13} />
-        Multiple users can share one account simultaneously
-      </div>
+      {/* Multi-user badge (Pro & Elite only) */}
+      {plan.monthlyPrice > 0 && (
+        <div className="flex items-center gap-2 mb-5 text-xs font-medium text-brand-500 bg-brand-500/8 border border-brand-500/20 rounded-lg px-3 py-2">
+          <Users size={13} />
+          Multiple users can share one account simultaneously
+        </div>
+      )}
 
       {/* Feature list */}
       <ul className="flex flex-col gap-3 mb-8 flex-1">
