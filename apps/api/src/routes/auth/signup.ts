@@ -113,7 +113,7 @@ export async function signupRoute(fastify: FastifyInstance) {
               Authorization: `Bearer ${resendApiKey}`,
             },
             body: JSON.stringify({
-              from: 'ARIA <onboarding@resend.dev>',
+              from: 'ARIA <tongoltyrone84@gmail.com>',
               to: email,
               subject: 'Confirm Your ARIA Account',
               html: `
