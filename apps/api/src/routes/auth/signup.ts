@@ -19,9 +19,8 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     const supabaseUrl = process.env['SUPABASE_URL']!;
     const serviceKey = process.env['SUPABASE_SERVICE_ROLE_KEY']!;
-    const resendApiKey = process.env['RESEND_API_KEY']!;
 
-    // Create user via Admin API
+    // Create user via Admin API (email confirmed immediately)
     const res = await fetch(`${supabaseUrl}/auth/v1/admin/users`, {
       method: 'POST',
       headers: {
@@ -32,7 +31,7 @@ export async function signupRoute(fastify: FastifyInstance) {
       body: JSON.stringify({
         email,
         password,
-        email_confirm: false,
+        email_confirm: true,
       }),
     });
 
@@ -85,60 +84,7 @@ export async function signupRoute(fastify: FastifyInstance) {
 
     fastify.posthog?.capture({ distinctId: userId, event: 'signup_completed', properties: { country } });
 
-    // Generate email confirmation link via Supabase Admin API
-    const linkRes = await fetch(`${supabaseUrl}/auth/v1/admin/generate_link`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-      },
-      body: JSON.stringify({
-        type: 'signup',
-        email,
-      }),
-    });
-
-    if (linkRes.ok) {
-      const linkData = await linkRes.json() as { action_link?: string };
-      const confirmationLink = linkData.action_link;
-
-      if (confirmationLink) {
-        // Send confirmation email via Resend
-        try {
-          const emailRes = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${resendApiKey}`,
-            },
-            body: JSON.stringify({
-              from: 'ARIA <tongoltyrone84@gmail.com>',
-              to: email,
-              subject: 'Confirm Your ARIA Account',
-              html: `
-                <h2>Welcome to ARIA!</h2>
-                <p>Please confirm your email address by clicking the link below:</p>
-                <p><a href="${confirmationLink}" style="background-color: #F05A28; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block;">Confirm Email</a></p>
-                <p>If you didn't create an account, you can safely ignore this email.</p>
-              `,
-            }),
-          });
-
-          const emailData = await emailRes.json();
-
-          if (emailRes.ok) {
-            fastify.log.info({ userId, email, resendResponse: emailData }, 'Confirmation email sent via Resend - SUCCESS');
-          } else {
-            fastify.log.error({ userId, email, resendResponse: emailData, status: emailRes.status }, 'Resend API returned error');
-          }
-        } catch (emailErr) {
-          fastify.log.error({ userId, email, err: emailErr }, 'Failed to send confirmation email - EXCEPTION');
-        }
-      }
-    }
-
-    return reply.status(201).send({ userId, requiresEmailVerification: true });
+    return reply.status(201).send({ userId, requiresEmailVerification: false });
   });
 }
  

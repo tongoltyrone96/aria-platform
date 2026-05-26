@@ -37,8 +37,15 @@ export default function SignupPage() {
         return;
       }
 
-      setSuccess(true);
-      setLoading(false);
+      const data = await res.json() as { requiresEmailVerification?: boolean };
+
+      if (data.requiresEmailVerification) {
+        setSuccess(true);
+        setLoading(false);
+      } else {
+        // No email verification needed, redirect to login
+        router.push('/login?signup=success');
+      }
     } catch {
       setError('Connection error. Please try again.');
       setLoading(false);
