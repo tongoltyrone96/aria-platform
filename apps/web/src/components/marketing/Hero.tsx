@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor, Shield, Zap, Target, Brain, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Monitor, Shield, Zap, Target, Brain, Globe, ChevronLeft, ChevronRight, Play, X } from 'lucide-react';
 
 const DOWNLOAD_URL = 'https://github.com/tongoltyrone96/aria-releases/releases/download/v0.2.4/ARIA-Setup-0.2.4.exe';
 
@@ -126,6 +126,8 @@ function HeroSlideshow() {
 }
 
 export function Hero() {
+  const [showVideo, setShowVideo] = useState(false);
+
   return (
     <section
       className="pt-40 pb-24"
@@ -162,7 +164,7 @@ export function Hero() {
             </motion.p>
           </div>
 
-          <motion.div {...fadeUp(0.3)} className="flex justify-center">
+          <motion.div {...fadeUp(0.3)} className="flex justify-center gap-4">
             <a
               href={DOWNLOAD_URL}
               className="inline-flex items-center gap-2 text-white text-base font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg"
@@ -171,6 +173,14 @@ export function Hero() {
               <Monitor className="w-5 h-5" />
               Download for Windows
             </a>
+            <button
+              type="button"
+              onClick={() => setShowVideo(true)}
+              className="inline-flex items-center gap-2 text-foreground text-base font-semibold px-8 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 border-2 border-border bg-background hover:bg-muted"
+            >
+              <Play className="w-5 h-5" style={{ color: '#F05A28' }} />
+              Demo
+            </button>
           </motion.div>
         </div>
 
@@ -219,6 +229,48 @@ export function Hero() {
           <HeroSlideshow />
         </motion.div>
       </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {showVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowVideo(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl bg-black rounded-2xl overflow-hidden shadow-2xl"
+            >
+              {/* Close button */}
+              <button
+                type="button"
+                onClick={() => setShowVideo(false)}
+                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-all"
+              >
+                <X size={20} />
+              </button>
+
+              {/* Video */}
+              <video
+                controls
+                autoPlay
+                className="w-full h-auto"
+                style={{ maxHeight: '80vh' }}
+              >
+                <source src="/ARIA.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

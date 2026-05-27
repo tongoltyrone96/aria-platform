@@ -9,3 +9,7 @@ dist
 .vercel
 .turbo
 coverage
+
+# Large files
+*.rar
+apps/web/public/ARIA.mp4
