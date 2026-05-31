@@ -20,6 +20,7 @@ import { paddleWebhookRoute } from './routes/webhook/paddle.js';
 import { nowpaymentsWebhookRoute } from './routes/webhook/nowpayments.js';
 import { cryptoPaymentRoutes } from './routes/payments/crypto.js';
 import { sessionRoutes } from './routes/session.js';
+import { fixDevicesRoute } from './routes/admin/fix-devices.js';
 
 const devLogger =
   process.env['NODE_ENV'] !== 'production'
@@ -62,6 +63,7 @@ async function buildServer() {
   await fastify.register(nowpaymentsWebhookRoute);
   await fastify.register(cryptoPaymentRoutes);
   await fastify.register(sessionRoutes);
+  await fastify.register(fixDevicesRoute); // TEMPORARY - remove after running once
 
   return fastify;
 }
