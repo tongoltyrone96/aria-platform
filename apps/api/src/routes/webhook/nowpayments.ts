@@ -5,6 +5,7 @@ import type { Plan } from '@aria/shared';
 import { generateLicenseKey } from '../../lib/crypto.js';
 import { Errors } from '../../lib/errors.js';
 import { verifyNowPaymentsIpn } from '../../services/nowpayments.js';
+import { getMaxDevicesForPlan } from '../../lib/plan-utils.js';
 
 const TERMINAL_STATUSES = new Set(['finished', 'confirmed']);
 
@@ -120,7 +121,11 @@ export async function nowpaymentsWebhookRoute(fastify: FastifyInstance) {
       for (const lic of userLicenses) {
         await fastify.db
           .update(licenses)
-          .set({ expiresAt, revokedAt: null })
+          .set({
+            expiresAt,
+            revokedAt: null,
+            maxDevices: getMaxDevicesForPlan(dbPlan),
+          })
           .where(eq(licenses.id, lic.id));
       }
     } else {
@@ -134,7 +139,7 @@ export async function nowpaymentsWebhookRoute(fastify: FastifyInstance) {
         userId,
         subscriptionId: sub?.id ?? null,
         key: generateLicenseKey(),
-        maxDevices: 1,
+        maxDevices: getMaxDevicesForPlan(dbPlan),
         expiresAt,
       });
     }

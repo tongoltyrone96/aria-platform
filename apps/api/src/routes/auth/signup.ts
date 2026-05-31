@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { profiles, subscriptions, licenses } from '@aria/db';
 import { generateReferralCode, generateLicenseKey } from '../../lib/crypto.js';
+import { getMaxDevicesForPlan } from '../../lib/plan-utils.js';
 
 const SignupSchema = z.object({
   email: z.string().email(),
@@ -75,7 +76,7 @@ export async function signupRoute(fastify: FastifyInstance) {
         userId,
         subscriptionId: subId,
         key: licenseKey,
-        maxDevices: 1,
+        maxDevices: getMaxDevicesForPlan('starter'),
       });
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);

@@ -1,0 +1,88 @@
+ARIA WEB TODO LIST
+
+1. Privacy Policy
+- Review whether Aria stores audio, transcripts, prompts, AI responses, resumes, job listings, or interview schedules.
+- Confirm whether user content is used for AI model training.
+- Confirm the actual third-party providers used for auth, database, hosting, payments, email, analytics, and support.
+- Add real data retention periods.
+- Add jurisdiction-specific privacy rights if needed.
+- Have the final Privacy Policy reviewed before production release.
+
+2. Terms of Service
+- Create a Terms of Service page.
+- Cover account registration, subscriptions, cancellations, refunds, acceptable use, token key restrictions, desktop app license, AI output disclaimer, interview outcome disclaimer, account termination, limitation of liability, and governing law.
+- Link the Footer Terms of Service item to the real page.
+
+3. Supabase Auth Integration
+- Replace mock localStorage auth with Supabase Auth.
+- Add Supabase environment variables.
+- Implement real sign in.
+- Implement real sign up.
+- Implement real sign out.
+- Protect all dashboard routes.
+- Redirect unauthenticated users to the sign in page.
+- Make the Header read real auth session state.
+
+4. Database Integration
+- Create profiles table.
+- Create tokens table.
+- Create usage_logs table.
+- Create subscriptions table.
+- Create support_tickets table.
+- Replace all dashboard mock data with database data.
+- Add row-level security policies before production.
+
+5. Stripe Integration
+- Create checkout sessions for paid plans.
+- Create customer portal sessions for plan and card management.
+- Fetch invoice history from Stripe.
+- Link invoice PDF downloads.
+- Add Stripe webhooks for subscription status updates.
+- Cancel subscriptions when an account is deleted.
+
+6. Dashboard Data
+- Replace mock user name, plan, token key, renewal date, and usage totals.
+- Replace mock usage history.
+- Replace mock billing details and invoices.
+- Replace mock settings profile data.
+- Replace mock support ticket submission.
+
+7. Download
+- Add the real installer at public/downloads/AriaSetup.exe, or disable the Download link until ready.
+- Add a System Requirements page before public launch.
+- Confirm Windows version, storage, microphone permissions, meeting app compatibility, and desktop app requirements.
+
+8. Documentation
+- Create a Documentation page.
+- Include installation steps.
+- Include token key activation instructions.
+- Include plan limits.
+- Include troubleshooting steps.
+- Include billing and account management instructions.
+
+9. Footer Links
+- Connect Documentation to a real page.
+- Connect System Requirements to a real page.
+- Connect Terms of Service to a real page.
+- Confirm whether Contact Support should go to the dashboard support page or a public support page.
+
+10. Package Cleanup
+- Check whether express, cors, dotenv, and nodemailer are needed.
+- Remove unused server dependencies if no backend will live in this repo.
+- Confirm whether React and React DOM should be normal dependencies instead of peer dependencies.
+- Add typecheck, lint, and preview scripts if needed.
+
+11. UI and UX
+- Add loading states for auth and dashboard pages.
+- Add empty states for usage, billing, and support ticket history.
+- Add real error messages for failed auth, billing, and database requests.
+- Confirm mobile layout for auth pages, dashboard pages, and footer.
+
+12. Production Checks
+- Verify no Korean text exists in source code, comments, or documentation.
+- Verify environment variables are documented.
+- Verify build succeeds.
+- Verify dashboard cannot be accessed without authentication.
+- Verify payment flows work in Stripe test mode.
+- Verify account deletion behavior.
+- Verify Privacy Policy and Terms of Service match actual product behavior.

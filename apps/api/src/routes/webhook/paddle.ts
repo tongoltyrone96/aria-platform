@@ -6,6 +6,7 @@ import type { Plan } from '@aria/shared';
 import { generateLicenseKey } from '../../lib/crypto.js';
 import { emailService } from '../../services/email.js';
 import { Errors } from '../../lib/errors.js';
+import { getMaxDevicesForPlan } from '../../lib/plan-utils.js';
 
 function verifyPaddleSignature(body: string, signature: string, secret: string): boolean {
   const parts = signature.split(';');
@@ -81,7 +82,7 @@ async function handleSubCreated(fastify: FastifyInstance, data: Record<string, u
     userId,
     subscriptionId: sub?.id ?? null,
     key: licenseKey,
-    maxDevices: 1,
+    maxDevices: getMaxDevicesForPlan(plan as Plan),
     expiresAt: periodEnd,
   });
 
@@ -94,12 +95,34 @@ async function handleSubUpdated(fastify: FastifyInstance, data: Record<string, u
   const paddleId = data['id'] as string;
   const periodEnd = new Date((data['current_billing_period'] as { ends_at: string })?.ends_at ?? 0);
   const status = data['status'] as string;
+  const customData = data['custom_data'] as { plan?: string } | undefined;
+  const plan = customData?.plan;
 
   await fastify.db.update(subscriptions).set({
     currentPeriodEnd: periodEnd,
     status: status as 'active' | 'past_due' | 'canceled',
+    ...(plan ? { plan: plan as Plan } : {}),
     updatedAt: new Date(),
   }).where(eq(subscriptions.paddleSubscriptionId, paddleId));
+
+  // Update license maxDevices when plan changes
+  if (plan) {
+    const [sub] = await fastify.db
+      .select({ userId: subscriptions.userId })
+      .from(subscriptions)
+      .where(eq(subscriptions.paddleSubscriptionId, paddleId))
+      .limit(1);
+
+    if (sub) {
+      await fastify.db
+        .update(licenses)
+        .set({
+          maxDevices: getMaxDevicesForPlan(plan as Plan),
+          expiresAt: periodEnd,
+        })
+        .where(eq(licenses.userId, sub.userId));
+    }
+  }
 }
 
 async function handleSubCanceled(fastify: FastifyInstance, data: Record<string, unknown>) {
