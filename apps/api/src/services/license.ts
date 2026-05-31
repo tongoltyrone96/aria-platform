@@ -44,9 +44,11 @@ export async function activateDevice(
   }
 
   // At device limit — auto-revoke the least recently seen device to make room
+  let bumpedHostname: string | null = null;
   if (activeDevices.length >= license.maxDevices) {
     const oldest = activeDevices[0];
     if (oldest) {
+      bumpedHostname = oldest.hostname ?? null;
       await db.update(devices)
         .set({ status: 'revoked', revokedAt: new Date() })
         .where(eq(devices.id, oldest.id));
@@ -69,5 +71,7 @@ export async function activateDevice(
     plan,
     limits: PLAN_LIMITS[plan],
     expiresAt: license.expiresAt?.toISOString() ?? null,
+    bumped: bumpedHostname !== null,
+    bumpedHostname,
   };
 }
