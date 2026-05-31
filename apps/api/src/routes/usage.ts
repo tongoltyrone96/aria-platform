@@ -51,11 +51,13 @@ export async function usageRoutes(fastify: FastifyInstance) {
     let periodStart: Date;
     let periodEnd: Date;
 
-    if (subscription?.currentPeriodEnd) {
+    const now = new Date();
+    const hasValidSubscription = subscription?.currentPeriodEnd && new Date(subscription.currentPeriodEnd) > now;
+
+    if (hasValidSubscription) {
       // Use subscription's billing day for monthly reset
       // Both monthly and annual plans reset every month on their billing day
-      const now = new Date();
-      const finalPeriodEnd = new Date(subscription.currentPeriodEnd);
+      const finalPeriodEnd = new Date(subscription!.currentPeriodEnd!);
       const billingDay = finalPeriodEnd.getDate();
 
       // Calculate current monthly billing cycle
