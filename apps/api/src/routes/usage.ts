@@ -47,22 +47,32 @@ export async function usageRoutes(fastify: FastifyInstance) {
       subscription = await fastify.db.select().from(subscriptions).where(eq(subscriptions.userId, userId)).limit(1).then((r) => r[0]);
     }
 
-    // Calculate billing period based on subscription, not calendar month
+    // Calculate billing period based on subscription
     let periodStart: Date;
     let periodEnd: Date;
 
     if (subscription?.currentPeriodEnd) {
-      // Use subscription's actual billing period
-      periodEnd = new Date(subscription.currentPeriodEnd);
+      // Use subscription's billing day for monthly reset
+      // Both monthly and annual plans reset every month on their billing day
+      const now = new Date();
+      const finalPeriodEnd = new Date(subscription.currentPeriodEnd);
+      const billingDay = finalPeriodEnd.getDate();
 
-      // Calculate period start based on plan type
-      periodStart = new Date(periodEnd);
-      if (plan.includes('annual')) {
-        // Annual plans: 365 days
-        periodStart.setDate(periodStart.getDate() - 365);
+      // Calculate current monthly billing cycle
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+
+      // Try this month's billing day
+      let thisMonthBillingDate = new Date(currentYear, currentMonth, billingDay);
+
+      // If billing day hasn't arrived this month yet, use last month's cycle
+      if (now < thisMonthBillingDate) {
+        periodEnd = thisMonthBillingDate;
+        periodStart = new Date(currentYear, currentMonth - 1, billingDay);
       } else {
-        // Monthly plans: 30 days
-        periodStart.setDate(periodStart.getDate() - 30);
+        // Billing day has passed, current cycle is this month to next month
+        periodStart = thisMonthBillingDate;
+        periodEnd = new Date(currentYear, currentMonth + 1, billingDay);
       }
     } else {
       // Fallback to calendar month for starter/free users (no currentPeriodEnd)
