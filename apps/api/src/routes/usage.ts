@@ -35,17 +35,41 @@ export async function usageRoutes(fastify: FastifyInstance) {
     }
 
     // If plan not resolved from device JWT, look it up from DB
+    let subscription = null;
     if (!planResolved) {
       const userLicense = await fastify.db.select().from(licenses).where(eq(licenses.userId, userId)).limit(1).then((r) => r[0]);
       if (userLicense?.subscriptionId) {
-        const sub = await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, userLicense.subscriptionId)).limit(1).then((r) => r[0]);
-        if (sub?.plan) plan = normalizePlan(sub.plan);
+        subscription = await fastify.db.select().from(subscriptions).where(eq(subscriptions.id, userLicense.subscriptionId)).limit(1).then((r) => r[0]);
+        if (subscription?.plan) plan = normalizePlan(subscription.plan);
       }
+    } else {
+      // Device JWT users - still need to fetch subscription for period calculation
+      subscription = await fastify.db.select().from(subscriptions).where(eq(subscriptions.userId, userId)).limit(1).then((r) => r[0]);
     }
 
-    const now = new Date();
-    const periodStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    const periodEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    // Calculate billing period based on subscription, not calendar month
+    let periodStart: Date;
+    let periodEnd: Date;
+
+    if (subscription?.currentPeriodEnd) {
+      // Use subscription's actual billing period
+      periodEnd = new Date(subscription.currentPeriodEnd);
+
+      // Calculate period start based on plan type
+      periodStart = new Date(periodEnd);
+      if (plan.includes('annual')) {
+        // Annual plans: 365 days
+        periodStart.setDate(periodStart.getDate() - 365);
+      } else {
+        // Monthly plans: 30 days
+        periodStart.setDate(periodStart.getDate() - 30);
+      }
+    } else {
+      // Fallback to calendar month for starter/free users (no currentPeriodEnd)
+      const now = new Date();
+      periodStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      periodEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    }
 
     // Total answers this month
     const [totalResult] = await fastify.db
