@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Monitor, Shield, Zap, Target, Brain, Globe, ChevronLeft, ChevronRight, Play, X } from 'lucide-react';
 
-const DOWNLOAD_URL = 'https://github.com/tongoltyrone96/aria-releases/releases/download/v0.2.6/ARIA-Setup-0.2.6-Offline-CPU.exe';
+const DOWNLOAD_URL = 'https://github.com/tongoltyrone96/aria-releases/releases/download/v0.2.7/ARIA-Setup-0.2.7-Offline-CPU.exe';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
